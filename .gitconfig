@@ -1,0 +1,9 @@
+[user]
+	email = varunadhitya.balaji@gmail.com
+	name = varunadhityagb
+[init]
+  defaultBranch = main
+[core]
+  editor = nvim
+[diff]
+  tool = vimdiff
