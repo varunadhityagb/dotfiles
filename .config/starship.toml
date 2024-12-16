@@ -1,6 +1,6 @@
 
 [character]                            
-success_symbol = "[﬌](bold green)"     
+success_symbol = "[->](bold green)"     
 error_symbol = "[✗](bold red)"
 
 [directory]
@@ -46,11 +46,11 @@ cherry_pick = '[🍒 PICKING](bold red)'
 
 
 [git_status]
-conflicted = '🏳'
-up_to_date = '✓'
-untracked = 'U(red)'
+conflicted = '🏳 '
+up_to_date = '✓ '
+untracked = 'UNT(red) '
 stashed = 'stashed '
-modified = 'M(red) '
+modified = ' MOD(red) '
 staged = '[++\($count\)](green) '
 ahead = '⇡${count} '
 diverged = '⇕⇡${ahead_count}⇣${behind_count} '

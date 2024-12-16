@@ -7,3 +7,5 @@
   editor = nvim
 [diff]
   tool = vimdiff
+[credential]
+	helper = store
