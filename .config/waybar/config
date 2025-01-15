@@ -21,7 +21,7 @@
         "return-type": "json",
         "exec": "~/.config/ml4w/scripts/updates.sh",
         "restart-interval": 60,
-        "on-click": "~/.config/ml4w/settings/software.sh"
+        "on-click": "~/.config/hypr/scripts/updates.sh"
     },
 
     "custom/project": {
