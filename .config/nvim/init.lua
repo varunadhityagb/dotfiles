@@ -1,3 +1,4 @@
 require("varun.core")
+
 require("varun.lazy")
-vim.cmd("colorscheme github_dark_default")
+vim.cmd("colorscheme kanagawa-wave")

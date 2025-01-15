@@ -2,4 +2,5 @@
 
 This repository contains my dotfiles.
 
-![my setup](/images/screenshot.png "my setup")
+![my setup](./images/screenshot.png)
+
