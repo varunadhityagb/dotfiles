@@ -3,7 +3,7 @@ export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-
+export PATH=$HOME/.config/emacs/bin:$PATH
 
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="robbyrussell"
@@ -21,14 +21,12 @@ export PATH=$PATH:"$HOME/.local/bin:$HOME/.cargo/bin:/var/lib/flatpak/exports/bi
 
 export PATH=$PATH:"$HOME/Softwares/ideaIU-2024.2.4/bin/"
 
-alias sem="cd ~/OneDrive/COLLEGE/Sem3"
-alias sem-os="cd ~/OneDrive/COLLEGE/Sem3/OS"
-alias sem-py="cd ~/OneDrive/COLLEGE/Sem3/python"
-alias sem-dsa="cd ~/OneDrive/COLLEGE/Sem3/DSA2"
-alias sem-ai="cd ~/OneDrive/COLLEGE/Sem3/FAI"
-alias sem-bio="cd ~/OneDrive/COLLEGE/Sem3/BIO && conda activate bio && echo \"Conda Environment BIO activated.\""
-alias sem-py-django="cd ~/OneDrive/COLLEGE/Sem3/python/django-examples && conda activate django && echo \"Conda Environment django activated.\""
-alias sem-py-project="cd ~/OneDrive/COLLEGE/Sem3/python/note-box && conda activate noteBox && echo \"Conda Environment python project activated.\""
+alias sem1="cd ~/OneDrive/COLLEGE/Sem1"
+alias sem2="cd ~/OneDrive/COLLEGE/Sem2"
+alias sem3="cd ~/OneDrive/COLLEGE/Sem3"
+alias sem4="cd ~/OneDrive/COLLEGE/Sem4"
+alias sem="cd ~/OneDrive/COLLEGE/Sem4"
+
 
 
 export LIBVIRT_DEFAULT_URI="qemu:///system"
@@ -127,9 +125,16 @@ extract() {
 
 eval "$(atuin init zsh)"
 alias icat="kitten icat"
-
+alias em="emacsclient -a 'emacs'"
+alias jn="jupyter notebook"
+alias jb="jupyter lab"
+alias emdoom="emacs ~/.config/doom/ &"
 export PATH=$PATH:/home/varunadhityagb/.spicetify
 source <(fzf --zsh)
 
 
 source <(starship init zsh)
+
+eval $(keychain --eval --agents ssh ~/.ssh/id_ed25519)
+
+# . "/home/varunadhityagb/.deno/env"
