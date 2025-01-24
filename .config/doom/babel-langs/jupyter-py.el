@@ -9,8 +9,8 @@
   :config
   ;; these hooks can't go in the :hook section since lsp-restart-workspace
   ;; is not available if lsp isn't active
-  ;; (add-hook 'conda-postactivate-hook (lambda () (lsp-restart-workspace)))
-  ;; (add-hook 'conda-postdeactivate-hook (lambda () (lsp-restart-workspace)))
+  (add-hook 'conda-postactivate-hook (lambda () (lsp-restart-workspace)))
+  (add-hook 'conda-postdeactivate-hook (lambda () (lsp-restart-workspace)))
   )
 
 ;;; jupyter
@@ -91,4 +91,12 @@
     (when (and (length> to-delete 0)
                (y-or-n-p (format "Delete %d files?" (length to-delete))))
       (dolist (file to-delete)
-        (delete-file (car file)))))
+        (delete-file (car file))))))
+
+(defun jupyter-property-header ()
+  "Insert a Jupyter source block with session and kernel properties."
+  (interactive)
+  (let* ((session-name (read-string "Session name : "))
+         (kernel-name (read-string "Kernel name : ")))
+    (insert (format "\n#+PROPERTY: header-args:jupyter-python :session %s :kernel %s\n"
+                    session-name kernel-name))))

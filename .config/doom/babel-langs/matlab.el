@@ -13,7 +13,7 @@
   (interactive)
   (let* ((current-file (buffer-file-name))
          (tangle-file (concat (file-name-sans-extension current-file) ".m")))
-    (insert (format "#+BEGIN_SRC matlab :session *MATLAB* :results output :tangle %s :comments org :async\n"
+    (insert (format "#+BEGIN_SRC matlab :session *MATLAB* :results output :tangle %s :comments org :async yes\n"
                     tangle-file))
     (insert "#+END_SRC\n")))
 
@@ -24,7 +24,7 @@
   (let* ((output-file (read-string "Output file (e.g., plot.png): "))
          (current-file (buffer-file-name))
          (tangle-file (concat (file-name-sans-extension current-file) ".m")))
-    (insert (format "#+BEGIN_SRC matlab :session *MATLAB* :results graphics file :file ./%s.png :tangle %s :comments org :async\n "
+    (insert (format "#+BEGIN_SRC matlab :session *MATLAB* :results graphics file :file ./%s.png :tangle %s :comments org :async yes\n "
                     output-file tangle-file))
     (insert "#+END_SRC\n")))
 

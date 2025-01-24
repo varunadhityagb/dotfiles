@@ -1,4 +1,11 @@
- # If you come from bash you might have to change your $PATH.
+# Add TeX Live documentation to MANPATH and INFOPATH
+export MANPATH="/usr/local/texlive/2024/texmf-dist/doc/man:$MANPATH"
+export INFOPATH="/usr/local/texlive/2024/texmf-dist/doc/info:$INFOPATH"
+
+# Add TeX Live binaries to PATH
+export PATH="/usr/local/texlive/2024/bin/x86_64-linux:$PATH"
+
+# If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
 # Path to your Oh My Zsh installation.
@@ -129,6 +136,8 @@ alias em="emacsclient -a 'emacs'"
 alias jn="jupyter notebook"
 alias jb="jupyter lab"
 alias emdoom="emacs ~/.config/doom/ &"
+alias mysql="mysql --host=127.0.0.1 --port=3306"
+alias matlab="LD_LIBRARY_PATH=/usr/lib:/usr/lib64:/usr/local/lib:/usr/local/lib64 matlab"
 export PATH=$PATH:/home/varunadhityagb/.spicetify
 source <(fzf --zsh)
 

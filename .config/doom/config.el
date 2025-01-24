@@ -67,21 +67,16 @@
 ;; Enable LSP
 (lsp)
 
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((octave . t)))
+
 ;; Comment line
 (map! :leader "z" #'comment-line)
 
 (setq +latex-viewers '(zathura))
 
 (setq confirm-kill-emacs nil)
-
-
-;; active Babel languages
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '(
-   (latex . t)
-   )
- )
 
 (require 'ob-async)
 
@@ -117,3 +112,61 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+(after! org
+  (set-face-attribute 'org-level-1 nil :height 1.1 :weight 'normal)
+  (set-face-attribute 'org-level-2 nil :height 1.1 :weight 'normal)
+  (set-face-attribute 'org-level-3 nil :height 1.1 :weight 'normal)
+  (set-face-attribute 'org-document-title nil :height 1.5 :weight 'bold))
+
+;; Set up TeX-master properly
+(after! tex
+  (setq TeX-auto-save t)
+  (setq TeX-parse-self t)
+  ;; Tell AUCTeX to use the current file as master by default
+  (setq-default TeX-master t)
+
+  ;; Use latexmk as the default command
+  (setq TeX-command-default "LatexMk"))
+
+;; Configure latex-preview-pane
+(use-package! latex-preview-pane
+  :after latex
+  :commands latex-preview-pane-mode
+  :init
+  (setq latex-preview-pane-multifile-mode 'auctex)
+  (setq latex-preview-pane-update-delay 0.1)
+  :config
+  ;; Set the default program for opening PDFs
+  (setq latex-preview-pane-pdf-view-command "zathura")
+
+  ;; Enable the preview pane
+  (latex-preview-pane-enable))
+
+
+;; Better auto-save configuration
+(add-hook! 'latex-mode-hook
+  (lambda ()
+    ;; Set the master file to the current file if not already set
+    (unless TeX-master
+      (setq TeX-master (buffer-file-name)))
+
+    ;; Enable auto-save
+    (auto-save-mode +1)
+    (setq auto-save-timeout 1)
+    (setq auto-save-interval 1)))
+
+;; Force update function
+(defun force-latex-preview-update ()
+  (interactive)
+  (when (bound-and-true-p latex-preview-pane-mode)
+    (latex-preview-pane-update)))
+
+;; Bind it to a key
+(map! :map latex-mode-map
+      :localleader
+      "p" #'force-latex-preview-update)
+
+
+(map! :leader
+      :desc "Open vterm" "o t" #'vterm)
