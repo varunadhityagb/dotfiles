@@ -30,7 +30,7 @@
     },
 
         "clock": {
-        "format": "{:%H:%M}  ",
+        "format": "{:%a %d-%m | %I:%M %p}",
         "tooltip-format": "<tt><small>{galendae -c ~/.config/galendae/dark.conf}</small></tt>",
         "on-click": "/usr/bin/galendae"
     },
@@ -70,11 +70,11 @@
 
     // Modules Right    
     "modules-right": [
-        "custom/project",
         "custom/updates",
         "pulseaudio",
         "battery", 
         "clock",
+        "custom/project",
         "tray",
         "custom/exit",
     ]
