@@ -113,7 +113,7 @@
 
        :lang
        ;; (cc +lsp)         ; C > C++ == 1
-       emacs-lisp        ; drown in parentheses
+       (emacs-lisp +lsp)        ; drown in parentheses
        (json +lsp)             ; At least it ain't XML
        (java +lsp)       ; the poster child for carpal tunnel syndrome
        (javascript +tree-sitter)        ; all(hope(abandon(ye(who(enter(here))))))
