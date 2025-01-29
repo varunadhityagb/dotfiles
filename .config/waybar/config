@@ -1,44 +1,54 @@
 
 {
-    // General Settings
     "layer": "top",
-    "margin-bottom": 0,
-    "margin-left": 0,
-    "margin-right": 0,    
     "spacing": 0,
     "position": "bottom",
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": [],
+    "modules-right": ["pulseaudio", "battery", "clock", "tray"],
 
-    // Load Modules
-    "include": [
-        "~/.config/waybar/waybar-quicklinks.json",
-        "~/.config/waybar/modules.json"
-    ],
-
-    // Updates Count
-    "custom/updates": {
-        "format": "   {}",
-        "escape": true,
-        "return-type": "json",
-        "exec": "~/.config/ml4w/scripts/updates.sh",
-        "restart-interval": 60,
-        "on-click": "~/.config/hypr/scripts/updates.sh"
-    },
-
-    "custom/project": {
-        "format": "  ",
-        "on-click": "~/.config/hypr/scripts/project.sh"
-    },
-
-        "clock": {
+    "clock": {
         "format": "{:%a %d-%m | %I:%M %p}",
         "tooltip-format": "<tt><small>{galendae -c ~/.config/galendae/dark.conf}</small></tt>",
         "on-click": "/usr/bin/galendae"
     },
 
-    // Pulseaudio
+    "hyprland/workspaces": {
+        "on-scroll-up": "hyprctl dispatch workspace r-1",
+        "on-scroll-down": "hyprctl dispatch workspace r+1",
+        "on-click": "activate",
+        "active-only": false,
+        "all-outputs": false,
+        "format": "{}",
+        "persistent-workspaces": {
+            "*": [1,2,3]
+        }   
+    },
+
+    "custom/exit": {
+        "format": "",
+        "on-click": "wlogout",
+        "tooltip-format": "Power Menu"
+    },
+
+    "tray": {
+        "icon-size": 21,
+        "spacing": 10
+    },
+
+    "battery": {
+        "states": {
+        "full": 99,
+        "warning": 30,
+        "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-icons": [" ", " ", " ", " ", " "]
+    },
+
     "pulseaudio": {
-        // "scroll-step": 1, // %, can be a float
-        "format": "{icon}   {volume}%",
+        "scroll-step": 1,
+        "format": "{icon}  {volume}%",
         "format-bluetooth": "{volume}% {icon} {format_source}",
         "format-bluetooth-muted": " {icon} {format_source}",
         "format-muted": " {format_source}",
@@ -51,31 +61,8 @@
         "phone": " ",
         "portable": " ",
         "car": " ",
-        "default": [" ", " ", " "]
+        "default": ["", "", ""]
         },
         "on-click": "pavucontrol"
-    },
-
-    // Modules Left
-    "modules-left": [
-        "hyprland/workspaces",
-        "group/quicklinks",
-    ],
-
-    // Modules Center
-    "modules-center": [
-        "hyprland/window",
-        "custom/empty"
-    ],
-
-    // Modules Right    
-    "modules-right": [
-        "custom/updates",
-        "pulseaudio",
-        "battery", 
-        "clock",
-        "custom/project",
-        "tray",
-        "custom/exit",
-    ]
+    }
 }
