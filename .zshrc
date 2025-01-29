@@ -137,7 +137,7 @@ alias jn="jupyter notebook"
 alias jb="jupyter lab"
 alias emdoom="emacs ~/.config/doom/ &"
 alias mysql="mysql --host=127.0.0.1 --port=3306"
-alias matlab="LD_LIBRARY_PATH=/usr/lib:/usr/lib64:/usr/local/lib:/usr/local/lib64 matlab"
+# alias matlab="LD_LIBRARY_PATH=/usr/lib:/usr/lib64:/usr/local/lib:/usr/local/lib64 matlab"
 export PATH=$PATH:/home/varunadhityagb/.spicetify
 source <(fzf --zsh)
 
@@ -147,3 +147,13 @@ source <(starship init zsh)
 eval $(keychain --eval --agents ssh ~/.ssh/id_ed25519)
 
 # . "/home/varunadhityagb/.deno/env"
+
+# bun completions
+[ -s "/home/varunadhityagb/.bun/_bun" ] && source "/home/varunadhityagb/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+#for matlab to use gpu
+export MESA_LOADER_DRIVER_OVERRIDE=i965
