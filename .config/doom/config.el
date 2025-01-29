@@ -156,6 +156,11 @@
     (setq auto-save-timeout 1)
     (setq auto-save-interval 1)))
 
+;; (setq org-latex-pdf-process
+;;       '("/usr/local/textlive/2024/bin/x86_64/pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+;;         "/usr/local/textlive/2024/bin/x86_64/pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+;;         "/usr/local/textlive/2024/bin/x86_64/pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+(setq exec-path (append exec-path '("/usr/local/textlive/2024/bin/x86_64/pdflatex")) )
 ;; Force update function
 (defun force-latex-preview-update ()
   (interactive)
