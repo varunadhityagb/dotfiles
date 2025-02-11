@@ -4,15 +4,21 @@
     "spacing": 0,
     "position": "bottom",
     "modules-left": ["hyprland/workspaces"],
-    "modules-center": [],
-    "modules-right": ["pulseaudio", "battery", "clock", "tray"],
+    "modules-center": [""],
+    "modules-right": ["tray", "bluetooth", "pulseaudio", "battery", "network", "clock"],
 
     "clock": {
         "format": "{:%a %d-%m | %I:%M %p}",
         "tooltip-format": "<tt><small>{galendae -c ~/.config/galendae/dark.conf}</small></tt>",
         "on-click": "/usr/bin/galendae"
     },
-
+    "network": {
+        "format-wifi": "{essid} ",
+        "format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
+        "format-disconnected": " Disconnected ⚠ ",
+        "on-click": "kitty nmtui-connect",
+        "tooltip-format-wifi": "{ipaddr}/{cidr}  ({frequency} GHz)",
+    },
     "hyprland/workspaces": {
         "on-scroll-up": "hyprctl dispatch workspace r-1",
         "on-scroll-down": "hyprctl dispatch workspace r+1",
@@ -20,9 +26,6 @@
         "active-only": false,
         "all-outputs": false,
         "format": "{}",
-        "persistent-workspaces": {
-            "*": [1,2,3]
-        }   
     },
 
     "custom/exit": {
@@ -49,11 +52,9 @@
     "pulseaudio": {
         "scroll-step": 1,
         "format": "{icon}  {volume}%",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-bluetooth-muted": " {icon}",
         "format-muted": " {format_source}",
-        "format-source": "{volume}% ",
-        "format-source-muted": "",
         "format-icons": {
         "headphone": " ",
         "hands-free": " ",
@@ -64,5 +65,12 @@
         "default": ["", "", ""]
         },
         "on-click": "pavucontrol"
+    },
+    "bluetooth": {
+        "format": "",
+        "format-connected": " {device_alias}",
+        "format-connected-battery": " {device_alias}",
+        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
     }
+    
 }
