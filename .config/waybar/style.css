@@ -1,7 +1,7 @@
 @define-color backgroundlight #CCCCFF;
 @define-color backgrounddark #CCCCFF;
 @define-color workspacesbackground1 #FFFFFF;
-@define-color workspacesbackground2 #CCCCCC; 
+@define-color workspacesbackground2 #CCCCCC;
 @define-color bordercolor #FFFFFF;
 @define-color textcolor1 #000000;
 @define-color textcolor2 #000000;
@@ -9,17 +9,18 @@
 @define-color iconcolor #CCCCFF;
 
 * {
-    font-family: "Fira Sans Semibold", "Font Awesome 6 Free", FontAwesome,  Roboto, Helvetica, Arial, sans-serif;
+    font-family: "Fira Sans Semibold", "Font Awesome 6 Free", FontAwesome,
+        Roboto, Helvetica, Arial, sans-serif;
     border: none;
     border-radius: 0px;
 }
 
 window#waybar {
-    background-color: rgba(27,27,27,0.8);
+    background-color: rgba(27, 27, 27, 0.8);
     border-bottom: 0px solid #ffffff;
-    color: #FFFFFF;
+    color: #ffffff;
     transition-property: background-color;
-    transition-duration: .5s;
+    transition-duration: 0.5s;
 }
 
 #workspaces {
@@ -30,7 +31,7 @@ window#waybar {
     font-weight: bold;
     font-style: normal;
     font-size: 16px;
-    color: @textcolor1;
+    color: #000000;
 }
 
 #workspaces button {
@@ -38,12 +39,12 @@ window#waybar {
     margin: 4px 3px;
     border-radius: 0px;
     border: 0px;
-    color: @textcolor3;
+    color: #ffffff;
     transition: all 0.3s ease-in-out;
 }
 
 #workspaces button.active {
-    color: @textcolor1;
+    color: #000000;
     background: @workspacesbackground2;
     border-radius: 5px;
     min-width: 40px;
@@ -51,7 +52,7 @@ window#waybar {
 }
 
 #workspaces button:hover {
-    color: @textcolor1;
+    color: #000000;
     background: @workspacesbackground2;
     border-radius: 5px;
 }
@@ -59,43 +60,42 @@ window#waybar {
 tooltip {
     border-radius: 10px;
     background-color: @backgroundlight;
-    opacity:0.8;
-    padding:20px;
-    margin:0px;
+    opacity: 0.8;
+    padding: 20px;
+    margin: 0px;
 }
 
 tooltip label {
-    color: @textcolor2;
+    color: #000000;
 }
-
 
 #window {
     background: @backgroundlight;
     margin: 10px 15px 10px 0px;
     padding: 2px 10px 0px 10px;
     border-radius: 12px;
-    color:@textcolor2;
-    font-size:16px;
-    font-weight:normal;
+    color: #000000;
+    font-size: 16px;
+    font-weight: normal;
 }
 
 window#waybar.empty #window {
-    background-color:transparent;
+    background-color: transparent;
 }
 
 #clock {
     background-color: #7ba7ec;
     font-size: 16px;
-    color: @textcolor1;
+    color: #000000;
     border-radius: 5px;
     padding: 2px 10px 0px 10px;
     margin: 10px 15px 10px 0px;
 }
 
 #pulseaudio {
-    background-color:#ff9a88;
+    background-color: #ff9a88;
     font-size: 16px;
-    color: @textcolor2;
+    color: #000000;
     border-radius: 5px;
     padding: 2px 10px 0px 10px;
     margin: 10px 15px 10px 0px;
@@ -103,59 +103,45 @@ window#waybar.empty #window {
 
 #pulseaudio.muted {
     background-color: #eb4d4b;
-    color: @textcolor1;
+    color: #000000;
 }
 #network {
-    background-color: @backgroundlight;
+    background-color: #aca9bb;
     font-size: 16px;
-    color: @textcolor2;
+    color: #000000;
     border-radius: 5px;
     padding: 2px 10px 0px 10px;
     margin: 10px 15px 10px 0px;
 }
 
 #network.ethernet {
-    background-color: @backgroundlight;
-    color: @textcolor2;
+    background-color: #aca9bb;
+    color: #000000;
 }
 
 #network.wifi {
-    background-color: @backgroundlight;
-    color: @textcolor2;
-}
-
- #bluetooth, #bluetooth.on, #bluetooth.connected {
-    background-color: @backgroundlight;
-    font-size: 16px;
-    color: @textcolor2;
-    border-radius: 5px;
-    padding: 2px 10px 0px 10px;
-    margin: 10px 15px 10px 0px;
-}
-
-#bluetooth.off {
-    background-color: transparent;
-    padding: 0px;
-    margin: 0px;
+    background-color: #d0eaec;
+    color: #000000;
 }
 
 #battery {
     background-color: #b3e9c7;
     font-size: 16px;
-    color: @textcolor2;
+    color: #000000;
     border-radius: 5px;
     padding: 2px 15px 0px 10px;
     margin: 10px 15px 10px 0px;
 }
 
-#battery.charging, #battery.plugged {
-    color: @textcolor2;
-    background-color: #87ba4d
+#battery.charging,
+#battery.plugged {
+    color: #000000;
+    background-color: #87ba4d;
 }
 
 #battery.critical:not(.charging) {
     background-color: #f53c3c;
-    color: @textcolor3;
+    color: #ffffff;
 }
 
 #battery.warning:not(.charging) {
@@ -163,7 +149,7 @@ window#waybar.empty #window {
 }
 
 #tray {
-    margin:0px 10px 0px 0px;
+    margin: 0px 10px 0px 0px;
     color: @iconcolor;
 }
 
@@ -182,7 +168,16 @@ label:focus {
 
 #custom-exit {
     margin: 0px 20px 0px 0px;
-    padding:0px;
-    font-size:20px;
+    padding: 0px;
+    font-size: 20px;
     color: @iconcolor;
+}
+
+#bluetooth.connected {
+    background-color: #63b3ff;
+    font-size: 16px;
+    color: #000000;
+    border-radius: 5px;
+    padding: 2px 10px 0px 10px;
+    margin: 10px 15px 10px 0px;
 }
