@@ -33,7 +33,7 @@ alias sem2="cd ~/OneDrive/COLLEGE/Sem2"
 alias sem3="cd ~/OneDrive/COLLEGE/Sem3"
 alias sem4="cd ~/OneDrive/COLLEGE/Sem4"
 alias sem="cd ~/OneDrive/COLLEGE/Sem4"
-
+alias ssh="kitty +kitten ssh"
 
 
 export LIBVIRT_DEFAULT_URI="qemu:///system"
@@ -140,7 +140,7 @@ alias mysql="mysql --host=127.0.0.1 --port=3306"
 # alias matlab="LD_LIBRARY_PATH=/usr/lib:/usr/lib64:/usr/local/lib:/usr/local/lib64 matlab"
 export PATH=$PATH:/home/varunadhityagb/.spicetify
 source <(fzf --zsh)
-
+alias stfu="shutdown now"
 
 source <(starship init zsh)
 
@@ -157,3 +157,12 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 #for matlab to use gpu
 export MESA_LOADER_DRIVER_OVERRIDE=i965
+
+function y() {
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+    yazi "$@" --cwd-file="$tmp"
+    if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+        builtin cd -- "$cwd"
+    fi
+    rm -f -- "$tmp"
+}
