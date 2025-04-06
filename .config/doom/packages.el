@@ -72,3 +72,4 @@
 (package! tree-sitter-langs)
 
 (package! latex-preview-pane)
+(package! forge)

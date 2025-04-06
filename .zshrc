@@ -28,11 +28,6 @@ export PATH=$PATH:"$HOME/.local/bin:$HOME/.cargo/bin:/var/lib/flatpak/exports/bi
 
 export PATH=$PATH:"$HOME/Softwares/ideaIU-2024.2.4/bin/"
 
-alias sem1="cd ~/OneDrive/COLLEGE/Sem1"
-alias sem2="cd ~/OneDrive/COLLEGE/Sem2"
-alias sem3="cd ~/OneDrive/COLLEGE/Sem3"
-alias sem4="cd ~/OneDrive/COLLEGE/Sem4"
-alias sem="cd ~/OneDrive/COLLEGE/Sem4"
 alias ssh="kitty +kitten ssh"
 
 
@@ -40,7 +35,7 @@ export LIBVIRT_DEFAULT_URI="qemu:///system"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/varunadhityagb/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_setup="$('/home/varunadhityagb/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
@@ -52,7 +47,7 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-
+eval "conda activate base"
 # >>> juliaup initialize >>>
 
 # !! Contents within this block are managed by juliaup !!
@@ -77,9 +72,6 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 alias da='date "+%Y-%m-%d %A %T %Z"'
 
 # Alias's to modified commands
-alias cp='cp -i'
-alias mv='mv -i'
-alias mkdir='mkdir -p'
 alias cls='clear'
 
 # cd into the old directory
@@ -137,10 +129,11 @@ alias jn="jupyter notebook"
 alias jb="jupyter lab"
 alias emdoom="emacs ~/.config/doom/ &"
 alias mysql="mysql --host=127.0.0.1 --port=3306"
-# alias matlab="LD_LIBRARY_PATH=/usr/lib:/usr/lib64:/usr/local/lib:/usr/local/lib64 matlab"
 export PATH=$PATH:/home/varunadhityagb/.spicetify
 source <(fzf --zsh)
 alias stfu="shutdown now"
+
+alias ls="ls --color=auto"
 
 source <(starship init zsh)
 
@@ -165,4 +158,24 @@ function y() {
         builtin cd -- "$cwd"
     fi
     rm -f -- "$tmp"
+}
+autoload -U compinit; compinit
+export DOCKER_HOST=unix:///var/run/docker.sock
+
+
+function swwc() {
+    swww img $1
+    wal -i $1
+    echo "path = $1" > ~/.config/hypr/wall.conf
+    ~/.pywal/generate-theme.sh
+}
+
+
+function mhd() {
+    sudo mkdir -p /run/media/varunadhityagb/Additional\ Disk/
+    sudo mount /dev/sda1 /run/media/varunadhityagb/Additional\ Disk/
+}
+
+function umhd() {
+    sudo umount /dev/sda1
 }
