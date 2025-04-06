@@ -1,156 +1,109 @@
-@define-color backgroundlight #CCCCFF;
-@define-color backgrounddark #CCCCFF;
-@define-color workspacesbackground1 #FFFFFF;
-@define-color workspacesbackground2 #CCCCCC;
-@define-color bordercolor #FFFFFF;
-@define-color textcolor1 #000000;
-@define-color textcolor2 #000000;
-@define-color textcolor3 #FFFFFF;
-@define-color iconcolor #CCCCFF;
+@import url("../../.cache/wal/colors-waybar.css");
 
 * {
-    font-family: "Fira Sans Semibold", "Font Awesome 6 Free", FontAwesome,
-        Roboto, Helvetica, Arial, sans-serif;
+    font-family:
+        "Fira Sans Semibold", "Font Awesome 6 Free", FontAwesome, Roboto,
+        Helvetica, Arial, sans-serif;
     border: none;
     border-radius: 0px;
 }
 
+.modules-left {
+    padding: 7px;
+    margin: 5px;
+    border-radius: 25px;
+    background: @color13;
+}
+
+.modules-right {
+    padding: 7px;
+    margin: 5px;
+    border-radius: 25px;
+    background: @color13;
+}
+
+.modules-center {
+    padding: 7px;
+    margin: 5px;
+    border-radius: 25px;
+    background: @color13;
+}
+
 window#waybar {
-    background-color: rgba(27, 27, 27, 0.8);
-    border-bottom: 0px solid #ffffff;
-    color: #ffffff;
-    transition-property: background-color;
-    transition-duration: 0.5s;
+    all: unset;
 }
 
 #workspaces {
-    margin: 5px 1px 6px 1px;
-    padding: 0px 1px;
-    border-radius: 5px;
-    border: 0px;
+    padding: 0px 5px;
     font-weight: bold;
     font-style: normal;
-    font-size: 16px;
-    color: #000000;
+    background: @color13;
+    color: @color13;
 }
 
 #workspaces button {
+    all: unset;
     padding: 0px 5px;
-    margin: 4px 3px;
-    border-radius: 0px;
-    border: 0px;
-    color: #ffffff;
+    color: alpha(@color9, 0.4);
     transition: all 0.3s ease-in-out;
 }
 
 #workspaces button.active {
-    color: #000000;
-    background: @workspacesbackground2;
-    border-radius: 5px;
-    min-width: 40px;
+    color: @background;
     transition: all 0.3s ease-in-out;
 }
 
 #workspaces button:hover {
-    color: #000000;
-    background: @workspacesbackground2;
-    border-radius: 5px;
-}
-
-tooltip {
-    border-radius: 10px;
-    background-color: @backgroundlight;
-    opacity: 0.8;
-    padding: 20px;
-    margin: 0px;
-}
-
-tooltip label {
-    color: #000000;
-}
-
-#window {
-    background: @backgroundlight;
-    margin: 10px 15px 10px 0px;
-    padding: 2px 10px 0px 10px;
-    border-radius: 12px;
-    color: #000000;
-    font-size: 16px;
-    font-weight: normal;
-}
-
-window#waybar.empty #window {
-    background-color: transparent;
+    color: @background;
+    border-radius: 25px;
+    background: @color9;
 }
 
 #clock {
-    background-color: #7ba7ec;
-    font-size: 16px;
-    color: #000000;
-    border-radius: 5px;
-    padding: 2px 10px 0px 10px;
-    margin: 10px 15px 10px 0px;
+    color: @background;
+    padding: 0px 5px;
 }
 
 #pulseaudio {
-    background-color: #ff9a88;
-    font-size: 16px;
-    color: #000000;
-    border-radius: 5px;
-    padding: 2px 10px 0px 10px;
-    margin: 10px 15px 10px 0px;
+    color: @background;
+    padding: 0px 5px;
 }
 
 #pulseaudio.muted {
     background-color: #eb4d4b;
-    color: #000000;
+    border-radius: 25px;
+    padding-top: 1px;
 }
 #network {
-    background-color: #aca9bb;
-    font-size: 16px;
-    color: #000000;
-    border-radius: 5px;
-    padding: 2px 10px 0px 10px;
-    margin: 10px 15px 10px 0px;
-}
-
-#network.ethernet {
-    background-color: #aca9bb;
-    color: #000000;
-}
-
-#network.wifi {
-    background-color: #d0eaec;
-    color: #000000;
+    color: @background;
+    padding: 0px 5px;
 }
 
 #battery {
-    background-color: #b3e9c7;
-    font-size: 16px;
-    color: #000000;
-    border-radius: 5px;
-    padding: 2px 15px 0px 10px;
-    margin: 10px 15px 10px 0px;
+    color: @background;
+    padding: 0px 5px;
 }
 
 #battery.charging,
 #battery.plugged {
-    color: #000000;
-    background-color: #87ba4d;
+    background-color: green;
+    border-radius: 25px;
+    padding-top: 1px;
 }
 
 #battery.critical:not(.charging) {
-    background-color: #f53c3c;
-    color: #ffffff;
+    background-color: red;
+    border-radius: 25px;
+    padding-top: 1px;
 }
 
 #battery.warning:not(.charging) {
-    background-color: #ffdb81;
+    color: #ffdb81;
 }
 
 #tray {
-    margin: 0px 10px 0px 0px;
-    color: @iconcolor;
+    color: @background;
+    margin: 0px 5px;
 }
 
 #tray > .passive {
@@ -163,21 +116,38 @@ window#waybar.empty #window {
 }
 
 label:focus {
-    background-color: #000000;
+    background-color: @background;
 }
 
 #custom-exit {
     margin: 0px 20px 0px 0px;
     padding: 0px;
     font-size: 20px;
-    color: @iconcolor;
+    color: @background;
 }
 
 #bluetooth.connected {
-    background-color: #63b3ff;
+    color: @background;
+    padding: 0px 5px;
+}
+
+#clock:hover,
+#battery:hover,
+#tray:hover,
+#bluetooth.connected:hover,
+#pulseaudio:hover,
+#network:hover {
+    background-color: @color11;
+    border-radius: 25px;
+}
+
+#group-expand {
+    padding: 0px 5px;
+    transition: all 0.3s ease;
+}
+#custom-expand {
     font-size: 16px;
-    color: #000000;
-    border-radius: 5px;
-    padding: 2px 10px 0px 10px;
-    margin: 10px 15px 10px 0px;
+    padding: 0px 5px;
+    color: @background;
+    transition: all 0.3s ease;
 }

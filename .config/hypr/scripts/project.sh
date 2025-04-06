@@ -1,13 +1,22 @@
 #!/bin/bash
-
-FILE="/home/varunadhityagb/.config/hypr/conf/monitor.conf"
-
-
-# Read the current content of the file
-CURRENT_CONTENT=$(<"$FILE")
+mode=$(echo -e "screen1\nscreen2\nmult\nmirror" | rofi -dmenu)
 
 
-mode=$(echo -e "screen1\nscreen2\nmult\nmirror" | rofi -theme $HOME/.config/rofi/launchers/type-1/style-4.rasi -dmenu)
-
-
-echo "source = ~/.config/hypr/conf/monitors/$mode.conf" > "$FILE"
+case $mode in
+    "screen1")
+        hyprctl keyword monitor HDMI-A-1,disable
+        hyprctl keyword monitor eDP-1,1600x900,auto,1
+        ;;
+    "screen2")
+        hyprctl keyword monitor HDMI-A-1,prefered,0x0,1
+        hyprctl keyword monitor eDP-1, disable
+        ;;
+    "mult")
+        hyprctl keyword monitor HDMI-A-1, prefered, 0x0, 1
+        hyprctl keyword monitor eDP-1,1600x900,auto,1
+        ;;
+    "mirror")
+        hyprctl keyword monitor HDMI-A-1, prefered, 0x0, 1, mirror, eDP-1
+        hyrpctl keyword monitor eDP-1,1600x900,auto,1
+        ;;
+esac

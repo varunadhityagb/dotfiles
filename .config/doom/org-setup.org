@@ -1,0 +1,12 @@
+#+OPTIONS: toc:nil
+#+LATEX_CLASS: article
+#+LATEX_HEADER: \usepackage{xcolor}
+#+LATEX_HEADER: \usepackage{listings}
+#+LATEX_HEADER: \lstset{frame=single, basicstyle=\ttfamily\footnotesize}
+#+LATEX_HEADER: \hypersetup{pdfauthor={Varun Adhitya G B}, pdflang={English}}
+#+AUTHOR: Varun Adhitya G B
+#+DATE: \today
+
+# #+LATEX_HEADER\setmonofont[scale=matchlowercase]{firacode nerd font}
+#+LATEX_HEADER:\usepackage{sectsty}
+#+LATEX_HEADER: \usepackage[tmargin=2cm,rmargin=0.5in,lmargin=0.5in,margin=0.85in,bmargin=2cm,footskip=.2in]{geometry}

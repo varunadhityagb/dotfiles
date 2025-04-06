@@ -8,24 +8,31 @@
 (setq display-line-numbers-type 'relative)
 
 (setq org-directory "~/org/")
+(setq org-latex-listings t)
+(setq org-latex-src-block-backend 'listings)
 
 (setq conda-anaconda-home (getenv "ANACONDA_HOME")
       conda-home-candidates
       (list "~/.anaconda"))
 
-
-(use-package pdf-tools
+(use-package! pdf-tools
   :defer t
   :commands (pdf-loader-install)
+  :init (pdf-loader-install)
   :mode "\\.pdf\\'"
   :bind (:map pdf-view-mode-map
               ("j" . pdf-view-next-line-or-next-page)
               ("k" . pdf-view-previous-line-or-previous-page)
               ("C-+" . pdf-view-enlarge)
               ("C--" . pdf-view-shrink))
-  :init (pdf-loader-install)
   :config
-  (add-to-list 'revert-without-query ".pdf"))
+  (setq pdf-view-resize-factor 1.1)  ;; Optional, adjust zoom factor
+  (add-to-list 'revert-without-query ".pdf")
+  (add-hook 'pdf-view-mode-hook
+            (lambda ()
+              (when (eq major-mode 'pdf-view-mode)
+                (setq pdf-sync-embed-pdf t)))))
+
 
 (add-hook 'pdf-view-mode-hook
           (lambda ()
@@ -59,8 +66,9 @@
   (setq TeX-auto-save t)
   (setq TeX-parse-self t)
   (setq-default TeX-master t)
-
-  (setq TeX-command-default "LatexMk"))
+  (setq TeX-command-default "LatexMk")
+  (setq latexmk-options (append latexmk-options '("-synctex=1")))
+  )
 
 (use-package! latex-preview-pane
   :after latex
@@ -89,6 +97,12 @@
 
 (setq exec-path (append exec-path '("/usr/local/textlive/2024/bin/x86_64/pdflatex")) )
 
+(setq copilot-mode nil)
+
+(defun insert-setupfile()
+  "Inserts setupfile"
+  (interactive)
+  (insert "#+SETUPFILE:/home/varunadhityagb/.config/doom/org-setup.org\n"))
 
 (map! :leader
       :desc "Open vterm" "o t" #'vterm)
@@ -96,3 +110,6 @@
 (map! :leader
       :localleader
       "p" #'latex-preview-pane-mode)
+
+(map! :leader
+      "b a b i" #'insert-setupfile )

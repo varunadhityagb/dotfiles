@@ -3,7 +3,7 @@
 FOLDER="/home/varunadhityagb/.hiddenFolder"
 fileList=$(ls -1 $FOLDER)
 echo $fileList
-res=$(echo $fileList | tr ' ' '\n' | rofi -theme $HOME/.config/rofi/launchers/type-1/style-4.rasi -dmenu)
+res=$(echo $fileList | tr ' ' '\n' | rofi -dmenu)
 FILE="$FOLDER/$res"
 
 if [ -z "$res" ]; then

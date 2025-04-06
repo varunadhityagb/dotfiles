@@ -2,10 +2,11 @@
 {
     "layer": "top",
     "spacing": 0,
-    "position": "bottom",
-    "modules-left": ["hyprland/workspaces"],
-    "modules-center": [""],
-    "modules-right": ["tray", "bluetooth", "pulseaudio", "battery", "network", "clock"],
+    "position": "top",
+    "reload_style_on_change": true,
+    "modules-left": ["clock", "battery"],
+    "modules-center": ["hyprland/workspaces"],
+    "modules-right": ["group/expand", "bluetooth", "pulseaudio", "network"],
 
     "clock": {
         "format": "{:%a %d-%m | %I:%M %p}",
@@ -25,7 +26,15 @@
         "on-click": "activate",
         "active-only": false,
         "all-outputs": false,
-        "format": "{}",
+        "format": "{icon}",
+        "format-icons": {
+            "active": "",
+            "default": "",
+            "empty": ""
+            },
+        "persistent-workspaces": {
+            "*": [1,2,3,4,5]
+        }
     },
 
     "custom/exit": {
@@ -54,14 +63,9 @@
         "format": "{icon}  {volume}%",
         "format-bluetooth": "{volume}% {icon}",
         "format-bluetooth-muted": " {icon}",
-        "format-muted": " {format_source}",
+        "format-muted": "",
         "format-icons": {
         "headphone": " ",
-        "hands-free": " ",
-        "headset": " ",
-        "phone": " ",
-        "portable": " ",
-        "car": " ",
         "default": ["", "", ""]
         },
         "on-click": "pavucontrol"
@@ -71,6 +75,20 @@
         "format-connected": " {device_alias}",
         "format-connected-battery": " {device_alias}",
         "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
-    }
+    },
+
+    "custom/expand": {
+            "format": "",
+            "tooltip": false
+        },
+    "group/expand": {
+        "orientation": "horizontal",
+        "drawer": {
+            "transition-duration": 600,
+            "transition-to-left": true,
+            "click-to-reveal": true
+        },
+        "modules": ["custom/expand", "tray"],
+    },
     
 }
