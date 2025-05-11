@@ -1,5 +1,6 @@
 #+OPTIONS: toc:nil
 #+LATEX_CLASS: article
+#+LATEX_CLASS_OPTIONS: [a4paper]
 #+LATEX_HEADER: \usepackage{xcolor}
 #+LATEX_HEADER: \usepackage{listings}
 #+LATEX_HEADER: \lstset{frame=single, basicstyle=\ttfamily\footnotesize}
@@ -10,3 +11,13 @@
 # #+LATEX_HEADER\setmonofont[scale=matchlowercase]{firacode nerd font}
 #+LATEX_HEADER:\usepackage{sectsty}
 #+LATEX_HEADER: \usepackage[tmargin=2cm,rmargin=0.5in,lmargin=0.5in,margin=0.85in,bmargin=2cm,footskip=.2in]{geometry}
+#+LATEX_HEADER: \usepackage{minted}
+#+OPTIONS: toc:nil
+#+LATEX_COMPILER: xelatex
+#+LATEX_HEADER: \usepackage[utf8]{inputenc}
+#+LATEX_HEADER: \usepackage[T1]{fontenc}
+#+LATEX_HEADER: \usemintedstyle{colorful}
+#+LATEX_HEADER: \usepackage{xcolor}
+#+LATEX_HEADER: \definecolor{bg}{rgb}{0.95,0.95,0.95}
+#+LATEX_HEADER: \setminted{bgcolor=bg, linenos=true, frame=lines}
+#+OPTIONS: ^:nil

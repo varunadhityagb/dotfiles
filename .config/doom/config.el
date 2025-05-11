@@ -118,4 +118,19 @@
 (map! :leader
       "b a b i" #'insert-setupfile )
 
+;; (setq (centaur-tabs-mode 'nil))
 
+(add-to-list 'org-babel-load-languages '(arduino . t))
+(org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages)
+(require 'flycheck-arduino)
+(add-hook 'arduino-mode-hook #'flycheck-arduino-setup)
+
+(after! org
+  (add-to-list 'org-file-apps '("\\.pdf\\'" . "zathura \"%s\"")))
+
+(setq org-src-fontify-natively t)
+(setq org-latex-listings 'minted)
+(setq org-latex-packages-alist '(("" "minted")))
+(setq org-latex-pdf-process
+      '("xelatex -shell-escape -interaction nonstopmode -output-directory=%o %f"
+        "xelatex -shell-escape -interaction nonstopmode -output-directory=%o %f"))

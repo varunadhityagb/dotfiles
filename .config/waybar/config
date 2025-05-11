@@ -18,7 +18,7 @@
         "format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
         "format-disconnected": " Disconnected ⚠ ",
         "on-click": "kitty nmtui-connect",
-        "tooltip-format-wifi": "{ipaddr}/{cidr}  ({frequency} GHz)",
+        "tooltip-format-wifi": "{signalStrength} % -- {ipaddr}/{cidr} -- ({frequency} GHz)",
     },
     "hyprland/workspaces": {
         "on-scroll-up": "hyprctl dispatch workspace r-1",
