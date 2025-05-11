@@ -2,8 +2,8 @@
 
 * {
     font-family:
-        "Fira Sans Semibold", "Font Awesome 6 Free", FontAwesome, Roboto,
-        Helvetica, Arial, sans-serif;
+        "SF Pro Bold", "Fira Sans Semibold", "Font Awesome 6 Free", FontAwesome,
+        Roboto, Helvetica, Arial, sans-serif;
     border: none;
     border-radius: 0px;
 }
@@ -11,21 +11,21 @@
 .modules-left {
     padding: 7px;
     margin: 5px;
-    border-radius: 25px;
+    border-radius: 10px;
     background: @color13;
 }
 
 .modules-right {
     padding: 7px;
     margin: 5px;
-    border-radius: 25px;
+    border-radius: 10px;
     background: @color13;
 }
 
 .modules-center {
     padding: 7px;
     margin: 5px;
-    border-radius: 25px;
+    border-radius: 10px;
     background: @color13;
 }
 
@@ -141,10 +141,6 @@ label:focus {
     border-radius: 25px;
 }
 
-#group-expand {
-    padding: 0px 5px;
-    transition: all 0.3s ease;
-}
 #custom-expand {
     font-size: 16px;
     padding: 0px 5px;

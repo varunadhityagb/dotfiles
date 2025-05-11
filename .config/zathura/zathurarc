@@ -11,3 +11,38 @@ set incremental-search true
 # zoom
 map <C-i> zoom in
 map <C-o> zoom out
+
+set recolor "true"
+set recolor-keephue "true"
+
+set completion-bg "#080F1B"
+set completion-fg "#c1c3c6"
+set completion-group-bg "#080F1B"
+set completion-group-fg "#5C585F"
+set completion-highlight-bg "#c1c3c6"
+set completion-highlight-fg "#080F1B"
+
+set recolor-lightcolor "#080F1B"
+set recolor-darkcolor "#c1c3c6"
+set default-bg "#080F1B"
+
+set inputbar-bg "#080F1B"
+set inputbar-fg "#c1c3c6"
+set notification-bg "#080F1B"
+set notification-fg "#c1c3c6"
+set notification-error-bg "#344659"
+set notification-error-fg "#c1c3c6"
+set notification-warning-bg "#344659"
+set notification-warning-fg "#c1c3c6"
+set statusbar-bg "#080F1B"
+set statusbar-fg "#c1c3c6"
+set index-bg "#080F1B"
+set index-fg "#c1c3c6"
+set index-active-bg "#c1c3c6"
+set index-active-fg "#080F1B"
+set render-loading-bg "#080F1B"
+set render-loading-fg "#c1c3c6"
+
+set window-title-home-tilde true
+set statusbar-basename true
+set selection-clipboard clipboard

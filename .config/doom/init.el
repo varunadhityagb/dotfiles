@@ -43,7 +43,7 @@
        ;; neotree           ; a project drawer, like NERDTree for vim
        ophints           ; highlight the region an operation acts on
        (popup +defaults)   ; tame sudden yet inevitable temporary windows
-       tabs              ; a tab bar for Emacs
+       ;; tabs              ; a tab bar for Emacs
        ;; treemacs          ; a project drawer, like neotree but cooler
        ;;unicode           ; extended unicode support for various languages
        (vc-gutter +pretty) ; vcs diff in the fringe
@@ -122,7 +122,7 @@
        (latex +cdlatex +fold +lsp)             ; writing papers in Emacs has never been so fun
        lua               ; one-based indices? one-based indices
        (markdown +grip)          ; writing docs for people to ignore
-       (org +gnuplot +jupyter +ipython +pretty)               ; organize your plain life in plain text
+       (org +gnuplot +jupyter +ipython +pretty +present)               ; organize your plain life in plain text
        (python +lsp +tree-sitter +conda)            ; beautiful is better than ugly
        ;; qt                ; the 'cutest' gui framework ever
        (rust +lsp)       ; Fe2O3.unwrap().unwrap().unwrap().unwrap()

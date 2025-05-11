@@ -50,13 +50,9 @@
 ;; (unpin! t)
 
 (package! wakatime-mode)
-(package! pdf-tools)
 (package! highlight-indent-guides)
 
 ;; Markdown
-(package! markdown-preview-mode)
-(package! markdown-mode)
-
 (package! matlab-mode)
 (package! ob-async)
 (package! jupyter)
@@ -64,12 +60,7 @@
 (package! code-cells)
 (package! lsp-pyright)
 (package! snakemake-mode)
-(package! auctex)
-
 
 ;; Tree-sitter support
-(package! tree-sitter)
-(package! tree-sitter-langs)
-
 (package! latex-preview-pane)
 (package! forge)

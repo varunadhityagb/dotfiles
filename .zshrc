@@ -61,7 +61,6 @@ export PATH
 # Set the default editor
 export EDITOR=nvim
 export VISUAL=nvim
-alias vim='nvim'
 alias nvimdiff='nvim -d'
 
 # Add an "alert" alias for long running commands.  Use like so:
@@ -164,8 +163,16 @@ export DOCKER_HOST=unix:///var/run/docker.sock
 
 
 function swwc() {
-    swww img $1
+    # swww img $1
     wal -i $1
+
+    killall hyprpaper
+    echo "preload = $1\nwallpaper = ,$1\nsplash = false" > ~/.config/hypr/hyprpaper.conf
+    hyprpaper & disown
+
+    cat ~/.config/zathura/base > ~/.config/zathura/zathurarc
+    cat ~/.cache/wal/colors-zathura >> ~/.config/zathura/zathurarc
+
     echo "path = $1" > ~/.config/hypr/wall.conf
     ~/.pywal/generate-theme.sh
 }
@@ -178,4 +185,16 @@ function mhd() {
 
 function umhd() {
     sudo umount /dev/sda1
+}
+export QT_QPA_PLATFORMTHEME=qt5ct
+
+function get_atendence() {
+    /home/varunadhityagb/anaconda3/bin/python /home/varunadhityagb/gitclonestuff/myamrita-parser/my-amrita-attendence.py
+}
+
+function no_sleep(){
+(
+        notify-send "🛑 No Sleep Mode" "Lid close will NOT suspend the system."
+        systemd-inhibit --what=handle-lid-switch --who="Hyprland" --why="Temporarily disabling lid sleep" bash
+    ) &
 }
