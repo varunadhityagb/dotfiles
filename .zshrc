@@ -22,17 +22,6 @@ plugins=(git z thefuck qrcode themes)
 
 source $ZSH/oh-my-zsh.sh
 
-export PATH="$PATH:/home/varunadhityagb/.local/share/coursier/bin"
-
-export PATH=$PATH:"$HOME/.local/bin:$HOME/.cargo/bin:/var/lib/flatpak/exports/bin:/.local/share/flatpak/exports/bin"
-
-export PATH=$PATH:"$HOME/Softwares/ideaIU-2024.2.4/bin/"
-
-alias ssh="kitty +kitten ssh"
-
-
-export LIBVIRT_DEFAULT_URI="qemu:///system"
-
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/home/varunadhityagb/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
@@ -47,17 +36,35 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
- 
+
 eval "conda activate base"
+
 # >>> juliaup initialize >>>
 
 # !! Contents within this block are managed by juliaup !!
 
 path=('/home/varunadhityagb/.juliaup/bin' $path)
 export PATH
-
 # <<< juliaup initialize <<<
 #
+
+export PATH="$PATH:/home/varunadhityagb/.local/share/coursier/bin"
+
+export PATH=$PATH:"$HOME/.local/bin:$HOME/.cargo/bin:/var/lib/flatpak/exports/bin:/.local/share/flatpak/exports/bin"
+
+export PATH=$PATH:"$HOME/Softwares/ideaIU-2024.2.4/bin/"
+
+export PATH=$PATH:/home/varunadhityagb/.spicetify
+
+export PATH="$HOME/development/flutter/bin:$PATH"
+
+# bun completions
+[ -s "/home/varunadhityagb/.bun/_bun" ] && source "/home/varunadhityagb/.bun/_bun"
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+export LIBVIRT_DEFAULT_URI="qemu:///system"
 
 # Set the default editor
 export EDITOR=nvim
@@ -73,25 +80,16 @@ alias countfiles="for t in files links directories; do echo \`find . -type \${t:
 alias tree='tree -CAhF --dirsfirst'
 
 
-# eval "$(atuin init zsh)"
+eval "$(atuin init zsh)"
 alias icat="kitten icat"
 alias mysql="mysql --host=127.0.0.1 --port=3306"
-export PATH=$PATH:/home/varunadhityagb/.spicetify
 source <(fzf --zsh)
 
 
 source <(starship init zsh)
 
-eval $(keychain --eval --agents ssh ~/.ssh/id_ed25519)
-
 # . "/home/varunadhityagb/.deno/env"
 
-# bun completions
-[ -s "/home/varunadhityagb/.bun/_bun" ] && source "/home/varunadhityagb/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
 
 #for matlab to use gpu
 export MESA_LOADER_DRIVER_OVERRIDE=i965
@@ -113,13 +111,13 @@ function swwc() {
     wal -i $1
 
     killall hyprpaper
-    echo "preload = $1\nwallpaper = ,$1\nsplash = false" > ~/.config/hypr/hyprpaper.conf
+    echo "preload = $1\nwallpaper = ,$1\nsplash = false" > ~/dotfiles/.config/hypr/hyprpaper.conf
     hyprpaper & disown
 
-    cat ~/.config/zathura/base > ~/.config/zathura/zathurarc
-    cat ~/.cache/wal/colors-zathura >> ~/.config/zathura/zathurarc
+    cat ~/dotfiles/.config/zathura/base > ~/dotfiles/.config/zathura/zathurarc
+    cat ~/.cache/wal/colors-zathura >> ~/dotfiles/.config/zathura/zathurarc
 
-    echo "path = $1" > ~/.config/hypr/wall.conf
+    echo "path = $1" > ~/dotfiles/.config/hypr/wall.conf
     ~/.pywal/generate-theme.sh
 }
 
@@ -144,4 +142,9 @@ function no_sleep(){
         systemd-inhibit --what=handle-lid-switch --who="Hyprland" --why="Temporarily disabling lid sleep" bash
     ) &
 }
-export PATH="$HOME/development/flutter/bin:$PATH"
+
+if [ -z "$SSH_AUTH_SOCK" ] || ! ssh-add -l &>/dev/null; then
+    eval $(keychain --quiet --eval ~/.ssh/id_ed25519)
+fi
+
+alias ssh="kitty +kitten ssh"

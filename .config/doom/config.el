@@ -120,11 +120,6 @@
 
 ;; (setq (centaur-tabs-mode 'nil))
 
-(add-to-list 'org-babel-load-languages '(arduino . t))
-(org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages)
-(require 'flycheck-arduino)
-(add-hook 'arduino-mode-hook #'flycheck-arduino-setup)
-
 (after! org
   (add-to-list 'org-file-apps '("\\.pdf\\'" . "zathura \"%s\"")))
 
