@@ -2,7 +2,7 @@ configuration {
     show-icons:                 false;
 }
 
-@import                          "colors.rasi"
+@import                          "~/.cache/wal/colors-rofi-pywal.rasi"
 
 window {
     transparency:                "real";
@@ -18,9 +18,9 @@ window {
     padding:                     0px;
     border:                      1px solid;
     border-radius:               12px;
-    border-color:                @selected;
+    border-color:                @color13;
     cursor:                      "default";
-    background-color:            @background;
+    background-color:            @color0;
 }
 
 mainbox {
@@ -30,7 +30,7 @@ mainbox {
     padding:                     20px;
     border:                      0px solid;
     border-radius:               0px;
-    border-color:                @selected;
+    border-color:                @color13;
     background-color:            transparent;
     children:                    ["message", "listview" ];
 }
@@ -41,8 +41,8 @@ message {
     padding:                     10px;
     border:                      0px solid;
     border-radius:               10px;
-    border-color:                @selected;
-    background-color:            @background-alt;
+    border-color:                @color1;
+    background-color:            @color2;
     text-color:                  @foreground;
 }
 textbox {
@@ -72,7 +72,7 @@ listview {
     padding:                     0px;
     border:                      0px solid;
     border-radius:               0px;
-    border-color:                @selected;
+    border-color:                @color13;
     background-color:            transparent;
     text-color:                  @foreground;
     cursor:                      "default";
@@ -85,9 +85,9 @@ element {
     padding:                     10px;
     border:                      0px solid;
     border-radius:               10px;
-    border-color:                @selected;
+    border-color:                @color9;
     background-color:            transparent;
-    text-color:                  @foreground;
+    text-color:                  @color7;
     cursor:                      pointer;
 }
 element-text {
@@ -98,6 +98,6 @@ element-text {
     horizontal-align:            0.0;
 }
 element selected.normal {
-    background-color:            var(selected);
-    text-color:                  var(background);
+    background-color:            @color6;
+    text-color:                  @color0;
 }

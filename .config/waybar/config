@@ -17,7 +17,7 @@
         "format-wifi": "{essid} ",
         "format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
         "format-disconnected": " Disconnected ⚠ ",
-        "on-click": "kitty nmtui-connect",
+        "on-click": "~/dotfiles/.config/rofi/wifi.sh",
         "tooltip-format-wifi": "{signalStrength} % -- {ipaddr}/{cidr} -- ({frequency} GHz)",
     },
     "hyprland/workspaces": {
