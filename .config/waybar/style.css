@@ -1,9 +1,11 @@
-@import url("../../.cache/wal/colors-waybar.css");
+@import "colors.css";
 
 * {
     font-family:
         "SF Pro Bold", "Fira Sans Semibold", "Font Awesome 6 Free", FontAwesome,
         Roboto, Helvetica, Arial, sans-serif;
+    font-size: 13;
+    color: @primary;
     border: none;
     border-radius: 0px;
 }
@@ -12,21 +14,21 @@
     padding: 7px;
     margin: 5px;
     border-radius: 10px;
-    background: @color13;
+    background: @surface_bright;
 }
 
 .modules-right {
     padding: 7px;
     margin: 5px;
     border-radius: 10px;
-    background: @color13;
+    background: @surface_bright;
 }
 
 .modules-center {
     padding: 7px;
     margin: 5px;
     border-radius: 10px;
-    background: @color13;
+    background: @surface_bright;
 }
 
 window#waybar {
@@ -35,28 +37,30 @@ window#waybar {
 
 #workspaces {
     padding: 0px 5px;
-    font-weight: bold;
-    font-style: normal;
-    background: @color13;
-    color: @color13;
+    background: @surface_bright;
+    color: @surface_bright;
 }
 
 #workspaces button {
     all: unset;
-    padding: 0px 5px;
-    color: alpha(@color9, 0.4);
+    padding: 0px 10px;
+    color: alpha(@primary, 0.7);
     transition: all 0.3s ease-in-out;
 }
 
 #workspaces button.active {
-    color: @background;
+    color: @primary;
+    background-color: @primary;
+    min-width: 75px;
+    padding: 0px;
+    border-radius: 20px;
     transition: all 0.3s ease-in-out;
 }
 
 #workspaces button:hover {
-    color: @background;
+    color: alpha(@primary, 0.1);
     border-radius: 25px;
-    background: @color9;
+    background: alpha(@primary, 0.7);
 }
 
 #clock,
@@ -65,7 +69,8 @@ window#waybar {
 #battery,
 #bluetooth.connected,
 #power-profiles-daemon {
-    color: @background;
+    color: @primary;
+    font-weight: bold;
     padding: 0px 5px;
 }
 
@@ -93,7 +98,7 @@ window#waybar {
 }
 
 #tray {
-    color: @background;
+    color: @primary;
     margin: 0px 5px;
 }
 
@@ -107,7 +112,7 @@ window#waybar {
 }
 
 label:focus {
-    background-color: @background;
+    background-color: @primary;
 }
 
 #custom-exit {
@@ -123,14 +128,14 @@ label:focus {
 #bluetooth.connected:hover,
 #pulseaudio:hover,
 #network:hover {
-    background-color: @color11;
+    background-color: @secondary_container;
     border-radius: 25px;
 }
 
 #custom-expand {
     font-size: 16px;
     padding: 0px 5px;
-    color: @background;
+    color: @primary;
     transition: all 0.3s ease;
 }
 

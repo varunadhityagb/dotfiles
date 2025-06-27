@@ -2,7 +2,7 @@ configuration {
     show-icons:                 false;
 }
 
-@import                          "~/.cache/wal/colors-rofi-pywal.rasi"
+@import                         "./matugen-colors.rasi"
 
 window {
     transparency:                "real";
@@ -18,9 +18,9 @@ window {
     padding:                     0px;
     border:                      1px solid;
     border-radius:               12px;
-    border-color:                @color13;
+    border-color:                @primary-container;
     cursor:                      "default";
-    background-color:            @color0;
+    background-color:            @surface-container;
 }
 
 mainbox {
@@ -30,7 +30,7 @@ mainbox {
     padding:                     20px;
     border:                      0px solid;
     border-radius:               0px;
-    border-color:                @color13;
+    border-color:                @primary-container;
     background-color:            transparent;
     children:                    ["message", "listview" ];
 }
@@ -39,18 +39,19 @@ message {
     enabled:                     true;
     margin:                      0px;
     padding:                     10px;
+    height:                      100px;
     border:                      0px solid;
     border-radius:               10px;
-    border-color:                @color1;
-    background-color:            @color2;
-    text-color:                  @foreground;
+    border-color:                @primary-container;
+    background-color:            @error;
+    text-color:                  @on-error;
 }
 textbox {
     background-color:            inherit;
     text-color:                  inherit;
     vertical-align:              0.5;
     horizontal-align:            0.0;
-    placeholder-color:           @foreground;
+    placeholder-color:           @on-error;
     blink:                       true;
     markup:                      true;
 }
@@ -70,12 +71,8 @@ listview {
     spacing:                     5px;
     margin:                      0px;
     padding:                     0px;
-    border:                      0px solid;
-    border-radius:               0px;
-    border-color:                @color13;
-    background-color:            transparent;
-    text-color:                  @foreground;
     cursor:                      "default";
+    background-color:            inherit;
 }
 
 element {
@@ -85,11 +82,9 @@ element {
     padding:                     10px;
     border:                      0px solid;
     border-radius:               10px;
-    border-color:                @color9;
-    background-color:            transparent;
-    text-color:                  @color7;
     cursor:                      pointer;
 }
+
 element-text {
     background-color:            transparent;
     text-color:                  inherit;
@@ -97,7 +92,18 @@ element-text {
     vertical-align:              0.5;
     horizontal-align:            0.0;
 }
+
+element normal.normal {
+    background-color: @surface-container;
+    text-color:       @on-surface;
+}
+
+element alternate.normal {
+    background-color: @surface-container;
+    text-color:       @on-surface;
+}
+
 element selected.normal {
-    background-color:            @color6;
-    text-color:                  @color0;
+    background-color: @primary;
+    text-color:       @on-primary;
 }

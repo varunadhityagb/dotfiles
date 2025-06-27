@@ -3,8 +3,8 @@
 (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 16 :weight 'regular))
 (setq doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font" :size 14 :weight 'regular))
 
-(setq doom-theme 'doom-monokai-ristretto)
-(add-to-list 'default-frame-alist '(alpha-background . 75))
+(setq doom-theme 'doom-one)
+;; (add-to-list 'default-frame-alist '(alpha-background . 90))
 
 (setq display-line-numbers-type 'relative)
 
@@ -129,3 +129,4 @@
 (setq org-latex-pdf-process
       '("xelatex -shell-escape -interaction nonstopmode -output-directory=%o %f"
         "xelatex -shell-escape -interaction nonstopmode -output-directory=%o %f"))
+(setq fancy-splash-image (concat doom-private-dir "varun.png"))

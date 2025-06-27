@@ -1,25 +1,21 @@
-@import "~/.cache/wal/colors-rofi-pywal.rasi"
+@import         "./matugen-colors.rasi"
 
 * {
-    font: "JetBrainsMono Nerd Font 12";
-    text-color: @foreground;
-    background-color: @background;
-    border: 0;
-    padding: 0;
-    margin: 0;
-    spacing: 0;
+    font: "SF Pro Regular Bold 13 ";
 }
 
 window {
     transparency: "real";
-    location: center;
-    anchor: center;
+    location: east;
+    anchor: east;
+    x-offset: -10px;
     fullscreen: false;
     width: 500px;
+    height: 98%;
     border: 1px solid;
     border-radius: 12px;
-    border-color: @color13;
-    background-color: @color0;
+    border-color: @primary-container;
+    background-color: @surface-container;
 }
 
 mainbox {
@@ -32,26 +28,29 @@ mainbox {
 inputbar {
     spacing: 10px;
     padding: 10px;
-    background-color: @color2;
+    border-color: @primary-container;
+    background-color: @secondary;
+    text-color: @on-secondary;
     border-radius: 8px;
     children: [prompt, entry];
 }
 
 prompt {
-    text-color: @foreground;
-    background-color: @color2;
+    enabled:                     true;
+    background-color:            inherit;
+    text-color:                  inherit;
 }
 
 entry {
-    text-color: @foreground;
-    placeholder-color: @foreground;
+    text-color: inherit;
+    placeholder-color: inherit;
     background-color: transparent;
     expand: true;
 }
 
 textbox {
     background-color: transparent;
-    text-color: @foreground;
+    text-color: inherit;
     vertical-align: 0.5;
     horizontal-align: 0.0;
     markup: true;
@@ -63,21 +62,29 @@ listview {
     dynamic: true;
     scrollbar: false;
     spacing: 5px;
-    background-color: transparent;
     cursor: default;
+    background-color: inherit;
 }
 
 element {
     padding: 10px;
     border-radius: 10px;
-    background-color: transparent;
-    text-color: @foreground;
     cursor: pointer;
 }
 
+element normal.normal {
+    background-color: @surface-container;
+    text-color:       @on-surface;
+}
+
+element alternate.normal {
+    background-color: @surface-container;
+    text-color:       @on-surface;
+}
+
 element selected.normal {
-    background-color: @color6;
-    text-color: @color0;
+    background-color: @primary;
+    text-color:       @on-primary;
 }
 
 element-text {

@@ -1,50 +1,54 @@
 {
-  "$schema": "/etc/xdg/swaync/configSchema.json",
-  "positionX": "right",
-  "positionY": "bottom",
-  "control-center-margin-top": 10,
-  "control-center-margin-bottom": 10,
+  "$schema": "$XDG_CONFIG_HOME/swaync/configSchema.json",
+  "control-center-height": 2,
+  "control-center-layer": "overlay",
+  "control-center-margin-bottom": 100,
+  "control-center-margin-left": 0,
   "control-center-margin-right": 10,
-  "control-center-margin-left": 10,
-  "notification-icon-size": 48,
+  "control-center-width": 500,
+  "cssPriority": "application",
+  "control-center-positionX": "center",
+  "control-center-positionY": "bottom",
+  "fit-to-screen": true,
+  "hide-on-action": false,
+  "hide-on-clear": true,
+  "image-visibility": "when-available",
+  "keyboard-shortcuts": true,
+  "layer": "layer",
   "notification-body-image-height": 100,
   "notification-body-image-width": 200,
-  "timeout": 5,
-  "timeout-low": 5,
-  "timeout-critical": 20,
-  "fit-to-screen": true,
-  "control-center-width": 350,
-  "notification-window-width": 350,
-  "keyboard-shortcuts": true,
-  "image-visibility": "when-available",
-  "transition-time": 200,
-  "hide-on-clear": false,
-  "hide-on-action": true,
+  "notification-icon-size": 50,
+  "notification-inline-replies": true,
+  "notification-visibility": {},
+  "notification-window-width": 400,
+  "positionX": "center",
+  "positionY": "bottom",
   "script-fail-notify": true,
-  "widgets": ["title", "dnd", "notifications", "mpris", "volume", "backlight"],
+  "scripts": {},
+  "timeout": 5,
+  "timeout-critical": 0,
+  "timeout-low": 5,
+  "transition-time": 100,
   "widget-config": {
-    "title": {
-      "text": "󰂚  :: Notifications",
-      "clear-all-button": true,
-      "button-text": "󰎟 "
-    },
     "dnd": {
       "text": "Do Not Disturb"
     },
-    "label": {
-      "max-lines": 1,
-      "text": "Notification Center"
-    },
     "mpris": {
-      "image-size": 96,
-      "image-radius": 10
+      "image-radius": 12,
+      "image-size": 96
+    },
+    "title": {
+      "text": "Notifications",
+      "button-text": "Clear All",
+      "clear-all-button": true
     },
     "volume": {
-      "label": "󰕾 "
-    },
-    "backlight": {
-      "label": "󰃟 ",
-      "subsystem": "backlight"
+      "label": "",
+      "show-per-app": true,
+      "show-per-app-icon": true,
+      "show-per-app-label": true
     }
-  }
+  },
+
+  "widgets": ["volume", "dnd", "title", "notifications", "mpris"]
 }
