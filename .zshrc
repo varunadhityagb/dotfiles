@@ -106,22 +106,6 @@ autoload -U compinit; compinit
 export DOCKER_HOST=unix:///var/run/docker.sock
 
 
-function swwc() {
-    # swww img $1
-    wal -i $1
-
-    killall hyprpaper
-    echo "preload = $1\nwallpaper = ,$1\nsplash = false" > ~/dotfiles/.config/hypr/hyprpaper.conf
-    hyprpaper & disown
-
-    cat ~/dotfiles/.config/zathura/base > ~/dotfiles/.config/zathura/zathurarc
-    cat ~/.cache/wal/colors-zathura >> ~/dotfiles/.config/zathura/zathurarc
-
-    echo "path = $1" > ~/dotfiles/.config/hypr/wall.conf
-    ~/.pywal/generate-theme.sh
-}
-
-
 function mhd() {
     sudo mkdir -p /run/media/varunadhityagb/Additional\ Disk/
     sudo mount /dev/sda1 /run/media/varunadhityagb/Additional\ Disk/
@@ -147,4 +131,9 @@ if [ -z "$SSH_AUTH_SOCK" ] || ! ssh-add -l &>/dev/null; then
     eval $(keychain --quiet --eval ~/.ssh/id_ed25519)
 fi
 
+
 alias ssh="kitty +kitten ssh"
+alias cp='~/gitclonestuff/advcpmv/advcp  -g'
+alias mv='~/gitclonestuff/advcpmv/advmv  -g'
+alias i="yay -S"
+alias is="yay -Ss"

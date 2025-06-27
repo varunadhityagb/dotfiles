@@ -6,13 +6,15 @@ notify-send -t 3000 "Getting list of available networks ... "
 wifi_list=$(nmcli --fields "SIGNAL,SECURITY,SSID,IN-USE" device wifi list |
             sed 1d |
             sed '/--/d' |
-            sed 's/WPA[0-9]*/ /' |
+            sed 's/WPA[0-9]*//' |
+            sed 's/802.1x//' |
             sed 's/WPA[0-9]*//' |
             sed 's/  */ /g'|
             sed "s/*//g" |
-            sed 's/^\([0-9][0-9]*\)/\1%/'
+            sed 's/^\([0-9][0-9]*\)/\1% /' |
+            sed 's/$/ /'
 )
-
+#
 
 # Get Wi-Fi power status
 connected=$(nmcli -fields WIFI g)

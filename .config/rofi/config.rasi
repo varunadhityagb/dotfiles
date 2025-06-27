@@ -1,5 +1,6 @@
 configuration {
     modi:                       "drun,run,ssh,window";
+    terminal:                   "kitty";
     show-icons:                 false;
     display-drun:               "";
     display-run:                "";
@@ -9,16 +10,7 @@ configuration {
     window-format:              "{w} · {c} · {t}";
 }
 
-@import         "~/.cache/wal/colors-rofi-pywal.rasi"
-
-* {
-    background:                         @color0;
-    normal-background:                  var(background);
-    alternate-normal-background:        var(background);
-    alternate-normal-foreground:        @foreground;
-    selected-normal-background:         @color6;
-    selected-normal-foreground:         @color0;
-}
+@import         "./matugen-colors.rasi"
 
 
 window {
@@ -33,11 +25,11 @@ window {
     enabled:                    true;
     margin:                     0px;
     padding:                    0px;
-    border:                      1px solid;
-    border-radius:               12px;
-    border-color:                @color13;
-    cursor:                      "default";
-    background-color:            @color0;
+    border:                     1px solid;
+    border-radius:              12px;
+    border-color:               @primary-container;
+    cursor:                     "default";
+    background-color:           @surface-container;
 }
 
 
@@ -48,7 +40,7 @@ mainbox {
     padding:                     20px;
     border:                      0px solid;
     border-radius:               0px;
-    border-color:                @color13;
+    border-color:                @primary-container;
     background-color:            transparent;
     children:                    ["inputbar", "message", "listview", "mode-switcher"];
 }
@@ -60,10 +52,10 @@ inputbar {
     margin:                      0px;
     padding:                     8px;
     border:                      0px solid;
-    border-radius:               4px;
-    border-color:                @color1;
-    background-color:            @color2;
-    text-color:                  @foreground;
+    border-radius:               10px;
+    border-color:                @primary-container;
+    background-color:            @secondary;
+    text-color:                  @on-secondary;
     children:                    [ "prompt", "entry" ];
 }
 
@@ -128,11 +120,6 @@ listview {
     spacing:                     5px;
     margin:                      0px;
     padding:                     0px;
-    border:                      0px solid;
-    border-radius:               0px;
-    border-color:                @color13;
-    background-color:            transparent;
-    text-color:                  @foreground;
     cursor:                      "default";
 }
 
@@ -144,15 +131,22 @@ element {
     padding:                     10px;
     border:                      0px solid;
     border-radius:               10px;
-    border-color:                @color9;
-    background-color:            @color0;
-    text-color:                  @color7;
     cursor:                      pointer;
 }
 
 element normal.normal {
-    background-color: var(normal-background);
-    text-color:       var(normal-foreground);
+    background-color: @surface-container;
+    text-color:       @on-surface;
+}
+
+element alternate.normal {
+    background-color: @surface-container;
+    text-color:       @on-surface;
+}
+
+element selected.normal {
+    background-color: @primary;
+    text-color:       @on-primary;
 }
 
 
@@ -177,9 +171,9 @@ message {
     padding:                     10px;
     border:                      0px solid;
     border-radius:               10px;
-    border-color:                @color1;
-    background-color:            @color2;
-    text-color:                  @foreground;
+    border-color:                @primary-container;
+    background-color:            @error;
+    text-color:                  @on-error;
 }
 
 textbox {
@@ -187,7 +181,7 @@ textbox {
     text-color:                  inherit;
     vertical-align:              0.5;
     horizontal-align:            0.0;
-    placeholder-color:           @foreground;
+    placeholder-color:           @on-surface;
     blink:                       true;
     markup:                      true;
 }
@@ -199,20 +193,20 @@ mode-switcher{
     padding:                     0px;
     border:                      0px solid;
     border-radius:               4px;
-    border-color:                @color13;
-    background-color:            @alternate-normal-background;
-    text-color:                  @foreground;
+    border-color:                @primary-container;
+    background-color:            @tertiary-container;
+    text-color:                  @on-tertiary-container;
 }
 button {
     padding:                     8px;
     border:                      0px solid;
     border-radius:               4px;
-    border-color:                @color13;
+    border-color:                @primary-container;
     background-color:            transparent;
     text-color:                  inherit;
     cursor:                      pointer;
 }
 button selected {
-    background-color:            var(normal-foreground);
-    text-color:                  var(normal-background);
+    background-color:            @tertiary;
+    text-color:                  @on-tertiary;
 }

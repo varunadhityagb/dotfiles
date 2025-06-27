@@ -22,11 +22,11 @@
 
        :completion
        ;; company           ; the ultimate code completion backend
-       (corfu +orderless)  ; complete with cap(f), cape and a flying feather!
+       (corfu +orderless +icons)  ; complete with cap(f), cape and a flying feather!
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
        ;;ivy               ; a search engine for love and life
-       vertico           ; the search engine of the future
+       (vertico +icons)           ; the search engine of the future
 
        :ui
        ;;deft              ; notational velocity for Emacs
@@ -37,17 +37,17 @@
        hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        indent-guides     ; highlighted indent columns
        ligatures         ; ligatures and symbols to make your code pretty again
-       minimap           ; show a map of the code on the side
+       ;; minimap           ; show a map of the code on the side
        modeline          ; snazzy, Atom-inspired modeline, plus API
        ;;nav-flash         ; blink cursor line after big motions
        ;; neotree           ; a project drawer, like NERDTree for vim
        ophints           ; highlight the region an operation acts on
        (popup +defaults)   ; tame sudden yet inevitable temporary windows
        ;; tabs              ; a tab bar for Emacs
-       ;; treemacs          ; a project drawer, like neotree but cooler
+       ;;treemacs          ; a project drawer, like neotree but cooler
        ;;unicode           ; extended unicode support for various languages
        (vc-gutter +pretty) ; vcs diff in the fringe
-       vi-tilde-fringe   ; fringe tildes to mark beyond EOB
+       ;; vi-tilde-fringe   ; fringe tildes to mark beyond EOB
        ;;window-select     ; visually switch windows
        workspaces        ; tab emulation, persistence & separate workspaces
        zen               ; distraction-free coding or writing
@@ -67,8 +67,8 @@
        ;;word-wrap         ; soft wrapping with language-aware indent
 
        :emacs
-       (dired +icons)    ; making dired pretty [functional]
-       electric          ; smarter, keyword-based electric-indent
+       (dired +icons +dirvish)    ; making dired pretty [functional]
+       ;; electric          ; smarter, keyword-based electric-indent
        ;;eww               ; the internet is gross
        (ibuffer +icons)          ; interactive buffer management
        undo              ; persistent, smarter undo for your inevitable mistakes
@@ -81,21 +81,21 @@
        vterm             ; the best terminal emulation in Emacs
 
        :checkers
-       (syntax +icons)              ; tasing you for every semicolon you forget
-       (spell +flyspell) ; tasing you for misspelling mispelling
+       (syntax +icons +flymake +childframe)              ; tasing you for every semicolon you forget
+       ;;spell ; tasing you for misspelling mispelling
        ;;grammar           ; tasing grammar mistake every you make
 
        :tools
        ;;ansible
        ;;biblio            ; Writes a PhD for you (citation needed)
        ;;collab            ; buffers with friends
-       debugger          ; FIXME stepping through code, to help you add bugs
+       ;; debugger          ; FIXME stepping through code, to help you add bugs
        ;;direnv
        ;;docker
        ;;editorconfig      ; let someone else argue about tabs vs spaces
        ;;ein               ; tame Jupyter notebooks with emacs
        (eval +overlay)     ; run code, run (also, repls)
-       lookup              ; navigate your code and its documentation
+       (lookup +docsets)             ; navigate your code and its documentation
        lsp               ; M-x vscode
        magit             ; a git porcelain for Emacs
        ;;make              ; run make tasks from Emacs
@@ -106,17 +106,16 @@
        ;;tmux              ; an API for interacting with tmux
        tree-sitter       ; syntax and parsing, sitting in a tree...
        ;;upload            ; map local to remote projects via ssh/ftp
-       (global-wakatime-mode)
+       global-wakatime-mode
 
        :os
        (:if (featurep :system 'macos) macos)  ; improve compatibility with macOS
        ;; tty               ; improve the terminal Emacs experience
 
        :lang
-       ;; (cc +lsp)         ; C > C++ == 1
        (emacs-lisp +lsp)        ; drown in parentheses
-       (json +lsp)             ; At least it ain't XML
-       (java +lsp)       ; the poster child for carpal tunnel syndrome
+       (json +tree-sitter +lsp)             ; At least it ain't XML
+       (java +tree-sitter +lsp)       ; the poster child for carpal tunnel syndrome
        (javascript +tree-sitter)        ; all(hope(abandon(ye(who(enter(here))))))
        (julia +tree-sitter)             ; a better, faster MATLAB
        (latex +cdlatex +fold +lsp)             ; writing papers in Emacs has never been so fun
@@ -125,9 +124,10 @@
        (org +gnuplot +jupyter +ipython +pretty +present)               ; organize your plain life in plain text
        (python +lsp +tree-sitter +conda)            ; beautiful is better than ugly
        ;; qt                ; the 'cutest' gui framework ever
-       (rust +lsp)       ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+       (rust +tree-sitter)       ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;; scala             ; java, but good
        sh                ; she sells {ba,z,fi}sh shells on the C xor
+       (web +tree-sitter)               ; the tubes
 
        :email
        ;;(mu4e +org +gmail)
