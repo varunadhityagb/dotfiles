@@ -1,0 +1,60 @@
+#!/bin/bash
+
+LOGFILE="$HOME/.screen_time"
+
+human_readable_time() {
+    local seconds=$1
+    local days=$((seconds / 86400))
+    local hours=$(( (seconds % 86400) / 3600 ))
+    local minutes=$(( (seconds % 3600) / 60 ))
+    local secs=$((seconds % 60))
+
+    output=""
+    [ $days -gt 0 ] && output="$output${days}d "
+    [ $hours -gt 0 ] && output="$output${hours}h "
+    [ $minutes -gt 0 ] && output="$output${minutes}m "
+    [ $secs -gt 0 ] && output="$output${secs}s "
+
+    echo "$output"
+}
+
+case "$1" in
+    start)
+        echo "$(date +%s) on" > "$LOGFILE"
+        ;;
+    on)
+        echo "$(date +%s) on" >> "$LOGFILE"
+        ;;
+    off)
+        echo "$(date +%s) off" >> "$LOGFILE"
+        ;;
+    status)
+        total=0
+        last_on=0
+
+        while read -r time state; do
+            if [ "$state" == "on" ]; then
+                last_on=$time
+            elif [ "$state" == "off" ]; then
+                if [ $last_on -ne 0 ]; then
+                    diff=$((time - last_on))
+                    total=$((total + diff))
+                    last_on=0
+                fi
+            fi
+        done < "$LOGFILE"
+
+        if [ $last_on -ne 0 ]; then
+            now=$(date +%s)
+            diff=$((now - last_on))
+            total=$((total + diff))
+        fi
+
+        echo -n "Screen time: "
+        human_readable_time "$total"
+        ;;
+    *)
+        echo "Usage: $0 {on|off|start|status}"
+        exit 1
+        ;;
+esac
