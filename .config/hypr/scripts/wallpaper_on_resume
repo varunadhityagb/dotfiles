@@ -8,3 +8,5 @@ minute=$(date +%-M)
 if [[ $minute -ge 5 && $minute -le 55 ]]; then
     /usr/bin/update-wallpaper >> ~/.wall_timer_log &
 fi
+
+/usr/bin/screen_timer on
