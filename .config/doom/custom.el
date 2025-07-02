@@ -36,12 +36,10 @@
       ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
  '(org-latex-image-default-width "0.3\\linewidth")
  '(package-selected-packages '(colorful-mode copilot org-ref))
- '(wakatime-api-key "waka_b7708179-c079-4289-9456-fda26311c481")
- '(wakatime-cli-path "/usr/bin/wakatime-cli"))
 
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+ (custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+  )

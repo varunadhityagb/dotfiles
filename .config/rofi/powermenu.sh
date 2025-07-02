@@ -7,10 +7,11 @@ reboot=' Reboot'
 lock=' Lock'
 logout=' Logout'
 
+screen_time="`screen_timer status`"
 # Rofi CMD
 rofi_cmd() {
 	rofi -dmenu \
-		-mesg "Uptime: $uptime" \
+		-mesg "$screen_time" \
 		-theme ~/.config/rofi/powermenu.rasi
 }
 

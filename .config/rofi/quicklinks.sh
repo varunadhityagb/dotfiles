@@ -7,6 +7,7 @@ option_4=""
 option_5=""
 option_6=""
 option_7=""
+option_8=""
 
 # Rofi CMD
 rofi_cmd() {
@@ -19,7 +20,7 @@ rofi_cmd() {
 
 # Pass variables to rofi dmenu
 run_rofi() {
-	echo -e "$option_1\n$option_2\n$option_3\n$option_4\n$option_5\n$option_6\n$option_7" | rofi_cmd
+	echo -e "$option_1\n$option_2\n$option_3\n$option_4\n$option_5\n$option_6\n$option_7\n$option_8" | rofi_cmd
 }
 
 # Execute Command
@@ -38,6 +39,8 @@ run_cmd() {
         brave --app=https://hotstar.com/
 	elif [[ "$1" == '--opt7' ]]; then
         brave --app=https://primevideo.com/
+    elif [[ "$1" == '--opt8' ]]; then
+        brave --app=https://netflix.com/
 	fi
 }
 
@@ -64,5 +67,8 @@ case "$chosen" in
         ;;
     "$option_7")
         run_cmd --opt7
+        ;;
+    "$option_8")
+        run_cmd --opt8
         ;;
 esac

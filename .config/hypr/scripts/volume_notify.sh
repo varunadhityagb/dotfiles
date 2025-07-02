@@ -16,7 +16,7 @@ else
 fi
 
 # Send notification
-notify-send -h string:x-canonical-private-synchronous:volume \
+notify-send -h string:x-canonical-private-synchronous:system-info \
             -h int:value:"$VOL" \
             -i "$ICON" "Volume: $VOL%"
 

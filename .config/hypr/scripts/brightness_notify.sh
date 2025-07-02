@@ -25,6 +25,6 @@ else
 fi
 
 # Send notification
-notify-send -h string:x-canonical-private-synchronous:brightness \
+notify-send -h string:x-canonical-private-synchronous:system-info \
             -h int:value:"$BRIGHTNESS_PERCENT" \
             -i "$ICON" "$DEVICE Brightness: $BRIGHTNESS_PERCENT%"
