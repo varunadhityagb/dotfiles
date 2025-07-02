@@ -1,18 +1,20 @@
-#!/bin/sh
+#!/bin/bash
 
 notify-send -t 3000 "Getting list of available networks ... "
 
 # Get Wi-Fi connections
 wifi_list=$(nmcli --fields "SIGNAL,SECURITY,SSID,IN-USE" device wifi list |
-            sed 1d |
-            sed '/--/d' |
-            sed 's/WPA[0-9]*//' |
-            sed 's/802.1x//' |
-            sed 's/WPA[0-9]*//' |
-            sed 's/  */ /g'|
-            sed "s/*//g" |
-            sed 's/^\([0-9][0-9]*\)/\1% /' |
-            sed 's/$/ /'
+                sed 1d |
+                sed '/--/d' |
+                sed 's/WPA[0-9]*//' |
+                sed 's/WPA[0-9]*//' |
+                sed 's/802.1X//' |
+                sed 's/  */ /g' |
+                sed "s/*//g" |
+                sed 's/^\([0-9][0-9]*\)/\1% /' |
+                sed 's/$/ /' |
+                awk '{if ($2 == "AMRITA-BLR-Connect") {if ($1 > max) {max=$1; line=$0}} else print $0} END {print line}' |
+                sort -r
 )
 #
 
@@ -31,7 +33,7 @@ menu_string=$(echo -e "$toggle\n$wifi_list")
 chosen_network=$(echo -e "$menu_string" | rofi -dmenu -p "Wi-Fi SSID:" -theme ~/.config/rofi/wifi.rasi)
 
 # Get name of connection
-chosen_id=$(echo "${chosen_network:6}" | sed 's/ //' | xargs)
+chosen_id=$(echo "${chosen_network:5}" | sed 's/ //' | xargs)
 
 # Get saved connections
 saved_connections=$(nmcli -g NAME connection)

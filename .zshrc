@@ -137,3 +137,4 @@ alias cp='~/gitclonestuff/advcpmv/advcp  -g'
 alias mv='~/gitclonestuff/advcpmv/advmv  -g'
 alias i="yay -S"
 alias is="yay -Ss"
+alias fzf="fzf --preview='bat --color=always {}'" 
