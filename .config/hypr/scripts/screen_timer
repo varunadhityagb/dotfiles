@@ -28,7 +28,7 @@ case "$1" in
     off)
         echo "$(date +%s) off" >> "$LOGFILE"
         ;;
-    status)
+    *)
         total=0
         last_on=0
 
@@ -52,9 +52,5 @@ case "$1" in
 
         echo -n "Screen time: "
         human_readable_time "$total"
-        ;;
-    *)
-        echo "Usage: $0 {on|off|start|status}"
-        exit 1
         ;;
 esac

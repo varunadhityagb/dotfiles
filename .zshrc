@@ -37,7 +37,7 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-eval "conda activate base"
+# eval "conda activate base"
 
 # >>> juliaup initialize >>>
 
@@ -138,3 +138,4 @@ alias mv='~/gitclonestuff/advcpmv/advmv  -g'
 alias i="yay -S"
 alias is="yay -Ss"
 alias fzf="fzf --preview='bat --color=always {}'" 
+alias archdays='echo $(( ( $(date +%s) - $(date -d "$(sudo tune2fs -l /dev/nvme0n1p1 | grep "Filesystem created" | awk "{print \$3, \$4, \$5, \$6, \$7}")" +%s) ) / 86400 ))'

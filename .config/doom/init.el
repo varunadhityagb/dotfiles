@@ -117,7 +117,7 @@
        (java +tree-sitter +lsp)       ; the poster child for carpal tunnel syndrome
        (javascript +tree-sitter)        ; all(hope(abandon(ye(who(enter(here))))))
        (julia +tree-sitter)             ; a better, faster MATLAB
-       (latex +cdlatex +fold +lsp)             ; writing papers in Emacs has never been so fun
+       (latex +cdlatex +fold +lsp +latexmk)             ; writing papers in Emacs has never been so fun
        lua               ; one-based indices? one-based indices
        (markdown +grip)          ; writing docs for people to ignore
        (org +gnuplot +jupyter +ipython +pretty +present)               ; organize your plain life in plain text

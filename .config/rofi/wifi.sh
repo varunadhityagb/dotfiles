@@ -33,7 +33,7 @@ menu_string=$(echo -e "$toggle\n$wifi_list")
 chosen_network=$(echo -e "$menu_string" | rofi -dmenu -p "Wi-Fi SSID:" -theme ~/.config/rofi/wifi.rasi)
 
 # Get name of connection
-chosen_id=$(echo "${chosen_network:5}" | sed 's/ //' | xargs)
+chosen_id=$(echo "${chosen_network:5}" | sed 's/ //' | sed 's///' | xargs)
 
 # Get saved connections
 saved_connections=$(nmcli -g NAME connection)
