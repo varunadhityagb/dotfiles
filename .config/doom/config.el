@@ -130,3 +130,21 @@
       '("xelatex -shell-escape -interaction nonstopmode -output-directory=%o %f"
         "xelatex -shell-escape -interaction nonstopmode -output-directory=%o %f"))
 (setq fancy-splash-image (concat doom-private-dir "varun.png"))
+
+(defun +latex/clean ()
+  "Delete auxiliary LaTeX files in the current directory."
+  (interactive)
+  (let ((clean-extensions '("aux" "fdb_latexmk" "fls" "log" "out" "synctex.gz"
+                            "toc" "bbl" "blg"))
+        (base (file-name-sans-extension (buffer-file-name))))
+    (dolist (ext clean-extensions)
+      (let ((file (concat base "." ext)))
+        (when (file-exists-p file)
+          (delete-file file))))
+    (when (file-directory-p ".auctex-auto")
+      (delete-directory ".auctex-auto" t))
+    (message "Cleaned up LaTeX auxiliary files.")))
+
+(map! :map LaTeX-mode-map
+      :localleader
+      :desc "Clean LaTeX aux files" "C" #'+latex/clean)

@@ -4,7 +4,7 @@
     font-family:
         "SF Pro Bold", "Fira Sans Semibold", "Font Awesome 6 Free", FontAwesome,
         Roboto, Helvetica, Arial, sans-serif;
-    font-size: 13;
+    font-size: 14;
     color: @primary;
     border: none;
     border-radius: 0px;
@@ -12,23 +12,29 @@
 
 .modules-left {
     padding: 7px;
-    margin: 5px;
-    border-radius: 10px;
+    margin: 7px 5px 0px 7px;
+    border-radius: 25px;
     background: @surface_bright;
+    border-color: @primary;
+    border: 8px double;
 }
 
 .modules-right {
     padding: 7px;
-    margin: 5px;
-    border-radius: 10px;
+    margin: 7px 5px 0px 5px;
+    border-radius: 25px;
     background: @surface_bright;
+    border-color: @primary;
+    border: 8px double;
 }
 
 .modules-center {
     padding: 7px;
-    margin: 5px;
-    border-radius: 10px;
+    margin: 7px 7px 0px 5px;
+    border-radius: 25px;
     background: @surface_bright;
+    border-color: @primary;
+    border: 8px double;
 }
 
 window#waybar {
