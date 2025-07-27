@@ -22,23 +22,6 @@ plugins=(git z thefuck qrcode themes)
 
 source $ZSH/oh-my-zsh.sh
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/varunadhityagb/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/varunadhityagb/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/varunadhityagb/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/varunadhityagb/anaconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
-# eval "conda activate base"
-
 # >>> juliaup initialize >>>
 
 # !! Contents within this block are managed by juliaup !!
@@ -131,6 +114,31 @@ if [ -z "$SSH_AUTH_SOCK" ] || ! ssh-add -l &>/dev/null; then
     eval $(keychain --quiet --eval ~/.ssh/id_ed25519)
 fi
 
+function ocli() { 
+    user=$2
+    create_user="CREATE USER $user IDENTIFIED BY oraclesucks
+        DEFAULT TABLESPACE users
+        TEMPORARY TABLESPACE temp
+        QUOTA UNLIMITED ON users;"
+
+    allow_login="GRANT CREATE SESSION TO $user;"
+    give_dev_prev="GRANT CONNECT, RESOURCE TO $user;"
+    del_user="DROP USER $user CASCADE;"
+
+    if [[ $1 == "-n" ]]; then
+        sqlplus -s system/oraclesucks <<EOF
+        ${create_user}
+        ${allow_login}
+        ${give_dev_prev}
+        EXIT;
+EOF
+    elif [[ $2 == "-d" ]]; then
+        sqlplus -s system/oraclesucks <<EOF
+        DROP USER $user CASCADE;
+        EXIT;
+EOF
+    fi
+}
 
 alias ssh="kitty +kitten ssh"
 alias cp='~/gitclonestuff/advcpmv/advcp  -g'

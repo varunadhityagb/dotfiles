@@ -1,0 +1,10 @@
+[Unit]
+Description=Run Matugen every 15 minutes
+
+[Timer]
+OnBootSec=1min       
+OnActiveSec=15min    
+Unit=matugen.service  
+
+[Install]
+WantedBy=timers.target 

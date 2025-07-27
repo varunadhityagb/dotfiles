@@ -39,12 +39,12 @@ else
     fi
     INTERVAL=$((720 / NIGHT_IMAGES))   # 180 minutes per image
     NIGHT_INDEX=$((OFFSET / INTERVAL)) # 0 to 3
-    INDEX=$((14 + NIGHT_INDEX))        # wall-14 to wall-17
+    INDEX=$((DAY_IMAGES + 1 + NIGHT_INDEX))        # wall-14 to wall-17
     /home/varunadhityagb/.spicetify/spicetify config color_scheme TokyoNightStorm
 fi
 
 IMG=$(printf "$WALLPAPER_DIR/wall-%d.jpg" "$INDEX")
 
-# /usr/bin/matugen image "$IMG" && echo "Script ran at $HOUR:$MIN -- wall set to $IMG"jjjjjjkk
-hyprpanel sw "$IMG"
-/home/varunadhityagb/.spicetify/spicetify apply &
+/usr/bin/matugen image "$IMG" && echo "Script ran at $HOUR:$MIN -- wall set to $IMG"jjjjjjkk
+# hyprpanel sw "$IMG"
+

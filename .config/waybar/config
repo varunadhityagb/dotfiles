@@ -4,14 +4,33 @@
     "spacing": 0,
     "position": "top",
     "reload_style_on_change": true,
-    "modules-left": ["clock", "battery"],
-    "modules-center": ["hyprland/workspaces"],
-    "modules-right": ["group/expand", "bluetooth", "pulseaudio", "network"],
+    "modules-left": ["hyprland/workspaces", "group/expand2"],
+    "modules-center": ["clock"],
+    "modules-right": ["group/expand", "power-profiles-daemon", "bluetooth", "battery", "pulseaudio", "network"],
 
     "clock": {
-        "format": "{:%a %d-%m | %I:%M %p}",
-        "tooltip-format": "<tt><small>{galendae -c ~/.config/galendae/dark.conf}</small></tt>",
-        "on-click": "/usr/bin/galendae"
+        "format": "{:%A, %B %d, %Y %R}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+                    "mode"          : "year",
+                    "mode-mon-col"  : 3,
+                    "weeks-pos"     : "right",
+                    "on-scroll"     : 1,
+                    "format": {
+                              "months":     "<span color='#ffead3'><b>{}</b></span>",
+                              "days":       "<span color='#ecc6d9'><b>{}</b></span>",
+                              "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
+                              "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
+                              "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
+                              }
+                    },
+        "actions":  {
+                    "on-click-right": "mode",
+                    "on-scroll-up": "tz_up",
+                    "on-scroll-down": "tz_down",
+                    "on-scroll-up": "shift_up",
+                    "on-scroll-down": "shift_down"
+                    }
     },
     "network": {
         "format-wifi": "{essid} ",
@@ -26,12 +45,6 @@
         "on-click": "activate",
         "active-only": false,
         "all-outputs": false,
-        "format": "{icon}",
-        "format-icons": {
-            "active": "",
-            "default": "",
-            "empty": ""
-            },
         "persistent-workspaces": {
             "*": [1,2,3,4,5]
         }
@@ -39,7 +52,7 @@
 
     "custom/exit": {
         "format": "",
-        "on-click": "wlogout",
+        "on-click": "~/dotfiles/rofi/powermenu.sh",
         "tooltip-format": "Power Menu"
     },
 
@@ -54,16 +67,16 @@
         "warning": 30,
         "critical": 15
         },
-        "format": "{icon} {capacity}%",
+        "format": "{icon}  {capacity}%",
         "format-icons": [" ", " ", " ", " ", " "]
     },
 
     "pulseaudio": {
         "scroll-step": 1,
-        "format": "{icon}  {volume}%",
+        "format": "{icon}   {volume}%",
         "format-bluetooth": "{volume}% {icon}",
-        "format-bluetooth-muted": " {icon}",
-        "format-muted": "",
+        "format-bluetooth-muted": " {icon}",
+        "format-muted": "",
         "format-icons": {
         "headphone": " ",
         "default": ["", "", ""]
@@ -89,18 +102,55 @@
             "transition-to-left": true,
             "click-to-reveal": true
         },
-        "modules": ["custom/expand", "tray" , "power-profiles-daemon"],
+        "modules": ["custom/expand", "tray" ],
+    },
+
+    "custom/expand2": {
+            "format": "",
+            "tooltip": false
+        },
+    "group/expand2": {
+        "orientation": "horizontal",
+        "drawer": {
+            "transition-duration": 600,
+            "transition-to-left": true,
+            "click-to-reveal": true
+        },
+        "modules": ["custom/expand2", "mpris", "cava"],
     },
 
     "power-profiles-daemon": {
       "format": "{icon}",
-      "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+      "tooltip-format": "Power profile: {profile}",
       "tooltip": true,
       "format-icons": {
         "default": "",
         "performance": "",
-        "balanced": "",
+        "balanced": "󰚀",
         "power-saver": ""
       }
+    },
+
+    "mpris": {
+        "format": "{title} ({artist})",
+        "format-paused": "{title} ({artist})",
+        "tooltip-format": "{player}\n{artist}\n{album}\n{title}",
+        "ignored-players": ["firefox", "brave"]
+        },
+
+    "cava": {
+        "cava_config": "/home/varunadhityagb/.config/cava/config",
+        "source": "auto",
+        "stereo": true,
+        "reverse": false,
+        "bar_delimiter": 0,
+        "monstercat": false,
+        "waves": false,
+        "noise_reduction": 0.77,
+        "input_delay": 2,
+        "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█" ],
+        "actions": {
+                   "on-click-right": "mode"
+                   }
     }
 }

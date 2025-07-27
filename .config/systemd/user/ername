@@ -1,0 +1,17 @@
+Jun 17 16:07:12 lattitude7420 systemd[1295]: Starting Run Matugen to generate a new wallpaper...
+Jun 17 16:07:12 lattitude7420 update-wallpaper[20965]: Script ran at 16:07
+Jun 17 16:07:12 lattitude7420 systemd[1295]: Finished Run Matugen to generate a new wallpaper.
+Jun 17 16:07:12 lattitude7420 systemd[1295]: matugen.service: Consumed 356ms CPU time, 109.5M memory peak.
+[0;1;39m-- Boot 2a7cc2d7a50849b6a3d7eaca7683179e --[0m
+Jun 17 16:09:19 lattitude7420 systemd[1280]: Starting Run Matugen to generate a new wallpaper...
+Jun 17 16:09:19 lattitude7420 update-wallpaper[2090]: Script ran at 16:09
+Jun 17 16:09:20 lattitude7420 systemd[1280]: Finished Run Matugen to generate a new wallpaper.
+Jun 17 16:09:20 lattitude7420 systemd[1280]: matugen.service: Consumed 391ms CPU time, 105.2M memory peak.
+Jun 17 16:24:08 lattitude7420 systemd[1280]: Starting Run Matugen to generate a new wallpaper...
+Jun 17 16:24:08 lattitude7420 update-wallpaper[13271]: Script ran at 16:24
+Jun 17 16:24:09 lattitude7420 systemd[1280]: Finished Run Matugen to generate a new wallpaper.
+Jun 17 16:24:09 lattitude7420 systemd[1280]: matugen.service: Consumed 338ms CPU time, 100.1M memory peak.
+Jun 17 16:43:15 lattitude7420 systemd[1280]: Starting Run Matugen to generate a new wallpaper...
+Jun 17 16:43:15 lattitude7420 update-wallpaper[28524]: Script ran at 16:43
+Jun 17 16:43:15 lattitude7420 systemd[1280]: Finished Run Matugen to generate a new wallpaper.
+Jun 17 16:43:15 lattitude7420 systemd[1280]: matugen.service: Consumed 341ms CPU time, 100.1M memory peak.

@@ -53,3 +53,7 @@ post_hook = '/usr/bin/pywalfox update'
 input_path = '~/dotfiles/.config/matugen/templates/rofi-colors.rasi'
 output_path = '~/dotfiles/.config/rofi/matugen-colors.rasi'
 
+[templates.swayosd]
+input_path = '~/dotfiles/.config/matugen/templates/swayosd-style.css'
+output_path = '~/dotfiles/.config/swayosd/style.css'
+post_hook = "pkill swayosd-server; swayosd-server & disown"

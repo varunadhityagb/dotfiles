@@ -1,0 +1,6 @@
+[Unit]
+Description=Run Matugen to generate a new wallpaper
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/update-wallpaper
