@@ -203,12 +203,12 @@
   "wallpaper.pywal": true,
   "theme.bar.menus.background": "#11111b",
   "theme.matugen": true,
-  "theme.bar.floating": true,
+  "theme.bar.floating": false,
   "theme.bar.location": "top",
   "bar.autoHide": "never",
   "theme.bar.buttons.enableBorders": true,
-  "theme.bar.buttons.borderSize": "0.1em",
-  "theme.bar.border.location": "full",
+  "theme.bar.buttons.borderSize": "0.15em",
+  "theme.bar.border.location": "none",
   "theme.bar.enableShadow": false,
   "bar.launcher.autoDetectIcon": true,
   "theme.bar.buttons.dashboard.enableBorder": false,
@@ -216,14 +216,14 @@
   "bar.workspaces.monitorSpecific": false,
   "bar.workspaces.show_icons": false,
   "bar.workspaces.show_numbered": false,
-  "bar.workspaces.workspaceMask": true,
+  "bar.workspaces.workspaceMask": false,
   "bar.workspaces.showWsIcons": false,
   "bar.workspaces.showApplicationIcons": false,
-  "bar.workspaces.numbered_active_indicator": "highlight",
+  "bar.workspaces.numbered_active_indicator": "underline",
   "bar.workspaces.spacing": 2,
   "bar.workspaces.reverse_scroll": true,
   "bar.workspaces.scroll_speed": 3,
-  "bar.workspaces.ignored": "",
+  "bar.workspaces.ignored": "[-99..0]",
   "theme.bar.buttons.windowtitle.enableBorder": false,
   "bar.windowtitle.custom_title": true,
   "bar.windowtitle.icon": true,
@@ -243,7 +243,7 @@
   "menus.volume.raiseMaximumVolume": true,
   "menus.clock.time.military": true,
   "menus.clock.weather.location": "Bangalore",
-  "menus.clock.weather.enabled": false,
+  "menus.clock.weather.enabled": true,
   "menus.dashboard.powermenu.avatar.image": "~/.face.icon",
   "menus.dashboard.stats.enable_gpu": false,
   "menus.dashboard.controls.enabled": true,
@@ -257,7 +257,8 @@
     "0": {
       "left": [
         "clock",
-        "battery"
+        "battery",
+        "custom/powerprofiles"
       ],
       "middle": [
         "workspaces"
@@ -267,41 +268,77 @@
         "bluetooth",
         "volume",
         "network",
-        "notifications"
+        "notifications",
+        "power"
       ]
     },
     "1": {
       "left": [
-        "clock",
-        "battery"
+        "ram",
+        "cpu",
+        "cputemp",
+        "storage"
       ],
       "middle": [
-        "workspaces"
+        "hyprsunset",
+        "media",
+        "hypridle"
       ],
       "right": [
-        "systray",
-        "bluetooth",
-        "volume",
-        "network",
-        "notifications"
+        "netstat",
+        "updates",
+        "weather"
       ]
     }
   },
   "menus.media.displayTimeTooltip": false,
   "wallpaper.enable": true,
-  "wallpaper.image": "/home/varunadhityagb/wallpaper/wall-16.jpg",
+  "wallpaper.image": "/home/varunadhityagb/wallpaper/wall-1.jpg",
   "theme.matugen_settings.mode": "dark",
   "theme.matugen_settings.scheme_type": "tonal-spot",
   "theme.matugen_settings.variation": "standard_1",
-  "theme.bar.transparent": false,
+  "theme.bar.transparent": true,
   "theme.bar.buttons.style": "default",
-  "theme.bar.opacity": 50,
+  "theme.bar.opacity": 60,
   "theme.bar.border.width": "0.175em",
   "menus.power.lowBatteryNotification": true,
-  "theme.font.size": "1.2rem",
+  "theme.font.size": "1.3rem",
   "theme.font.weight": 600,
   "theme.bar.border_radius": "0.3em",
   "theme.bar.outer_spacing": "0.5em",
   "theme.bar.buttons.y_margins": "0.5em",
-  "theme.bar.buttons.spacing": "0.3em"
+  "theme.bar.buttons.spacing": "0.3em",
+  "theme.notification.enableShadow": false,
+  "theme.osd.orientation": "horizontal",
+  "theme.osd.location": "bottom",
+  "theme.osd.enableShadow": false,
+  "menus.clock.time.hideSeconds": false,
+  "theme.bar.layer": "top",
+  "bar.workspaces.applicationIconOncePerWorkspace": false,
+  "bar.workspaces.showAllActive": false,
+  "theme.bar.buttons.workspaces.pill.active_width": "15em",
+  "theme.bar.buttons.workspaces.pill.height": "4em",
+  "theme.bar.buttons.workspaces.pill.width": "4em",
+  "theme.bar.buttons.battery.enableBorder": false,
+  "theme.osd.radius": "0.5em",
+  "theme.osd.margins": "7px 7px 100px 7px",
+  "menus.clock.weather.key": "8dd78007809545e3b7590632240911",
+  "menus.clock.weather.unit": "metric",
+  "bar.network.rightClick": "nm-connection-editor",
+  "theme.bar.buttons.radius": "0.3em",
+  "bar.clock.format": "%a %b %d  %I:%M %p",
+  "bar.clock.icon": "󰸗",
+  "theme.bar.buttons.media.enableBorder": false,
+  "bar.notifications.hideCountWhenZero": false,
+  "bar.network.truncation": false,
+  "bar.workspaces.workspaces": 5,
+  "theme.bar.buttons.workspaces.smartHighlight": true,
+  "bar.customModules.cava.showIcon": false,
+  "bar.customModules.cava.showActiveOnly": false,
+  "bar.customModules.cava.stereo": false,
+  "bar.customModules.cava.bars": 14,
+  "theme.bar.buttons.modules.cava.enableBorder": false,
+  "bar.clock.showIcon": true,
+  "bar.customModules.updates.leftClick": "kitty -e /usr/share/hyprpanel/scripts/runUpdates.sh -arch",
+  "bar.customModules.updates.autoHide": true
 }

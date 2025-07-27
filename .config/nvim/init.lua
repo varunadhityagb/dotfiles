@@ -1,4 +1,8 @@
 require("varun.core")
 
 require("varun.lazy")
-vim.cmd("colorscheme kanagawa-wave")
+
+require("catppuccin").setup({
+  transparent_background = true,
+})
+vim.cmd.colorscheme "catppuccin"

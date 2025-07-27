@@ -1,0 +1,9 @@
+@include styleModule(
+    "cmodule-powerprofiles",
+    (
+        "text-color": #aabbcc,
+        "icon-color": #c5c4dd,
+        "inner-spacing": 0em,
+        "icon-size": 1.3em,
+    )
+);
