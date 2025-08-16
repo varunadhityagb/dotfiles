@@ -10,7 +10,9 @@ export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
+
 export PATH=$HOME/.config/emacs/bin:$PATH
+export PATH=$HOME/.local/share/gem/ruby/3.4.0/bin:$PATH
 
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="robbyrussell"
@@ -53,6 +55,8 @@ export LIBVIRT_DEFAULT_URI="qemu:///system"
 export EDITOR=nvim
 export VISUAL=nvim
 alias nvimdiff='nvim -d'
+
+fastfetch
 
 # Remove a directory and all files
 alias rmd='/bin/rm  --recursive --force --verbose '
@@ -99,8 +103,8 @@ function umhd() {
 }
 export QT_QPA_PLATFORMTHEME=qt5ct
 
-function get_atendence() {
-    /home/varunadhityagb/anaconda3/bin/python /home/varunadhityagb/gitclonestuff/myamrita-parser/my-amrita-attendence.py
+function get_attendence() {
+    /home/varunadhityagb/gitclonestuff/myamrita-parser/.venv/bin/python /home/varunadhityagb/gitclonestuff/myamrita-parser/my-amrita-attendence2.py
 }
 
 function no_sleep(){
@@ -140,6 +144,36 @@ EOF
     fi
 }
 
+
+get_amrita_photo() {
+  if [ -z "$1" ]; then
+    echo "Usage: get_amrita_photo <ROLL_NO>"
+    return 1
+  fi
+
+  ROLL_NO="$1"
+  
+  if [ -z "$2" ]; then 
+      curl -sS -X GET "https://my.amrita.edu/icts/admn_port_down/profpic_student.php?roll_no=${ROLL_NO}" \
+        -H 'Accept: image/avif,image/webp,image/apng,image/*,*/*;q=0.8' \
+        -H 'Accept-Encoding: gzip, deflate, br, zstd' \
+        -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) Chrome/138.0.0.0 Safari/537.36' \
+        -H 'Cookie: PHPSESSID=veqnujlek0r5mjs5s76g0h9j91' \
+        -H 'Host: my.amrita.edu' \
+        -H 'Referer: https://students.amrita.edu/' \
+        --compressed | icat
+  else
+      curl --output "$1" -sS -X GET "https://my.amrita.edu/icts/admn_port_down/profpic_student.php?roll_no=${ROLL_NO}" \
+        -H 'Accept: image/avif,image/webp,image/apng,image/*,*/*;q=0.8' \
+        -H 'Accept-Encoding: gzip, deflate, br, zstd' \
+        -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) Chrome/138.0.0.0 Safari/537.36' \
+        -H 'Cookie: PHPSESSID=veqnujlek0r5mjs5s76g0h9j91' \
+        -H 'Host: my.amrita.edu' \
+        -H 'Referer: https://students.amrita.edu/' \
+        --compressed
+  fi
+}
+
 alias ssh="kitty +kitten ssh"
 alias cp='~/gitclonestuff/advcpmv/advcp  -g'
 alias mv='~/gitclonestuff/advcpmv/advmv  -g'
@@ -147,3 +181,4 @@ alias i="yay -S"
 alias is="yay -Ss"
 alias fzf="fzf --preview='bat --color=always {}'" 
 alias archdays='echo $(( ( $(date +%s) - $(date -d "$(sudo tune2fs -l /dev/nvme0n1p1 | grep "Filesystem created" | awk "{print \$3, \$4, \$5, \$6, \$7}")" +%s) ) / 86400 ))'
+alias pyact="source .venv/bin/activate"

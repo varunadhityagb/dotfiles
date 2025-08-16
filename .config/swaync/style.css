@@ -427,3 +427,23 @@
 .widget-mpris-subtitle {
   font-size: 1.1rem;
 }
+
+.widget-dnd {
+  margin: 8px;
+  font-size: 1.1rem;
+}
+.widget-dnd > switch {
+  font-size: initial;
+  border-radius: 8px;
+  background: @primary;
+  border: 1px solid @inverse-surface;
+  box-shadow: none;
+}
+.widget-dnd > switch:checked {
+  background: @inverse-surface;
+}
+.widget-dnd > switch slider {
+  background: @primary;
+  border-radius: 8px;
+  border: 1px solid @inverse-surface;
+}
