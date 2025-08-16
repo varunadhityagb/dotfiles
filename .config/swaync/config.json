@@ -7,8 +7,8 @@
   "control-center-margin-right": 10,
   "control-center-width": 500,
   "cssPriority": "application",
-  "control-center-positionX": "center",
-  "control-center-positionY": "bottom",
+  "control-center-positionX": "right",
+  "control-center-positionY": "top",
   "fit-to-screen": true,
   "hide-on-action": false,
   "hide-on-clear": true,
@@ -21,8 +21,8 @@
   "notification-inline-replies": true,
   "notification-visibility": {},
   "notification-window-width": 400,
-  "positionX": "center",
-  "positionY": "bottom",
+  "positionX": "right",
+  "positionY": "top",
   "script-fail-notify": true,
   "scripts": {},
   "timeout": 5,
@@ -50,5 +50,5 @@
     }
   },
 
-  "widgets": ["volume", "dnd", "title", "notifications", "mpris"]
+  "widgets": ["dnd", "title", "notifications"]
 }

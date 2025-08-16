@@ -1,13 +1,13 @@
 #!/bin/bash
 
 option_1=""
-option_2=""
+option_2="󰊻"
 option_3=""
-option_4=""
-option_5=""
+option_4="󰴢"
+option_5=""
 option_6=""
 option_7=""
-option_8=""
+option_8="󰝆"
 
 # Rofi CMD
 rofi_cmd() {
@@ -30,7 +30,7 @@ run_cmd() {
 	elif [[ "$1" == '--opt2' ]]; then
 		brave --app=https://teams.microsoft.com/
 	elif [[ "$1" == '--opt3' ]]; then
-		discord
+		discord-development
 	elif [[ "$1" == '--opt4' ]]; then
 		brave --app=https://outlook.office.com/
 	elif [[ "$1" == '--opt5' ]]; then

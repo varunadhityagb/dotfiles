@@ -2,7 +2,7 @@
 
 * {
     font-family: "SF Pro Bold";
-    font-size: 16;
+    font-size: 16px;
 }
 
 .modules-left {
@@ -22,25 +22,25 @@
 
 window#waybar {
     all: unset;
-    background-color: alpha(@primary_container, 0.5);
+    background-color: alpha(@on_primary_fixed, 0.5);
     padding: 10px;
 }
 
 tooltip {
     border-radius: 10px;
-    background-color: @background;
+    background-color: @on_primary_fixed;
     opacity: 0.8;
 }
 
 tooltip label {
-    color: @on_background;
+    color: @primary_fixed;
 }
 
 #clock,
 #pulseaudio,
 #network,
 #battery,
-#bluetooth.connected,
+#bluetooth,
 #power-profiles-daemon,
 #custom-expand,
 #custom-expand2,
@@ -48,11 +48,12 @@ tooltip label {
 #memory,
 #disk,
 #custom-exit,
+#custom-dnd,
 #workspaces,
 #mpris,
 #cava {
-    color: @primary;
-    margin: 0px 6px;
+    color: @primary_fixed;
+    margin: 0px 6px 0px 0px;
     padding-right: 8px;
     font-weight: bold;
     border-radius: 6px;
@@ -60,17 +61,17 @@ tooltip label {
 
 #workspaces button {
     all: unset;
-    padding: 0px 10px;
-    color: alpha(@primary, 0.7);
+    margin: 0px 20px 0px 0px;
+    color: alpha(@primary_fixed, 0.7);
     transition: all 0.3s ease-in-out;
 }
 
 #workspaces button.active {
-    color: @primary;
-    background-color: @primary;
-    min-width: 60px;
-    padding: 0px 3px;
-    border-radius: 10px;
+    color: @on_primary_fixed;
+    background-color: @primary_fixed;
+    min-width: 25px;
+    border-radius: 25px;
+    padding: 0px 20px 0px 20px;
     transition: all 0.3s ease-in-out;
 }
 
@@ -85,6 +86,11 @@ tooltip label {
     color: #ffdb81;
 }
 
+#tray {
+    color: @primary;
+    margin: 0px 5px;
+}
+
 #tray > .passive {
     -gtk-icon-effect: dim;
 }
@@ -95,7 +101,7 @@ tooltip label {
 }
 
 label:focus {
-    background-color: @primary;
+    background-color: @primary_fixed;
 }
 
 #custom-expand,

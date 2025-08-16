@@ -1,12 +1,12 @@
 configuration {
     modi:                       "drun,run,ssh,window";
     terminal:                   "kitty";
-    show-icons:                 false;
+    show-icons:                 true;
     display-drun:               "";
     display-run:                "";
     display-ssh:                "";
     display-window:             "";
-    drun-display-format:        "{name}";
+    drun-display-format:        "  {name}";
     window-format:              "{w} · {c} · {t}";
 }
 

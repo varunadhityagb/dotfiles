@@ -1,0 +1,62 @@
+#!/bin/bash
+
+MODE="$1"
+ACTION="$2"
+OUTPUT_DIR="$HOME/Pictures/Screenshots"
+TIMESTAMP=$(date +'%Y-%m-%d_%H-%M-%S')
+FILENAME="$OUTPUT_DIR/screenshot-$TIMESTAMP.png"
+
+# Ensure output directory exists for 'save' mode
+if [[ "$ACTION" == "save" && ! -d "$OUTPUT_DIR" ]]; then
+  mkdir -p "$OUTPUT_DIR" || {
+    notify-send "Failed to create screenshot directory: $OUTPUT_DIR"
+    exit 1
+  }
+fi
+
+# Determine source command based on mode
+case "$MODE" in
+  region)
+    pkill slurp 2>/dev/null
+    SOURCE_CMD="hyprshot -m region --raw"
+    ;;
+  window)
+    SOURCE_CMD="hyprshot -m window --raw"
+    ;;
+  fullscreen)
+    SOURCE_CMD="hyprshot -m output --raw"
+    ;;
+  *)
+    notify-send "Invalid mode: $MODE. Use region, window, or fullscreen."
+    exit 1
+    ;;
+esac
+
+# Set satty options based on action
+case "$ACTION" in
+  save)
+    SATTY_OPTIONS=(
+      --filename -
+      --output-filename "$FILENAME"
+      --early-exit
+      --disable-notifications
+    )
+    ;;
+  copy)
+    SATTY_OPTIONS=(
+      --filename -
+      --early-exit
+      --actions-on-enter save-to-clipboard
+      --save-after-copy
+      --disable-notifications
+      --copy-command 'wl-copy'
+    )
+    ;;
+  *)
+    notify-send "Invalid action: $ACTION. Use save or copy." 
+    exit 1
+    ;;
+esac
+
+# Run the screenshot command pipeline
+eval "$SOURCE_CMD" | satty "${SATTY_OPTIONS[@]}"

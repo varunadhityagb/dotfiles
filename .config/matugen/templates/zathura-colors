@@ -53,7 +53,7 @@ set font "FiraCode Nerd Font 12"
 " Zathura mappings
 " -----------------------------------------------------------------------------
 " remove status bar
-set guioptions none
+set guioptions s
 " Zoom in/out
 map [normal]     z zoom in
 map [normal]     Z zoom out
@@ -90,3 +90,8 @@ map [fullscreen] W adjust_window width
 
 map [normal]     i set recolor
 map [fullscreen] i set recolor
+
+
+set statusbar-basename true
+set statusbar-home-tilde true
+set statusbar-page-percent true

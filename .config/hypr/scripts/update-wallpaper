@@ -2,7 +2,7 @@
 
 # --- CONFIG ---
 WALLPAPER_DIR="$HOME/wallpaper"
-DAY_IMAGES=13
+DAY_IMAGES=8
 NIGHT_IMAGES=4
 
 # Get color or test time
@@ -24,7 +24,6 @@ if [ "$TOTAL_MINUTES" -ge 360 ] && [ "$TOTAL_MINUTES" -lt 1080 ]; then
     OFFSET=$((TOTAL_MINUTES - 360))  # Minutes since 6 AM
     INTERVAL=$((720 / DAY_IMAGES))   # ~55 minutes per image
     INDEX=$((OFFSET / INTERVAL + 1)) # wall-1 to wall-13
-    /home/varunadhityagb/.spicetify/spicetify config color_scheme nord
 
 
 else
@@ -40,11 +39,10 @@ else
     INTERVAL=$((720 / NIGHT_IMAGES))   # 180 minutes per image
     NIGHT_INDEX=$((OFFSET / INTERVAL)) # 0 to 3
     INDEX=$((DAY_IMAGES + 1 + NIGHT_INDEX))        # wall-14 to wall-17
-    /home/varunadhityagb/.spicetify/spicetify config color_scheme TokyoNightStorm
 fi
 
 IMG=$(printf "$WALLPAPER_DIR/wall-%d.jpg" "$INDEX")
 
-/usr/bin/matugen image "$IMG" && echo "Script ran at $HOUR:$MIN -- wall set to $IMG"jjjjjjkk
+/usr/bin/matugen image "$IMG" && echo "Script ran at $HOUR:$MIN -- wall set to $IMG"
 # hyprpanel sw "$IMG"
 

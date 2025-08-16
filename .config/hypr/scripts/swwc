@@ -1,16 +1,3 @@
 #!/bin/bash
-# wal -i $1
-
-# killall hyprpaper
-echo "preload = $1" > ~/dotfiles/.config/hypr/hyprpaper.conf
-echo "wallpaper = ,$1" >> ~/dotfiles/.config/hypr/hyprpaper.conf
-echo "splash = false" >> ~/dotfiles/.config/hypr/hyprpaper.conf
-# hyprpaper & disown
-
 swww img $1
-
-
-echo "path = $1" > ~/dotfiles/.config/hypr/wall.conf
-
-~/dotfiles/.config/hypr/scripts/generate_clipse_theme.py ~/.cache/wal/colors.json ~/dotfiles/.config/clipse/custom_theme.json
-
+/home/varunadhityagb/dotfiles/.config/hypr/scripts/generate_clipse_theme.py /home/varunadhityagb/.cache/wal/colors.json /home/varunadhityagb/dotfiles/.config/clipse/custom_theme.json
