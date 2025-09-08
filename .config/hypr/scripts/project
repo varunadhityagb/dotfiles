@@ -20,3 +20,4 @@ case $mode in
         hyrpctl keyword monitor eDP-1,1600x900,auto,1
         ;;
 esac
+

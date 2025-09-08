@@ -4,9 +4,13 @@ players=$(playerctl --list-all)
 
 # Check if 'cider' is in the list
 if echo "$players" | grep -q "cider"; then
-    song_info=$(playerctl metadata --format '{{title}}    {{artist}}')
-else
+    song_info=$(playerctl metadata --format '{{title}}   {{artist}}')
+elif echo "$players" | grep -q "spotify"; then
     song_info=$(playerctl metadata --format '{{title}}     {{artist}}')
+elif echo "$players" | grep -q "kdeconnect"; then
+    song_info=$(playerctl metadata --format '{{title}}     {{artist}}')
+else
+    song_info=$(playerctl metadata --format '{{title}}  󰎆   {{artist}}')
 fi
 
 echo "$song_info"

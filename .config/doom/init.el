@@ -91,12 +91,12 @@
        ;;collab            ; buffers with friends
        ;; debugger          ; FIXME stepping through code, to help you add bugs
        ;;direnv
-       ;;docker
+       docker
        ;;editorconfig      ; let someone else argue about tabs vs spaces
        ;;ein               ; tame Jupyter notebooks with emacs
        (eval +overlay)     ; run code, run (also, repls)
-       (lookup +docsets)             ; navigate your code and its documentation
-       lsp               ; M-x vscode
+       (lookup +docsets)   ; navigate your code and its documentation
+       (lsp +peek)               ; M-x vscode
        magit             ; a git porcelain for Emacs
        ;;make              ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
@@ -123,7 +123,7 @@
        (org +gnuplot +jupyter +ipython +pretty +present)               ; organize your plain life in plain text
        (python +lsp +tree-sitter +conda)            ; beautiful is better than ugly
        ;; qt                ; the 'cutest' gui framework ever
-       (rust +tree-sitter)       ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+       (rust +tree-sitter +lsp)       ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;; scala             ; java, but good
        sh                ; she sells {ba,z,fi}sh shells on the C xor
        (web +tree-sitter)               ; the tubes
@@ -136,7 +136,7 @@
        :app
        calendar
        ;; emms
-       ;;everywhere        ; *leave* Emacs!? You must be joking
+       everywhere        ; *leave* Emacs!? You must be joking
        ;;irc               ; how neckbeards socialize
        ;;(rss +org)        ; emacs as an RSS reader
 

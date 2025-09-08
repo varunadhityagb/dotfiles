@@ -103,8 +103,30 @@ function umhd() {
 }
 export QT_QPA_PLATFORMTHEME=qt5ct
 
+function winboat() {
+  /home/varunadhityagb/AppImages/winboat-0.6.13.AppImage & disown
+}
+
+function get_timetable() {
+    if [[ -z $1 ]]; then 
+        ~/random_scripts/timetable.sh 2023 aie e 5
+    elif [[ $1 == +* ]]; then
+        ~/random_scripts/timetable.sh 2023 aie e 5 $1
+    else
+        ~/random_scripts/timetable.sh $1 $2 $3 $4
+    fi
+}
+
 function get_attendence() {
-    /home/varunadhityagb/gitclonestuff/myamrita-parser/.venv/bin/python /home/varunadhityagb/gitclonestuff/myamrita-parser/my-amrita-attendence2.py
+    /home/varunadhityagb/gitclonestuff/myamrita-parser/.venv/bin/python /home/varunadhityagb/gitclonestuff/myamrita-parser/my-amrita-attendence.py
+}
+
+function get_marks() {
+    /home/varunadhityagb/gitclonestuff/myamrita-parser/.venv/bin/python /home/varunadhityagb/gitclonestuff/myamrita-parser/my-amrita-marks.py
+}
+
+function amrita_update_session() {
+    /home/varunadhityagb/gitclonestuff/myamrita-parser/.venv/bin/python /home/varunadhityagb/gitclonestuff/myamrita-parser/my-amrita-login.py
 }
 
 function no_sleep(){

@@ -51,7 +51,8 @@ tooltip label {
 #custom-dnd,
 #workspaces,
 #mpris,
-#cava {
+#cava,
+#tray {
     color: @primary_fixed;
     margin: 0px 6px 0px 0px;
     padding-right: 8px;
@@ -84,11 +85,6 @@ tooltip label {
 }
 #battery.warning:not(.charging) {
     color: #ffdb81;
-}
-
-#tray {
-    color: @primary;
-    margin: 0px 5px;
 }
 
 #tray > .passive {

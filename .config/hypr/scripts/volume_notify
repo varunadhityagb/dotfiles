@@ -20,3 +20,6 @@ notify-send -h string:x-canonical-private-synchronous:system-info \
             -h int:value:"$VOL" \
             -i "$ICON" "Volume: $VOL%"
 
+swayosd-client --custom-icon="$ICON" \
+               --custom-progress=$(echo "scale=2; $VOL / 100" | bc) \
+               --custom-progress-text="$VOL%"

@@ -3,7 +3,7 @@
 FOLDER="/home/varunadhityagb/.hiddenFolder"
 fileList=$(ls -1 $FOLDER)
 echo $fileList
-res=$(echo $fileList | tr ' ' '\n' | rofi -dmenu)
+res=$(echo $fileList | tr ' ' '\n' | rofi -kb-element-prev "Ctrl+[45]" -kb-element-next "Ctrl+[44]" -kb-mode-previous "Ctrl+[43]" -kb-mode-next "Ctrl+[46]" -dmenu)
 FILE="$FOLDER/$res"
 
 if [ -z "$res" ]; then

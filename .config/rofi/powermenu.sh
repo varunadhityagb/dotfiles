@@ -20,27 +20,17 @@ rofi_cmd() {
 run_rofi() {
 	echo -e "$lock\n$logout\n$reboot\n$shutdown" | rofi_cmd
 }
-stat=$(hyprctl clients)
 
-
-
-
-# Actions
 chosen="$(run_rofi)"
 case ${chosen} in
     $shutdown)
-        if [[ "$stat" ==  "unknown request" ]]; then
             shutdown now
-        else
-            open_windows=$(echo "$stat"| grep 'class:' | awk '{print $2}' | sort | uniq)
-            notify-send "The following Windows are open" "$open_windows"
-        fi
         ;;
     $reboot)
     reboot
         ;;
     $lock)
-    /usr/bin/hyprlock
+    systemctl suspend
         ;;
     $logout)
     hyprctl dispatch exit

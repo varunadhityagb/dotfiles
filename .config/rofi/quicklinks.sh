@@ -22,15 +22,31 @@ rofi_cmd() {
 run_rofi() {
 	echo -e "$option_1\n$option_2\n$option_3\n$option_4\n$option_5\n$option_6\n$option_7\n$option_8" | rofi_cmd
 }
+stat=$(hyprctl clients)
 
 # Execute Command
 run_cmd() {
 	if [[ "$1" == '--opt1' ]]; then
-		brave --app=https://web.whatsapp.com/
+        open_windows=$(echo "$stat" | grep 'whatsapp')
+
+        if [[ -z "$open_windows" ]]; then
+            brave --app=https://web.whatsapp.com/
+        else
+            target_title="web.whatsapp.com"
+
+            addr=$(hyprctl clients -j | jq -r --arg title "$target_title" '.[] | select(.title == $title) | .address' | head -n 1)
+
+            if [ -n "$addr" ]; then
+                hyprctl dispatch focuswindow "address:$addr"
+            else
+                echo "No window found with title \"$target_title\""
+            fi
+        fi
+
 	elif [[ "$1" == '--opt2' ]]; then
 		brave --app=https://teams.microsoft.com/
 	elif [[ "$1" == '--opt3' ]]; then
-		discord-development
+		discord
 	elif [[ "$1" == '--opt4' ]]; then
 		brave --app=https://outlook.office.com/
 	elif [[ "$1" == '--opt5' ]]; then

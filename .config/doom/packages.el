@@ -49,18 +49,14 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;; (unpin! t)
 
-(package! wakatime-mode)
 (package! highlight-indent-guides)
 
-;; Markdown
 (package! matlab-mode)
 (package! ob-async)
 (package! jupyter)
 (package! auto-complete)
 (package! code-cells)
 (package! lsp-pyright)
-(package! snakemake-mode)
 
-;; Tree-sitter support
 (package! latex-preview-pane)
 (package! forge)

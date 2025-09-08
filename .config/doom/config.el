@@ -3,8 +3,8 @@
 (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 16 :weight 'regular))
 (setq doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font" :size 14 :weight 'regular))
 
-(setq doom-theme 'doom-one)
-;; (add-to-list 'default-frame-alist '(alpha-background . 90))
+(setq doom-theme 'deeper-blue)
+(add-to-list 'default-frame-alist '(alpha-background . 95))
 
 (setq display-line-numbers-type 'relative)
 
@@ -129,6 +129,7 @@
 (setq org-latex-pdf-process
       '("xelatex -shell-escape -interaction nonstopmode -output-directory=%o %f"
         "xelatex -shell-escape -interaction nonstopmode -output-directory=%o %f"))
+
 (setq fancy-splash-image (concat doom-private-dir "varun.png"))
 
 (defun +latex/clean ()
@@ -148,3 +149,12 @@
 (map! :map LaTeX-mode-map
       :localleader
       :desc "Clean LaTeX aux files" "C" #'+latex/clean)
+
+(after! org (require 'org-xopp) (org-xopp-setup))
+(package! org-xopp
+  :recipe (:host github :repo "mahmoodsh36/org-xopp"
+           :files (:defaults "*.sh")))
+
+(map! :leader
+      :desc "Find file at point" ; optional but recommended
+      "f o" #'ffap)

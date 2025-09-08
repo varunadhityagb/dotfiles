@@ -3,36 +3,36 @@
 " -----------------------------------------------------------------------------
 
 " Colors
-set default-bg              "rgba(0, 54, 59, 1.0)"
-set default-fg              "#81d4dc"
+set default-bg              "rgba(45, 41, 96, 1.0)"
+set default-fg              "#c5c0ff"
 
-set statusbar-bg            "#00363b"
-set statusbar-fg            "#81d4dc"
+set statusbar-bg            "#2d2960"
+set statusbar-fg            "#c5c0ff"
 
-set inputbar-bg             "#00363b"
-set inputbar-fg             "#81d4dc"
+set inputbar-bg             "#2d2960"
+set inputbar-fg             "#c5c0ff"
 
 set notification-error-bg   "#690005"
 set notification-error-fg   "#ffb4ab"
 
-set notification-warning-bg "#9df0f9"
+set notification-warning-bg "#e3dfff"
 set notification-warning-fg "#93000a"
 
-set highlight-color         "#9df0f9"
-set highlight-active-color  "#81d4dc"
+set highlight-color         "#e3dfff"
+set highlight-active-color  "#c5c0ff"
 
-set completion-highlight-fg "#00363b"
-set completion-highlight-bg "#81d4dc"
+set completion-highlight-fg "#2d2960"
+set completion-highlight-bg "#c5c0ff"
 
-set completion-bg           "#00363b"
-set completion-fg           "#81d4dc"
+set completion-bg           "#2d2960"
+set completion-fg           "#c5c0ff"
 
-set notification-bg         "#00363b"
-set notification-fg         "#81d4dc"
+set notification-bg         "#2d2960"
+set notification-fg         "#c5c0ff"
 
 set recolor                 "true"
-set recolor-lightcolor      "rgba(0, 54, 59, 1.0)"
-set recolor-darkcolor       "#81d4dc"
+set recolor-lightcolor      "rgba(45, 41, 96, 1.0)"
+set recolor-darkcolor       "#c5c0ff"
 set recolor-reverse-video   "true"
 set recolor-keephue         "true"
 
@@ -53,7 +53,7 @@ set font "FiraCode Nerd Font 12"
 " Zathura mappings
 " -----------------------------------------------------------------------------
 " remove status bar
-set guioptions none
+set guioptions s
 " Zoom in/out
 map [normal]     z zoom in
 map [normal]     Z zoom out
@@ -90,3 +90,8 @@ map [fullscreen] W adjust_window width
 
 map [normal]     i set recolor
 map [fullscreen] i set recolor
+
+
+set statusbar-basename true
+set statusbar-home-tilde true
+set statusbar-page-percent true
