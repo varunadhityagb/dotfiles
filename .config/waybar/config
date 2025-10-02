@@ -3,16 +3,23 @@
     "layer": "top",
     "spacing": 0,
     "position": "top",
+    "height": 30,
     "reload_style_on_change": true,
-    "modules-left": ["hyprland/workspaces", "group/expand2"],
-    "modules-center": ["clock", "custom/dnd"],
-    "modules-right": ["group/expand", "power-profiles-daemon", "bluetooth", "battery", "pulseaudio", "network"],
+    "modules-left": ["hyprland/workspaces", "hyprland/submap"],
+    "modules-center": ["group/music"],
+    "modules-right": ["group/expand", "power-profiles-daemon", "battery", "pulseaudio", "network", "clock", "custom/dnd"],
+
+    "image#album-art": {
+        "exec": "~/album_art.sh",
+        "size": 28,
+        "interval": 5,
+    },
 
     "clock": {
-        "format": "{:%A, %B %d, %Y %R}",
+        "format": "{:%a %b %d %R %p}",
         "tooltip-format": "<tt><small>{calendar}</small></tt>",
         "calendar": {
-                    "mode"          : "year",
+                    "mode"          : "month",
                     "mode-mon-col"  : 3,
                     "weeks-pos"     : "right",
                     "on-scroll"     : 1,
@@ -73,19 +80,19 @@
 
     "battery": {
         "states": {
-        "full": 99,
-        "warning": 30,
-        "critical": 15
+            "warning": 30,
+            "critical": 15
         },
         "format": "{icon}  {capacity}%",
-        "format-icons": [" ", " ", " ", " ", " "]
+        "tooltip-format": "<b>{timeTo}</b>\nMax: {health}%",
+        "format-icons": [" ", " ", " ", " ", " "],
     },
 
     "pulseaudio": {
         "scroll-step": 1,
         "format": "{icon}   {volume}%",
         "format-bluetooth": "{volume}% {icon}",
-        "format-bluetooth-muted": " {icon}",
+        "format-bluetooth-muted": "",
         "format-muted": "",
         "format-icons": {
         "headphone": " ",
@@ -107,9 +114,20 @@
         "format": "{}",
         "exec": "swaync-client --get-dnd | grep -q true && echo '{\"text\":\"󰂛\",\"tooltip\":\"DND On\"}' || echo '{\"text\":\"󰂞\",\"tooltip\":\"DND Off\"}'",
         "return-type": "json",
-        "on-click": "~/dotfiles/.config/hypr/scripts/dnd-toggle.sh",
+        "on-click": "swaync-client -t",
+        "on-click-right": "~/dotfiles/.config/hypr/scripts/dnd-toggle.sh",
         "signal": 10,
         "tooltip": true
+    },
+
+    "group/music": {
+        "orientation": "horizontal",
+        "drawer": {
+            "transition-duration": 600,
+            "transition-to-left": true,
+            "click-to-reveal": false
+        },
+        "modules": ["mpris", "cava","image#album-art" ],
     },
 
     "custom/expand": {
@@ -123,22 +141,9 @@
             "transition-to-left": true,
             "click-to-reveal": true
         },
-        "modules": ["custom/expand", "tray" ],
+        "modules": ["custom/expand", "tray", "bluetooth" ],
     },
 
-    "custom/expand2": {
-            "format": "",
-            "tooltip": false
-        },
-    "group/expand2": {
-        "orientation": "horizontal",
-        "drawer": {
-            "transition-duration": 600,
-            "transition-to-left": true,
-            "click-to-reveal": true
-        },
-        "modules": ["custom/expand2", "cava", "mpris"],
-    },
 
     "power-profiles-daemon": {
       "format": "{icon}",
@@ -153,11 +158,11 @@
     },
 
     "mpris": {
-        "format": "{title} ({artist})",
-        "format-paused": "{title} ({artist})",
+        "format": "{title}",
+        "format-paused": "",
         "tooltip-format": "{player}\n{artist}\n{album}\n{title}",
         "ignored-players": ["firefox", "brave"]
-        },
+    },
 
     "cava": {
         "cava_config": "/home/varunadhityagb/.config/cava/config",
@@ -171,8 +176,11 @@
         "noise_reduction": 0.77,
         "input_delay": 2,
         "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█" ],
-        "actions": {
-                   "on-click-right": "mode"
-                   }
-    }
+    },
+
+    "hyprland/submap": {
+        "format": "󰘳   {}",
+        "tooltip": false
+    },
+
 }

@@ -7,42 +7,39 @@ NIGHT_IMAGES=4
 
 # Get color or test time
 if [ "$1" == "--test" ]; then
-    HOUR=$2
-    MIN=$3
+  HOUR=$2
+  MIN=$3
 else
-    HOUR=$(date +%H)
-    MIN=$(date +%M)
+  HOUR=$(date +%H)
+  MIN=$(date +%M)
 fi
-
 
 # Convert to minutes since midnight
 TOTAL_MINUTES=$((10#$HOUR * 60 + 10#$MIN))
 
 # Daytime: 06:00 (360) to 18:00 (1080)
 if [ "$TOTAL_MINUTES" -ge 360 ] && [ "$TOTAL_MINUTES" -lt 1080 ]; then
-    # Daytime
-    OFFSET=$((TOTAL_MINUTES - 360))  # Minutes since 6 AM
-    INTERVAL=$((720 / DAY_IMAGES))   # ~55 minutes per image
-    INDEX=$((OFFSET / INTERVAL + 1)) # wall-1 to wall-13
-
+  # Daytime
+  OFFSET=$((TOTAL_MINUTES - 360))  # Minutes since 6 AM
+  INTERVAL=$((720 / DAY_IMAGES))   # ~55 minutes per image
+  INDEX=$((OFFSET / INTERVAL + 1)) # wall-1 to wall-13
 
 else
-    # Nighttime
-    # Normalize to minutes since 6 PM
-    if [ "$TOTAL_MINUTES" -lt 360 ]; then
-        # After midnight, before 6 AM
-        OFFSET=$((TOTAL_MINUTES + (1440 - 1080)))  # From 6 PM to color
-    else
-        # After 6 PM
-        OFFSET=$((TOTAL_MINUTES - 1080))
-    fi
-    INTERVAL=$((720 / NIGHT_IMAGES))   # 180 minutes per image
-    NIGHT_INDEX=$((OFFSET / INTERVAL)) # 0 to 3
-    INDEX=$((DAY_IMAGES + 1 + NIGHT_INDEX))        # wall-14 to wall-17
+  # Nighttime
+  # Normalize to minutes since 6 PM
+  if [ "$TOTAL_MINUTES" -lt 360 ]; then
+    # After midnight, before 6 AM
+    OFFSET=$((TOTAL_MINUTES + (1440 - 1080))) # From 6 PM to color
+  else
+    # After 6 PM
+    OFFSET=$((TOTAL_MINUTES - 1080))
+  fi
+  INTERVAL=$((720 / NIGHT_IMAGES))        # 180 minutes per image
+  NIGHT_INDEX=$((OFFSET / INTERVAL))      # 0 to 3
+  INDEX=$((DAY_IMAGES + 1 + NIGHT_INDEX)) # wall-14 to wall-17
 fi
 
 IMG=$(printf "$WALLPAPER_DIR/wall-%d.jpg" "$INDEX")
-
+cp ${IMG} ${WALLPAPER_DIR}/curr.jpg
 /usr/bin/matugen image "$IMG" && echo "Script ran at $HOUR:$MIN -- wall set to $IMG"
 # hyprpanel sw "$IMG"
-

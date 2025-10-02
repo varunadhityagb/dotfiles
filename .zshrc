@@ -8,28 +8,23 @@ export PATH="/usr/local/texlive/2024/bin/x86_64-linux:$PATH"
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
-# Path to your Oh My Zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
-
 export PATH=$HOME/.config/emacs/bin:$PATH
 export PATH=$HOME/.local/share/gem/ruby/3.4.0/bin:$PATH
 
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
 
 # Uncomment the following line to enable command auto-correction.
 ENABLE_CORRECTION="true"
 
 plugins=(git z thefuck qrcode themes)
 
+export ZSH="$HOME/.oh-my-zsh"
 source $ZSH/oh-my-zsh.sh
-
 # >>> juliaup initialize >>>
 
 # !! Contents within this block are managed by juliaup !!
 
-path=('/home/varunadhityagb/.juliaup/bin' $path)
-export PATH
+# path=('/home/varunadhityagb/.juliaup/bin' $path)
+# export PATH
 # <<< juliaup initialize <<<
 #
 
@@ -185,7 +180,7 @@ get_amrita_photo() {
         -H 'Referer: https://students.amrita.edu/' \
         --compressed | icat
   else
-      curl --output "$1" -sS -X GET "https://my.amrita.edu/icts/admn_port_down/profpic_student.php?roll_no=${ROLL_NO}" \
+      curl --output "$1.jpeg" -sS -X GET "https://my.amrita.edu/icts/admn_port_down/profpic_student.php?roll_no=${ROLL_NO}" \
         -H 'Accept: image/avif,image/webp,image/apng,image/*,*/*;q=0.8' \
         -H 'Accept-Encoding: gzip, deflate, br, zstd' \
         -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) Chrome/138.0.0.0 Safari/537.36' \
@@ -196,6 +191,8 @@ get_amrita_photo() {
   fi
 }
 
+source <(kubectl completion zsh)
+
 alias ssh="kitty +kitten ssh"
 alias cp='~/gitclonestuff/advcpmv/advcp  -g'
 alias mv='~/gitclonestuff/advcpmv/advmv  -g'
@@ -204,3 +201,8 @@ alias is="yay -Ss"
 alias fzf="fzf --preview='bat --color=always {}'" 
 alias archdays='echo $(( ( $(date +%s) - $(date -d "$(sudo tune2fs -l /dev/nvme0n1p1 | grep "Filesystem created" | awk "{print \$3, \$4, \$5, \$6, \$7}")" +%s) ) / 86400 ))'
 alias pyact="source .venv/bin/activate"
+alias ppt2pdf="libreoffice --headless --convert-to pdf"
+alias emacsd="emacs --daemon"
+alias hy="hyprctl"
+
+export MESA_LOADER_DRIVER_OVERRIDE=iris

@@ -1,0 +1,8 @@
+#!/bin/bash
+# Inside power-update script
+echo "Starting script..." # Print statements for debugging
+notify-send "hello" || {
+  echo "Command failed!"
+  exit 1
+}
+echo "Script finished successfully"

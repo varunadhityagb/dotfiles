@@ -60,3 +60,6 @@
 
 (package! latex-preview-pane)
 (package! forge)
+(package! mpv)
+(package! yeetube)
+(package! mines)

@@ -2,28 +2,18 @@
 
 * {
     font-family: "SF Pro Bold";
-    font-size: 16px;
+    font-size: 15px;
 }
 
-.modules-left {
-    padding: 7px;
-    margin: 3px 5px 0px 7px;
-}
-
-.modules-right {
-    padding: 7px;
-    margin: 3px 5px 0px 5px;
-}
-
+.modules-left,
+.modules-right,
 .modules-center {
-    padding: 7px;
-    margin: 3px 7px 0px 5px;
+    padding: 7px 7px 7px 0px;
 }
 
 window#waybar {
     all: unset;
-    background-color: alpha(@on_primary_fixed, 0.5);
-    padding: 10px;
+    background-color: rgba(27, 27, 27, 0.7);
 }
 
 tooltip {
@@ -54,15 +44,20 @@ tooltip label {
 #cava,
 #tray {
     color: @primary_fixed;
-    margin: 0px 6px 0px 0px;
+    margin: 0px 5px 0px 5px;
     padding-right: 8px;
     font-weight: bold;
     border-radius: 6px;
 }
 
+#image {
+    padding: 0px;
+    margin: -3px;
+}
+
 #workspaces button {
     all: unset;
-    margin: 0px 20px 0px 0px;
+    margin: 0px 10px;
     color: alpha(@primary_fixed, 0.7);
     transition: all 0.3s ease-in-out;
 }
@@ -70,9 +65,8 @@ tooltip label {
 #workspaces button.active {
     color: @on_primary_fixed;
     background-color: @primary_fixed;
-    min-width: 25px;
-    border-radius: 25px;
-    padding: 0px 20px 0px 20px;
+    border-radius: 5px;
+    padding: 0px 20px;
     transition: all 0.3s ease-in-out;
 }
 
@@ -85,6 +79,10 @@ tooltip label {
 }
 #battery.warning:not(.charging) {
     color: #ffdb81;
+}
+
+#battery.charging {
+    color: green;
 }
 
 #tray > .passive {
