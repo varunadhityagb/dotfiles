@@ -1,7 +1,7 @@
 @import "colors.css";
 
 * {
-    font-family: "SF Pro Bold";
+    font-family: "SF Pro Display";
     font-size: 15px;
 }
 
@@ -68,10 +68,6 @@ tooltip label {
     border-radius: 5px;
     padding: 0px 20px;
     transition: all 0.3s ease-in-out;
-}
-
-#pulseaudio.muted {
-    color: #eb4d4b;
 }
 
 #battery.critical:not(.charging) {

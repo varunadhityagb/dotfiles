@@ -1,4 +1,3 @@
-
 {
     "layer": "top",
     "spacing": 0,
@@ -6,8 +5,8 @@
     "height": 30,
     "reload_style_on_change": true,
     "modules-left": ["hyprland/workspaces", "hyprland/submap"],
-    "modules-center": ["group/music"],
-    "modules-right": ["group/expand", "power-profiles-daemon", "battery", "pulseaudio", "network", "clock", "custom/dnd"],
+    "modules-center": [],
+    "modules-right": ["tray","bluetooth", "battery", "pulseaudio", "network", "clock", "custom/dnd"],
 
     "image#album-art": {
         "exec": "~/album_art.sh",
@@ -17,33 +16,14 @@
 
     "clock": {
         "format": "{:%a %b %d %R %p}",
-        "tooltip-format": "<tt><small>{calendar}</small></tt>",
-        "calendar": {
-                    "mode"          : "month",
-                    "mode-mon-col"  : 3,
-                    "weeks-pos"     : "right",
-                    "on-scroll"     : 1,
-                    "format": {
-                              "months":     "<span color='#ffead3'><b>{}</b></span>",
-                              "days":       "<span color='#ecc6d9'><b>{}</b></span>",
-                              "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
-                              "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
-                              "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
-                              }
-                    },
-        "actions":  {
-                    "on-click-right": "mode",
-                    "on-scroll-up": "tz_up",
-                    "on-scroll-down": "tz_down",
-                    "on-scroll-up": "shift_up",
-                    "on-scroll-down": "shift_down"
-                    }
+        "on-click": "~/dotfiles/.config/waybar/scripts/calendar.sh"
     },
+
     "network": {
-        "format-wifi": "{essid} ",
-        "format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
-        "format-disconnected": " Disconnected 󱛅 ",
-        "format-disabled": " Wifi Off 󰖪",
+        "format-wifi": " ",
+        "format-ethernet": " ",
+        "format-disconnected": "󱛅 ",
+        "format-disabled": "󰖪 ",
         "on-click": "~/dotfiles/.config/rofi/wifi.sh",
         "tooltip-format-wifi": "{signalStrength} % -- {ipaddr}/{cidr} -- ({frequency} GHz)",
     },
@@ -83,28 +63,27 @@
             "warning": 30,
             "critical": 15
         },
-        "format": "{icon}  {capacity}%",
-        "tooltip-format": "<b>{timeTo}</b>\nMax: {health}%",
+        "format": "{icon}   {capacity}%",
         "format-icons": [" ", " ", " ", " ", " "],
+        "on-click": "~/dotfiles/.config/waybar/scripts/battery.sh"
     },
 
     "pulseaudio": {
         "scroll-step": 1,
-        "format": "{icon}   {volume}%",
-        "format-bluetooth": "{volume}% {icon}",
-        "format-bluetooth-muted": "",
-        "format-muted": "",
+        "format": "{icon}",
+        "format-bluetooth": "{icon}",
+        "format-bluetooth-muted": " ",
+        "format-muted": " ",
         "format-icons": {
         "headphone": " ",
-        "default": ["", "", ""]
+        "default": [" ", " ", " "]
         },
-        "on-click": "pavucontrol"
+        "on-click": "~/dotfiles/.config/waybar/scripts/volume.sh"
     },
     "bluetooth": {
         "format-on": "󰂯",
         "format-off": "󰂲",
-        "format-connected": "󰂯 {device_alias}",
-        "format-connected-battery": "󰂯  {device_alias}",
+        "format-connected": "󰋋",
         "tooltip-format-connected": "Battery : {device_battery_percentage}%",
         "on-click-right": "bluetoothctl power $(bluetoothctl show | grep -i \"Powered\" | awk '{print $2}' | xargs -I {} sh -c 'if [ \"$1\" = \"yes\" ]; then echo \"off\"; else echo \"on\"; fi' sh {})",
         "on-click": "blueberry",
@@ -125,9 +104,9 @@
         "drawer": {
             "transition-duration": 600,
             "transition-to-left": true,
-            "click-to-reveal": false
+            "click-to-reveal": true
         },
-        "modules": ["mpris", "cava","image#album-art" ],
+        "modules": ["mpris", "image#album-art" ],
     },
 
     "custom/expand": {
@@ -139,9 +118,9 @@
         "drawer": {
             "transition-duration": 600,
             "transition-to-left": true,
-            "click-to-reveal": true
+            "click-to-reveal": false
         },
-        "modules": ["custom/expand", "tray", "bluetooth" ],
+        "modules": ["custom/expand", "group/music", "tray", "power-profiles-daemon"],
     },
 
 
@@ -161,22 +140,11 @@
         "format": "{title}",
         "format-paused": "",
         "tooltip-format": "{player}\n{artist}\n{album}\n{title}",
-        "ignored-players": ["firefox", "brave"]
+        "ignored-players": ["firefox", "brave"],
+        "on-click": "",
+        "on-click-middle": "play-pause",
     },
 
-    "cava": {
-        "cava_config": "/home/varunadhityagb/.config/cava/config",
-        "source": "auto",
-        "stereo": true,
-        "reverse": false,
-        "bar_delimiter": 0,
-        "monstercat": false,
-        "hide_on_silence": true,
-        "waves": false,
-        "noise_reduction": 0.77,
-        "input_delay": 2,
-        "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█" ],
-    },
 
     "hyprland/submap": {
         "format": "󰘳   {}",

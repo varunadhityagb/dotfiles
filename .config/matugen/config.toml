@@ -37,8 +37,9 @@ input_path = '~/dotfiles/.config/matugen/templates/kitty-colors.conf'
 output_path = '~/dotfiles/.config/kitty/colors.conf'
 
 [templates.swaync]
-input_path = '~/dotfiles/.config/matugen/templates/colors.css'
-output_path = '~/dotfiles/.config/swaync/colors.css'
+input_path = '~/.config/matugen/templates/matugen-swaync.css'
+output_path = '~/.config/swaync/matugen/matugen-swaync.css'
+post_hook = 'swaync-client -rs'
 
 [templates.zathura]
 input_path = '~/dotfiles/.config/matugen/templates/zathura-colors'
@@ -57,3 +58,16 @@ output_path = '~/dotfiles/.config/rofi/matugen-colors.rasi'
 input_path = '~/dotfiles/.config/matugen/templates/swayosd-style.css'
 output_path = '~/dotfiles/.config/swayosd/style.css'
 post_hook = "pkill swayosd-server; swayosd-server &> /dev/null & disown"
+
+[templates.spicetify]
+input_path = '~/dotfiles/.config/matugen/templates/spicetify-colors.ini'
+output_path = '~/dotfiles/.config/spicetify/Themes/Onepunch/color.ini'
+post_hook = "spicetify apply &> /dev/null & disown"
+
+[templates.kvantum]
+input_path = '~/.config/matugen/templates/matugen.kvconfig'
+output_path = '~/dotfiles/.config/Kvantum/matugen/matugen.kvconfig'
+
+[templates.cava]
+input_path = '~/.config/matugen/templates/matugen-cava'
+output_path = '~/.config/cava/config'
