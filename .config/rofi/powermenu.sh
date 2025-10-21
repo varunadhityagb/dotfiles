@@ -4,7 +4,7 @@ uptime="`uptime -p | sed -e 's/up //g'`"
 # Options
 shutdown=' Shutdown'
 reboot=' Reboot'
-lock=' Lock'
+sleep='󰒲 Sleep'
 logout=' Logout'
 
 screen_time="`screen_timer status`"
@@ -18,7 +18,7 @@ rofi_cmd() {
 
 # Pass variables to rofi dmenu
 run_rofi() {
-	echo -e "$lock\n$logout\n$reboot\n$shutdown" | rofi_cmd
+	echo -e "$sleep\n$logout\n$reboot\n$shutdown" | rofi_cmd
 }
 
 chosen="$(run_rofi)"
@@ -29,7 +29,7 @@ case ${chosen} in
     $reboot)
     reboot
         ;;
-    $lock)
+    $sleep)
     systemctl suspend
         ;;
     $logout)

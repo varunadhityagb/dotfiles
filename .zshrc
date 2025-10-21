@@ -51,7 +51,7 @@ export EDITOR=nvim
 export VISUAL=nvim
 alias nvimdiff='nvim -d'
 
-fastfetch
+nitch
 
 # Remove a directory and all files
 alias rmd='/bin/rm  --recursive --force --verbose '
@@ -191,6 +191,17 @@ get_amrita_photo() {
   fi
 }
 
+
+summarize_dir() {
+for i in $(ls); do
+       echo "==================================";
+       echo "$i";
+       echo "==================================";
+       cat "$i";
+ done;
+}
+
+
 source <(kubectl completion zsh)
 
 alias ssh="kitty +kitten ssh"
@@ -204,5 +215,7 @@ alias pyact="source .venv/bin/activate"
 alias ppt2pdf="libreoffice --headless --convert-to pdf"
 alias emacsd="emacs --daemon"
 alias hy="hyprctl"
+alias list_packages_by_time="ls -lt /var/lib/pacman/local | awk '{print $9}'
+"
 
 export MESA_LOADER_DRIVER_OVERRIDE=iris

@@ -1,25 +1,32 @@
 #!/bin/bash
 
-# Get current volume
+# Get current volume and mute status
 VOL=$(pamixer --get-volume)
 MUTE=$(pamixer --get-mute)
 
-# Choose icon
+# Choose appropriate icon
 if [ "$MUTE" = "true" ]; then
-    ICON="audio-volume-muted"
+    ICON="volume_muted_dark"
 elif [ "$VOL" -lt 30 ]; then
-    ICON="audio-volume-low"
+    ICON="volume_low_dark"
 elif [ "$VOL" -lt 70 ]; then
-    ICON="audio-volume-medium"
+    ICON="volume_medium_dark"
 else
-    ICON="audio-volume-high"
+    ICON="volume_high_dark"
 fi
 
-# Send notification
-notify-send -h string:x-canonical-private-synchronous:system-info \
-            -h int:value:"$VOL" \
-            -i "$ICON" "Volume: $VOL%"
+VAL=$(awk -v vol="$VOL" 'BEGIN { printf "%.2f", vol / 100 }')
 
-swayosd-client --custom-icon="$ICON" \
-               --custom-progress=$(echo "scale=2; $VOL / 100" | bc) \
-               --custom-progress-text="$VOL%"
+# Check if VAL > 1
+if (( $(echo "$VAL > 1" | bc -l) )); then
+    # Wrap value into 0–1 range
+    WRAPPED_VAL=$(awk -v val="$VAL" 'BEGIN { printf "%.2f", val - int(val) }')
+
+    avizo-client --image-resource="$ICON" \
+                 --progress="$WRAPPED_VAL" \
+                 --bar-fg-color=red
+
+else
+    avizo-client --image-resource="$ICON" \
+                 --progress="$VAL"
+fi

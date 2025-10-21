@@ -2,8 +2,8 @@
 
 # --- CONFIG ---
 WALLPAPER_DIR="$HOME/wallpaper"
-DAY_IMAGES=8
-NIGHT_IMAGES=4
+DAY_IMAGES=5
+NIGHT_IMAGES=2
 
 # Get color or test time
 if [ "$1" == "--test" ]; then

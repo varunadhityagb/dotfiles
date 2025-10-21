@@ -17,13 +17,18 @@ BRIGHTNESS_PERCENT=$(( BRIGHTNESS * 100 / MAX_BRIGHTNESS ))
 
 # Choose icon
 if [ "$BRIGHTNESS_PERCENT" -lt 30 ]; then
-    ICON="display-brightness-low"
+    ICON="brightness_low_dark"
 elif [ "$BRIGHTNESS_PERCENT" -lt 70 ]; then
-    ICON="display-brightness-medium"
+    ICON="brightness_medium_dark"
 else
-    ICON="display-brightness-high"
+    ICON="brightness_high_dark"
 fi
 
-swayosd-client --custom-icon="$ICON" \
-               --custom-progress=$(echo "scale=2; $BRIGHTNESS_PERCENT / 100" | bc) \
-               --custom-progress-text="$BRIGHTNESS_PERCENT%"
+# swayosd-client --custom-icon="$ICON" \
+#                --custom-progress= \
+#                --custom-progress-text="$BRIGHTNESS_PERCENT%"
+
+avizo-client --image-resource="$ICON" \
+             --progress=$(echo "scale=2; $BRIGHTNESS_PERCENT / 100" | bc)
+
+  # --background=STRING

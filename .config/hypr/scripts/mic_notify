@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Get current volume and mute status
+VOL=$(pamixer --default-source --get-volume)
+MUTE=$(pamixer --default-source --get-mute)
+
+# Choose appropriate icon
+if [ "$MUTE" = "true" ]; then
+    ICON="mic_muted"
+else
+    ICON="mic_unmuted"
+fi
+
+VAL=$(awk -v vol="$VOL" 'BEGIN { printf "%.2f", vol / 100 }')
+
+avizo-client --image-resource="$ICON" \
+             --progress="$VAL"

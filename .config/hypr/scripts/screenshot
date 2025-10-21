@@ -59,4 +59,4 @@ case "$ACTION" in
 esac
 
 # Run the screenshot command pipeline
-eval "$SOURCE_CMD" | satty "${SATTY_OPTIONS[@]}"
+eval "$SOURCE_CMD" | swappy -f -
