@@ -11,6 +11,9 @@ export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 export PATH=$HOME/.config/emacs/bin:$PATH
 export PATH=$HOME/.local/share/gem/ruby/3.4.0/bin:$PATH
 
+export PATH="$HOME/.local/bin:$PATH"
+export LD_LIBRARY_PATH="$HOME/.local/lib:$LD_LIBRARY_PATH"
+export PKG_CONFIG_PATH="$HOME/.local/lib/pkgconfig:$PKG_CONFIG_PATH"
 
 # Uncomment the following line to enable command auto-correction.
 ENABLE_CORRECTION="true"
@@ -98,15 +101,12 @@ function umhd() {
 }
 export QT_QPA_PLATFORMTHEME=qt5ct
 
-function winboat() {
-  /home/varunadhityagb/AppImages/winboat-0.6.13.AppImage & disown
-}
 
 function get_timetable() {
     if [[ -z $1 ]]; then 
-        ~/random_scripts/timetable.sh 2023 aie e 5
-    elif [[ $1 == +* ]]; then
-        ~/random_scripts/timetable.sh 2023 aie e 5 $1
+        ~/random_scripts/timetable.sh 2023 aie-e 5
+    elif [[ $1 == +* || $1 == -* ]]; then
+        ~/random_scripts/timetable.sh 2023 aie-e 5 $1
     else
         ~/random_scripts/timetable.sh $1 $2 $3 $4
     fi
@@ -193,13 +193,63 @@ get_amrita_photo() {
 
 
 summarize_dir() {
-for i in $(ls); do
-       echo "==================================";
-       echo "$i";
-       echo "==================================";
-       cat "$i";
- done;
+    exclude=("$@")          # Exclude directories passed as arguments
+    file_types=()           # Array for file type filters (leave empty to include all)
+
+    for i in */; do
+        dir="${i%/}"
+
+        skip=false
+        for ex in "${exclude[@]}"; do
+            if [ "$dir" = "$ex" ]; then
+                skip=true
+                break
+            fi
+        done
+
+        if [ "$skip" = true ]; then
+            continue
+        fi
+
+        _summarize_recursive "$dir"
+    done
 }
+
+_summarize_recursive() {
+    for item in "$1"/*; do
+        if [ -d "$item" ]; then
+            _summarize_recursive "$item"
+        else
+            # Check if file extension matches allowed file types (if any)
+            if _is_included_file_type "$item"; then
+                echo "=================================="
+                echo "$item"
+                echo "=================================="
+                cat "$item"
+                echo -e "\n\n"
+            fi
+        fi
+    done
+}
+
+_is_included_file_type() {
+    # If no file types are specified, include all files
+    if [ ${#file_types[@]} -eq 0 ]; then
+        return 0
+    fi
+
+    # Check if the file extension is in the allowed list
+    for ext in "${file_types[@]}"; do
+        if [[ "$1" == *.$ext ]]; then
+            return 0
+        fi
+    done
+
+    # If no match, exclude the file
+    return 1
+}
+
+
 
 
 source <(kubectl completion zsh)

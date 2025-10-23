@@ -3,8 +3,8 @@
 (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 16 :weight 'regular))
 (setq doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font" :size 14 :weight 'regular))
 
-(setq doom-theme 'deeper-blue)
-(add-to-list 'default-frame-alist '(alpha-background . 95))
+(setq doom-theme 'doom-matugen)
+(add-to-list 'default-frame-alist '(alpha-background . 80))
 
 (setq display-line-numbers-type 'relative)
 
@@ -130,7 +130,7 @@
       '("xelatex -shell-escape -interaction nonstopmode -output-directory=%o %f"
         "xelatex -shell-escape -interaction nonstopmode -output-directory=%o %f"))
 
-(setq fancy-splash-image (concat doom-private-dir "varun.png"))
+;; (setq fancy-splash-image (concat doom-private-dir "varun.png"))
 
 (defun +latex/clean ()
   "Delete auxiliary LaTeX files in the current directory."
@@ -169,3 +169,33 @@
          ("k" . 'yeetube-remove-saved-video)
          )
   )
+
+(setq custom-safe-themes t)
+
+(defvar my/theme-file-mtime nil)
+(defvar my/theme-file (expand-file-name "themes/doom-matugen-theme.el" doom-user-dir))
+
+(defun my/reload-matugen-theme-if-changed ()
+  (when (file-exists-p my/theme-file)
+    (let ((current-mtime (file-attribute-modification-time
+                          (file-attributes my/theme-file))))
+      (when (and current-mtime
+                 (or (not my/theme-file-mtime)
+                     (time-less-p my/theme-file-mtime current-mtime)))
+        (setq my/theme-file-mtime current-mtime)
+        (load-theme 'doom-matugen t)
+        (message "Matugen theme reloaded!")))))
+
+(add-hook 'server-after-make-frame-hook #'my/reload-matugen-theme-if-changed)
+
+(add-hook 'focus-in-hook #'my/reload-matugen-theme-if-changed)
+
+(setq doom-theme 'doom-matugen)
+
+(defun my/reload-theme ()
+  (interactive)
+  (load-theme 'doom-matugen t)
+  (message "Theme reloaded!"))
+
+(map! :leader
+      :desc "Reload theme" "h h" #'my/reload-theme)

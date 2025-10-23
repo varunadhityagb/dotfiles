@@ -39,7 +39,6 @@ output_path = '~/dotfiles/.config/kitty/colors.conf'
 [templates.swaync]
 input_path = '~/.config/matugen/templates/matugen-swaync.css'
 output_path = '~/.config/swaync/matugen/matugen-swaync.css'
-post_hook = 'swaync-client -rs'
 
 [templates.zathura]
 input_path = '~/dotfiles/.config/matugen/templates/zathura-colors'
@@ -62,7 +61,7 @@ post_hook = "pkill swayosd-server; swayosd-server &> /dev/null & disown"
 [templates.spicetify]
 input_path = '~/dotfiles/.config/matugen/templates/spicetify-colors.ini'
 output_path = '~/dotfiles/.config/spicetify/Themes/Onepunch/color.ini'
-post_hook = "spicetify apply &> /dev/null & disown"
+post_hook = "spicetify apply --no-restart &> /dev/null & disown"
 
 [templates.kvantum]
 input_path = '~/.config/matugen/templates/matugen.kvconfig'
@@ -71,3 +70,11 @@ output_path = '~/dotfiles/.config/Kvantum/matugen/matugen.kvconfig'
 [templates.cava]
 input_path = '~/.config/matugen/templates/matugen-cava'
 output_path = '~/.config/cava/config'
+
+[templates.emacs]
+input_path = "~/.config/matugen/templates/doom-matugen-theme.el"
+output_path = "~/.config/doom/themes/doom-matugen-theme.el"
+
+[templates.nvim]
+input_path = "~/dotfiles/.config/matugen/templates/matugen.lua"
+output_path = "~/dotfiles/.config/nvim/lua/plugins/matugen.lua"

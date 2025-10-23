@@ -4,14 +4,14 @@ OUTPUT_DIR="$HOME/Videos"
 
 screenrecording() {
   filename="$OUTPUT_DIR/screenrecording-$(date +'%Y-%m-%d_%H-%M-%S').mp4"
-  notify-send "Screen recording starting..."
+  notify-send "Screen Recorder" "Screen recording starting..."
   sleep 1
   wf-recorder -f "$filename" "$@"
 }
 
 if pgrep -x wf-recorder >/dev/null; then
   pkill -x wf-recorder
-  notify-send "Screen recording saved to $OUTPUT_DIR"
+  notify-send "Screen Recorder" "Screen recording saved to $OUTPUT_DIR"
 elif [[ "$1" == "output" ]]; then
   screenrecording
 else

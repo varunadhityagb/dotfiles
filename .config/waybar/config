@@ -6,7 +6,7 @@
     "reload_style_on_change": true,
     "modules-left": ["hyprland/workspaces", "hyprland/submap"],
     "modules-center": [],
-    "modules-right": ["tray","bluetooth", "battery", "pulseaudio", "network", "clock", "custom/dnd"],
+    "modules-right": ["tray","bluetooth", "battery", "pulseaudio", "network", "clock"],
 
     "image#album-art": {
         "exec": "~/album_art.sh",
@@ -38,11 +38,16 @@
             "*": [1,2,3,4,5]
         },
         "format-icons": {
-            "1": "",
-            "2": "󰈙",
-            "3": "",
-            "4": "",
-            "5": "󰝚"
+            "1": "Code",
+            "2": "Documents",
+            "3": "Browser",
+            "4": "Messages",
+            "5": "Media",
+            "6": "M1",
+            "7": "M2",
+            "8": "M3",
+            "9": "M4",
+            "10": "M5"
         }
     },
 
@@ -65,7 +70,7 @@
         },
         "format": "{icon}   {capacity}%",
         "format-icons": [" ", " ", " ", " ", " "],
-        "on-click": "~/dotfiles/.config/waybar/scripts/battery.sh"
+        "on-click": "~/dotfiles/.config/waybar/scripts/battery.sh",
     },
 
     "pulseaudio": {
@@ -86,7 +91,7 @@
         "format-connected": "󰋋",
         "tooltip-format-connected": "Battery : {device_battery_percentage}%",
         "on-click-right": "bluetoothctl power $(bluetoothctl show | grep -i \"Powered\" | awk '{print $2}' | xargs -I {} sh -c 'if [ \"$1\" = \"yes\" ]; then echo \"off\"; else echo \"on\"; fi' sh {})",
-        "on-click": "blueberry",
+        "on-click": "~/dotfiles/.config/waybar/scripts/bluetooth.sh"
     },
 
     "custom/dnd": {
