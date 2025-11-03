@@ -1,6 +1,7 @@
 #!/bin/bash
 mode=$(echo -e "screen1\nscreen2\nmult\nmirror" | rofi -dmenu)
 monitor_file="$HOME/dotfiles/.config/hypr/modules/monitors.conf"
+monitor_curr="$HOME/dotfiles/.config/hypr/modules/monitor"
 
 screen1="monitor = HDMI-A-1, disable\nmonitor = eDP-1, highress@highrr, auto, 1"
 screen2="monitor = HDMI-A-1, highress@highrr, auto, 1\nmonitor = eDP-1, disable"
@@ -10,14 +11,18 @@ mirror="monitor = HDMI-A-1, highress@highrr, auto, 1, mirror, eDP-1\nmonitor = e
 case $mode in
     "screen1")
         printf "%b\n" "$screen1" > "$monitor_file"
+        echo "0" > "$monitor_curr"
         ;;
     "screen2")
         printf "%b\n" "$screen2" > "$monitor_file"
+        echo "1" > "$monitor_curr"
         ;;
     "mult")
         printf "%b\n" "$mult" > "$monitor_file"
+        echo "2" > "$monitor_curr"
         ;;
     "mirror")
         printf "%b\n" "$mirror" > "$monitor_file"
+        echo "3" > "$monitor_curr"
         ;;
 esac

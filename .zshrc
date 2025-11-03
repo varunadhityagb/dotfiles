@@ -196,6 +196,18 @@ summarize_dir() {
     exclude=("$@")          # Exclude directories passed as arguments
     file_types=()           # Array for file type filters (leave empty to include all)
 
+    for item in *; do
+            if [ -f "$item" ]; then
+                if _is_included_file_type "$item"; then
+                    echo "=================================="
+                    echo "$item"
+                    echo "=================================="
+                    cat "$item"
+                    echo -e "\n\n"
+                fi
+            fi
+        done
+
     for i in */; do
         dir="${i%/}"
 
@@ -249,8 +261,8 @@ _is_included_file_type() {
     return 1
 }
 
-
-
+get_group_id() {mudslide groups 2>/dev/null | grep "$1" | jq -r '.id'}
+send_whatsapp_msg() { mudslide send $(get_group_id "$1") $2 }
 
 source <(kubectl completion zsh)
 
@@ -269,3 +281,7 @@ alias list_packages_by_time="ls -lt /var/lib/pacman/local | awk '{print $9}'
 "
 
 export MESA_LOADER_DRIVER_OVERRIDE=iris
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

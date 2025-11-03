@@ -11,7 +11,8 @@ option_8="󰝆"
 
 # Rofi CMD
 rofi_cmd() {
-	rofi -theme-str "listview {columns: 1; lines: 4;}" \
+	rofi -kb-element-prev "Ctrl+[45]" -kb-element-next "Ctrl+[44]" -kb-mode-previous "Ctrl+[43]" -kb-mode-next "Ctrl+[46]" \
+        -theme-str "listview {columns: 1; lines: 4;}" \
 		-theme-str 'textbox-prompt-colon {str: "";}' \
 		-dmenu \
 		-markup-rows \
