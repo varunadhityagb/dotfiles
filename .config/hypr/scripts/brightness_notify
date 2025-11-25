@@ -1,19 +1,19 @@
 #!/bin/bash
 
-if  [[ $1 -eq 0 ]]; then
+if [[ $1 -eq 0 ]]; then
     DEVICE=""
     BRIGHTNESS=$(brightnessctl get)
     MAX_BRIGHTNESS=$(brightnessctl max)
 elif [[ $1 -eq 1 ]]; then
     DEVICE="Monitor"
-    BRIGHTNESS=$(ddcutil getvcp 10 --bus 1 | awk -F'=' '{ print $2 }' | awk -F',' '{print $1}')
-    MAX_BRIGHTNESS=$(ddcutil getvcp 10 --bus 1 | awk -F'=' '/Brightness/ { gsub(/,/, "", $3); print $3 }')
+    BRIGHTNESS=$(ddcutil getvcp 10 --bus 3 | awk -F'=' '{ print $2 }' | awk -F',' '{print $1}')
+    MAX_BRIGHTNESS=$(ddcutil getvcp 10 --bus 3 | awk -F'=' '/Brightness/ { gsub(/,/, "", $3); print $3 }')
 else
     echo "Usage: $0 [0|1]"
     exit 1
 fi
 
-BRIGHTNESS_PERCENT=$(( BRIGHTNESS * 100 / MAX_BRIGHTNESS ))
+BRIGHTNESS_PERCENT=$((BRIGHTNESS * 100 / MAX_BRIGHTNESS))
 
 # Choose icon
 if [ "$BRIGHTNESS_PERCENT" -lt 30 ]; then
@@ -29,6 +29,6 @@ fi
 #                --custom-progress-text="$BRIGHTNESS_PERCENT%"
 
 avizo-client --image-resource="$ICON" \
-             --progress=$(echo "scale=2; $BRIGHTNESS_PERCENT / 100" | bc)
+    --progress=$(echo "scale=2; $BRIGHTNESS_PERCENT / 100" | bc)
 
-  # --background=STRING
+# --background=STRING

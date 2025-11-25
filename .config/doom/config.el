@@ -12,7 +12,11 @@
 (setq org-latex-src-block-backend 'listings)
 (setq confirm-kill-emacs nil)
 (load! "babel-config.el")
+
 (require 'ob-async)
+(require 'ruff-format)
+
+(add-hook 'python-mode-hook 'ruff-format-on-save-mode)
 
 ;; setup file
 (defun insert-setupfile()
@@ -112,3 +116,16 @@
       initial-buffer-choice (lambda () (get-buffer "*scratch*"))
       doom-fallback-buffer-name "*scratch*"
       doom-fallback-buffer-major-mode 'lisp-interaction-mode)
+
+
+(add-hook 'dired-mode-hook 'dired-hide-details-mode t)
+
+(defun projectile-gc-projects ()
+  "Remove non-existent directories from `projectile-known-projects'."
+  (interactive)
+  (let ((old-projects projectile-known-projects))
+    (setq projectile-known-projects
+          (--select (file-exists-p it) old-projects))
+    (unless (= (length old-projects) (length projectile-known-projects))
+      (message "Projectile: Cleaned up %d non-existent project(s)."
+               (- (length old-projects) (length projectile-known-projects))))))

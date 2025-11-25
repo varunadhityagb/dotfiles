@@ -121,7 +121,7 @@
        lua               ; one-based indices? one-based indices
        (markdown +grip)          ; writing docs for people to ignore
        (org +gnuplot +jupyter +ipython +pretty +present)               ; organize your plain life in plain text
-       (python +lsp +tree-sitter +conda)            ; beautiful is better than ugly
+       (python +lsp +tree-sitter)            ; beautiful is better than ugly
        ;; qt                ; the 'cutest' gui framework ever
        (rust +tree-sitter +lsp)       ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;; scala             ; java, but good

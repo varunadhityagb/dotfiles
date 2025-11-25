@@ -63,6 +63,7 @@
 (package! mpv)
 (package! yeetube)
 (package! mines)
+(package! ruff-format)
 
 (package! doom-matugen-theme
   :recipe (:local-repo "themes"))

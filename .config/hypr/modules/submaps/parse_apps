@@ -1,0 +1,13 @@
+#!/bin/python3
+
+FILE_PATH = "/home/varunadhityagb/dotfiles/.config/hypr/modules/submaps/apps.conf"
+
+with open(FILE_PATH) as file:
+    data = file.readlines()
+
+start_idx = data.index("# ---\n")
+end_idx = data.index("# ---\n", start_idx+1)
+
+data = data[start_idx+1:end_idx]
+
+print(data)

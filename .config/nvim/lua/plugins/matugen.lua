@@ -19,41 +19,41 @@ return {
       -- Matugen colors
       local colors = {
         -- Base colors
-        background = "#0e1415",
-        foreground = "#dee4e4",
+        background = "#101417",
+        foreground = "#e0e3e8",
 
         -- Surface colors
-        surface = "#0e1415",
-        surface_bright = "#343a3b",
-        surface_container = "#1b2122",
-        surface_container_high = "#252b2c",
-        surface_container_highest = "#303637",
-        surface_container_low = "#171d1e",
-        surface_container_lowest = "#090f10",
+        surface = "#101417",
+        surface_bright = "#363a3e",
+        surface_container = "#1c2024",
+        surface_container_high = "#262a2e",
+        surface_container_highest = "#313539",
+        surface_container_low = "#181c20",
+        surface_container_lowest = "#0b0f12",
 
         -- Primary colors
-        primary = "#81d3df",
-        primary_container = "#004f57",
-        primary_fixed = "#9df0fb",
-        primary_fixed_dim = "#81d3df",
-        on_primary = "#00363c",
-        on_primary_container = "#9df0fb",
+        primary = "#95cdf7",
+        primary_container = "#004b6f",
+        primary_fixed = "#c9e6ff",
+        primary_fixed_dim = "#95cdf7",
+        on_primary = "#00344e",
+        on_primary_container = "#c9e6ff",
 
         -- Secondary colors
-        secondary = "#b1cbcf",
-        secondary_container = "#324b4e",
-        secondary_fixed = "#cde7eb",
-        secondary_fixed_dim = "#b1cbcf",
-        on_secondary = "#1c3438",
-        on_secondary_container = "#cde7eb",
+        secondary = "#b7c9d9",
+        secondary_container = "#384956",
+        secondary_fixed = "#d3e5f5",
+        secondary_fixed_dim = "#b7c9d9",
+        on_secondary = "#22323f",
+        on_secondary_container = "#d3e5f5",
 
         -- Tertiary colors
-        tertiary = "#b9c6ea",
-        tertiary_container = "#3a4664",
-        tertiary_fixed = "#d9e2ff",
-        tertiary_fixed_dim = "#b9c6ea",
-        on_tertiary = "#23304d",
-        on_tertiary_container = "#d9e2ff",
+        tertiary = "#cfc0e8",
+        tertiary_container = "#4c4162",
+        tertiary_fixed = "#eaddff",
+        tertiary_fixed_dim = "#cfc0e8",
+        on_tertiary = "#352b4b",
+        on_tertiary_container = "#eaddff",
 
         -- Error colors
         error = "#ffb4ab",
@@ -62,13 +62,13 @@ return {
         on_error_container = "#ffdad6",
 
         -- Other colors
-        outline = "#899294",
-        outline_variant = "#3f484a",
-        on_surface = "#dee4e4",
-        on_surface_variant = "#bec8ca",
-        inverse_surface = "#dee4e4",
-        inverse_on_surface = "#2b3132",
-        inverse_primary = "#006973",
+        outline = "#8b9198",
+        outline_variant = "#41474d",
+        on_surface = "#e0e3e8",
+        on_surface_variant = "#c1c7ce",
+        inverse_surface = "#e0e3e8",
+        inverse_on_surface = "#2d3135",
+        inverse_primary = "#266489",
         shadow = "#000000",
         scrim = "#000000",
       }

@@ -4,7 +4,7 @@
 [init]
   defaultBranch = main
 [core]
-  editor = nvim
+  editor = emacsclient
 [diff]
   tool = vimdiff
 [credential]
@@ -14,3 +14,5 @@
 	process = git-lfs filter-process
 	required = true
 	clean = git-lfs clean -- %f
+[push]
+	autoSetupRemote = true

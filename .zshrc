@@ -78,15 +78,6 @@ source <(starship init zsh)
 
 #for matlab to use gpu
 export MESA_LOADER_DRIVER_OVERRIDE=i965
-
-function y() {
-    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-    yazi "$@" --cwd-file="$tmp"
-    if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-        builtin cd -- "$cwd"
-    fi
-    rm -f -- "$tmp"
-}
 autoload -U compinit; compinit
 export DOCKER_HOST=unix:///var/run/docker.sock
 
@@ -191,10 +182,10 @@ get_amrita_photo() {
   fi
 }
 
+file_types=()           # Array for file type filters (leave empty to include all)
 
 summarize_dir() {
     exclude=("$@")          # Exclude directories passed as arguments
-    file_types=()           # Array for file type filters (leave empty to include all)
 
     for item in *; do
             if [ -f "$item" ]; then
@@ -263,6 +254,11 @@ _is_included_file_type() {
 
 get_group_id() {mudslide groups 2>/dev/null | grep "$1" | jq -r '.id'}
 send_whatsapp_msg() { mudslide send $(get_group_id "$1") $2 }
+http_status(){
+  for port in "$@"; do
+    curl -s https://http.cat/$port | icat
+  done
+}
 
 source <(kubectl completion zsh)
 
@@ -277,11 +273,17 @@ alias pyact="source .venv/bin/activate"
 alias ppt2pdf="libreoffice --headless --convert-to pdf"
 alias emacsd="emacs --daemon"
 alias hy="hyprctl"
-alias list_packages_by_time="ls -lt /var/lib/pacman/local | awk '{print $9}'
-"
+alias ls="lsd"
+alias l="lsd -l"
+alias list_packages_by_time="lsd -lt /var/lib/pacman/local | awk '{print $9}'"
+alias em="emacsclient"
 
 export MESA_LOADER_DRIVER_OVERRIDE=iris
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+fpath+=~/.zfunc; autoload -Uz compinit; compinit
+
+zstyle ':completion:*' menu select

@@ -1,17 +1,15 @@
 #!/bin/bash
 
-if pgrep -x "hyprsunset" > /dev/null
-then
+if pgrep -x "hyprsunset" >/dev/null; then
     echo "hyprsunset is already running"
-    killall hyprsunset;
+    killall hyprsunset
 else
     echo "hyprsunset is not running"
     value=$(rofi -dmenu -i -p "Enter the value")
-    if [ -z "$value" ]
-    then
-         hyprsunset -t 4500;
+    if [ -z "$value" ]; then
+        hyprsunset -t 4500
         exit
     else
-         hyprsunset -t $value;
+        hyprsunset -t $value
     fi
 fi

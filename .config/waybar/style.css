@@ -34,6 +34,7 @@ tooltip label {
 #power-profiles-daemon,
 #custom-expand,
 #custom-expand2,
+#custom-updates,
 #cpu,
 #memory,
 #disk,
@@ -42,7 +43,8 @@ tooltip label {
 #workspaces,
 #mpris,
 #cava,
-#tray {
+#tray,
+#submap {
     color: @primary_fixed;
     margin: 0px 5px 0px 5px;
     padding-right: 8px;

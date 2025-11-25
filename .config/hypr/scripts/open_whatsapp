@@ -1,0 +1,16 @@
+stat=$(hyprctl clients)
+open_windows=$(echo "$stat" | grep 'whatsapp')
+
+if [[ -z "$open_windows" ]]; then
+    brave --app=https://web.whatsapp.com/
+else
+    target_title="web.whatsapp.com"
+
+    addr=$(hyprctl clients -j | jq -r --arg title "$target_title" '.[] | select(.title == $title) | .address' | head -n 1)
+
+    if [ -n "$addr" ]; then
+        hyprctl dispatch focuswindow "address:$addr"
+    else
+        echo "No window found with title \"$target_title\""
+    fi
+fi

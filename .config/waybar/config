@@ -6,7 +6,7 @@
     "reload_style_on_change": true,
     "modules-left": ["hyprland/workspaces", "hyprland/submap"],
     "modules-center": [],
-    "modules-right": ["tray","bluetooth", "battery", "pulseaudio", "network", "clock"],
+    "modules-right": ["tray", "custom/updates", "bluetooth", "battery", "pulseaudio", "network", "clock"],
 
     "image#album-art": {
         "exec": "~/album_art.sh",
@@ -55,6 +55,16 @@
         "format": "",
         "on-click": "~/dotfiles/rofi/powermenu.sh",
         "tooltip-format": "Power Menu"
+    },
+
+    "custom/updates": {
+        "format": "   {}",
+        "escape": true,
+        "return-type": "json",
+        "exec": "~/.config/hypr/scripts/updates.sh",
+        "interval": 1800,
+        "signal": 1,
+        "hide-empty-text": true,
     },
 
     "tray": {
