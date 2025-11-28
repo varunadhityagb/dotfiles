@@ -1,113 +1,223 @@
-/***
- *    ┳┓┏┓┏┳┓┳┏┓┳┏┓┏┓┏┳┓┳┏┓┳┓
- *    ┃┃┃┃ ┃ ┃┣ ┃┃ ┣┫ ┃ ┃┃┃┃┃
- *    ┛┗┗┛ ┻ ┻┻ ┻┗┛┛┗ ┻ ┻┗┛┛┗
- *                           
+/* ┳┓┏┓┏┳┓┳┏┓┳┏┓┏┓┏┳┓┳┏┓┳┓
+ * ┃┃┃┃ ┃ ┃┣ ┃┃ ┣┫ ┃ ┃┃┃┃┃
+ * ┛┗┗┛ ┻ ┻┻ ┻┗┛┛┗ ┻ ┻┗┛┛┗
+ * LIQUID GLASS EDITION
  */
 
 @define-color text            @on_surface;
 @define-color background-alt  @surface_bright;
 @define-color selected        @primary;
-@define-color hover           alpha(@selected, .4);
+@define-color hover           alpha(@selected, .5);
 @define-color urgent          @error;
 
 * {
-
-  color: @text;
-  all: unset;
-  font-size: 16px;
-  font-family: "GeistMono Nerd Font Propo";
-  transition: 200ms;
-
+    color: @text;
+    all: unset;
+    font-size: 16px;
+    font-family: "GeistMono Nerd Font Propo";
+    transition: 200ms;
 }
 
 .notification-row {
-  color: @text;
-  outline: none;
-  margin: 0;
-  padding: 0px;
+    color: @text;
+    outline: none;
+    margin: 0;
+    padding: 0px;
 }
 
+/* FLOATING NOTIFICATIONS - LIQUID GLASS */
 .floating-notifications.background .notification-row .notification-background {
-  background: @background;
-  box-shadow: 0 0 8px 0 rgba(0,0,0,.6);
-  border: 1px solid @selected;
-  border-radius: 24px;
-  margin: 16px;
-  padding: 0;
+    /* Premium liquid glass effect */
+    background-image: linear-gradient(
+        to bottom,
+        alpha(@surface_container, 0.25),
+        rgba(0, 0, 0, 0.025)
+    );
+
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    box-shadow:
+        0px 4px 12px rgba(0, 0, 0, 0.4),
+        0px 1px 3px rgba(0, 0, 0, 0.2);
+
+    margin: 16px;
+    padding: 0;
+    border-radius: 24px;
+
+    /* Glass highlight borders */
+    border-style: none;
+    border-bottom-style: solid;
+    border-top-style: solid;
+    border-bottom-color: alpha(@primary_fixed, 0.15);
+    border-top-color: alpha(@primary_fixed, 0.45);
+    border-width: 1px;
+
+    color: rgb(255, 255, 255);
 }
 
-.floating-notifications.background .notification-row .notification-background .notification {
-  padding: 6px;
-  border-radius: 12px;
+.floating-notifications.background
+    .notification-row
+    .notification-background
+    .notification {
+    padding: 6px;
+    border-radius: 20px;
 }
 
-.floating-notifications.background .notification-row .notification-background .notification.critical {
-  border: 2px solid @urgent;
+.floating-notifications.background
+    .notification-row
+    .notification-background
+    .notification.critical {
+    border: 2px solid alpha(@urgent, 0.7);
+    box-shadow: 0 0 12px alpha(@urgent, 0.3);
 }
 
-.floating-notifications.background .notification-row .notification-background .notification .notification-content {
-  margin: 14px;
+.floating-notifications.background
+    .notification-row
+    .notification-background
+    .notification
+    .notification-content {
+    margin: 14px;
 }
 
-.floating-notifications.background .notification-row .notification-background .notification > *:last-child > * {
-  min-height: 3.4em;
+.floating-notifications.background
+    .notification-row
+    .notification-background
+    .notification
+    > *:last-child
+    > * {
+    min-height: 3.4em;
 }
 
-.floating-notifications.background .notification-row .notification-background .notification > *:last-child > * .notification-action {
-  border-radius: 8px;
-  background-color: @background-alt ;
-  margin: 6px;
-  border: 1px solid transparent;
+/* Glass Action Buttons */
+.floating-notifications.background
+    .notification-row
+    .notification-background
+    .notification
+    > *:last-child
+    > *
+    .notification-action {
+    border-radius: 10px;
+    background-image: linear-gradient(
+        to bottom,
+        alpha(@background-alt, 0.5),
+        alpha(@background-alt, 0.3)
+    );
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    margin: 6px;
+    border: 1px solid alpha(@selected, 0.3);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-.floating-notifications.background .notification-row .notification-background .notification > *:last-child > * .notification-action:hover {
-  background-color: @hover;
-  border: 1px solid @selected;
+.floating-notifications.background
+    .notification-row
+    .notification-background
+    .notification
+    > *:last-child
+    > *
+    .notification-action:hover {
+    background-image: linear-gradient(
+        to bottom,
+        alpha(@hover, 0.6),
+        alpha(@hover, 0.4)
+    );
+    border-color: @selected;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
 }
 
-.floating-notifications.background .notification-row .notification-background .notification > *:last-child > * .notification-action:active {
-  background-color: @selected;
-  color: @background;
+.floating-notifications.background
+    .notification-row
+    .notification-background
+    .notification
+    > *:last-child
+    > *
+    .notification-action:active {
+    background-color: @selected;
+    color: @background;
 }
 
+/* Image Styling */
 .image {
-  margin: 10px 20px 10px 0px;
+    margin: 10px 20px 10px 0px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
+/* Text Styling with Glass Aesthetics */
 .summary {
-  font-weight: 800;
-  font-size: 1rem;
+    font-weight: 800;
+    font-size: 1rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .body {
-  font-size: 0.8rem;
+    font-size: 0.8rem;
+    opacity: 0.95;
 }
 
-.floating-notifications.background .notification-row .notification-background .close-button {
-  margin: 6px;
-  padding: 2px;
-  border-radius: 6px;
-  background-color: transparent;
-  border: 1px solid transparent;
+/* Close Button - Liquid Glass */
+.floating-notifications.background
+    .notification-row
+    .notification-background
+    .close-button {
+    margin: 6px;
+    padding: 2px;
+    border-radius: 8px;
+    background-image: linear-gradient(
+        to bottom,
+        alpha(@surface_container, 0.4),
+        alpha(@surface_container, 0.2)
+    );
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid alpha(@primary_fixed, 0.2);
 }
 
-.floating-notifications.background .notification-row .notification-background .close-button:hover {
-  background-color: @selected;
-  color: @background;
+.floating-notifications.background
+    .notification-row
+    .notification-background
+    .close-button:hover {
+    background-image: linear-gradient(
+        to bottom,
+        alpha(@selected, 0.7),
+        alpha(@selected, 0.5)
+    );
+    border-color: @selected;
+    color: @background;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
-.floating-notifications.background .notification-row .notification-background .close-button:active {
-  background-color: @selected;
-  color: @background;
+.floating-notifications.background
+    .notification-row
+    .notification-background
+    .close-button:active {
+    background-color: @selected;
+    color: @background;
 }
 
+/* Progress Bar - Glass Style */
 .notification.critical progress {
-  background-color: @selected;
+    background-image: linear-gradient(
+        to right,
+        alpha(@urgent, 0.6),
+        alpha(@urgent, 0.4)
+    );
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .notification.low progress,
 .notification.normal progress {
-  background-color: @selected;
+    background-image: linear-gradient(
+        to right,
+        alpha(@selected, 0.6),
+        alpha(@selected, 0.4)
+    );
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
-

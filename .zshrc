@@ -50,8 +50,7 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 export LIBVIRT_DEFAULT_URI="qemu:///system"
 
 # Set the default editor
-export EDITOR=nvim
-export VISUAL=nvim
+export EDITOR=emacsclient
 alias nvimdiff='nvim -d'
 
 nitch
@@ -160,7 +159,7 @@ get_amrita_photo() {
   fi
 
   ROLL_NO="$1"
-  
+
   if [ -z "$2" ]; then 
       curl -sS -X GET "https://my.amrita.edu/icts/admn_port_down/profpic_student.php?roll_no=${ROLL_NO}" \
         -H 'Accept: image/avif,image/webp,image/apng,image/*,*/*;q=0.8' \
@@ -280,10 +279,32 @@ alias em="emacsclient"
 
 export MESA_LOADER_DRIVER_OVERRIDE=iris
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+load_nvm() {
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+  unfunction nvm node npm npx 2>/dev/null
+}
 
-fpath+=~/.zfunc; autoload -Uz compinit; compinit
+load_bun() {
+  export BUN_INSTALL="$HOME/.bun"
+  export PATH="$BUN_INSTALL/bin:$PATH"
+  # Load bun completions only when needed
+  [ -s "$BUN_INSTALL/_bun" ] && source "$BUN_INSTALL/_bun"
+  unfunction bun 2>/dev/null
+}
+
+
+# ----- NVM lazy shims -----
+nvm()  { load_nvm; nvm "$@"; }
+node() { load_nvm; node "$@"; }
+npm()  { load_nvm; npm "$@"; }
+npx()  { load_nvm; npx "$@"; }
+
+# ----- Bun lazy shim -----
+bun()  { load_bun; bun "$@"; }
+
+autoload -Uz compinit
+compinit -C
 
 zstyle ':completion:*' menu select

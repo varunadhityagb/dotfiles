@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Check for active screencast sessions
+if busctl --user call org.freedesktop.portal.Desktop /org/freedesktop/portal/desktop org.freedesktop.DBus.Properties Get ss org.freedesktop.portal.ScreenCast ActiveSessions 2>/dev/null | grep -q "array"; then
+    echo "yes"
+else
+    echo ""
+fi

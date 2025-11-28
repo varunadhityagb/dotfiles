@@ -1,29 +1,44 @@
 @import "colors.css";
+@define-color accent_color @primary_fixed;
 
 * {
+    border: none;
+    border-radius: 8;
+    min-height: 0;
     font-family: "SF Pro Display";
     font-size: 15px;
+    padding: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    background: transparent;
 }
 
 .modules-left,
 .modules-right,
 .modules-center {
-    padding: 7px 7px 7px 0px;
+    padding: 1px;
 }
 
 window#waybar {
-    all: unset;
-    background-color: rgba(27, 27, 27, 0.7);
+    border-radius: 12px;
+    border-width: 1px;
+    border-bottom-width: 1px;
+    padding: 0px;
+
+    border-style: solid;
+    border-color: alpha(@primary_fixed, 0.2);
 }
 
 tooltip {
-    border-radius: 10px;
-    background-color: @on_primary_fixed;
-    opacity: 0.8;
+    color: white;
+    border-top-style: solid;
+    border-bottom-style: solid;
+    border-width: 1px;
+    border-top-color: alpha(@primary_fixed, 0.4);
+    border-bottom-color: alpha(@primary_fixed, 0.25);
 }
-
 tooltip label {
-    color: @primary_fixed;
+    color: white;
 }
 
 #clock,
@@ -45,31 +60,94 @@ tooltip label {
 #cava,
 #tray,
 #submap {
-    color: @primary_fixed;
-    margin: 0px 5px 0px 5px;
-    padding-right: 8px;
-    font-weight: bold;
-    border-radius: 6px;
+    background-image: linear-gradient(
+        to bottom,
+        alpha(@primary_fixed, 0.25),
+        rgba(0, 0, 0, 0.025)
+    );
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.34);
+    margin: 4px;
+    padding: 4px 8px;
+    border-radius: 8px;
+    color: rgb(255, 255, 255);
+
+    /* Important style feature in order to give a glassy look! */
+    /* I'm using the top and bottom borders to mimic highlights in highly reflective surfaces, looks good with the glassy-look */
+    border-style: none;
+    border-bottom-style: solid;
+    border-top-style: solid;
+    border-bottom-color: alpha(@primary_fixed, 0.15);
+    border-top-color: alpha(@primary_fixed, 0.45);
+    border-width: 1px;
 }
 
-#image {
-    padding: 0px;
-    margin: -3px;
+#tray menu {
+    background-image: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.75),
+        rgba(0, 0, 0, 0.25)
+    );
+    color: rgba(220, 220, 220, 1);
+    padding: 4px;
+}
+#tray menu menuitem {
+    background-image: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.3),
+        alpha(@primary_fixed, 0.15),
+        rgba(255, 255, 255, 0.3)
+    );
+    margin: 3px;
+    color: rgb(255, 255, 255);
+    border-radius: 4px;
+
+    border-style: none;
+    border-bottom-style: solid;
+    border-top-style: solid;
+    border-bottom-color: alpha(@primary_fixed, 0.15);
+    border-top-color: alpha(@primary_fixed, 0.3);
+    border-width: 1px;
+}
+#tray menu menuitem:hover {
+    color: @accent_color;
+    text-shadow: 0px 0px 6px @accent_color;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
 }
 
 #workspaces button {
-    all: unset;
-    margin: 0px 10px;
-    color: alpha(@primary_fixed, 0.7);
-    transition: all 0.3s ease-in-out;
+    transition-duration: 100ms;
+    all: initial;
+    min-width: 0;
+    color: rgb(255, 255, 255);
+    margin-right: 0.2cm;
+    margin-left: 0.2cm;
+    text-shadow: 0px 0px 4px rgb(135, 135, 135);
 }
 
 #workspaces button.active {
-    color: @on_primary_fixed;
-    background-color: @primary_fixed;
-    border-radius: 5px;
-    padding: 0px 20px;
-    transition: all 0.3s ease-in-out;
+    color: @primary_fixed;
+    text-shadow: 0px 0px 6px @primary_fixed;
+}
+
+#workspaces button:hover {
+    transition-duration: 120ms;
+    color: @primary_fixed;
+    text-shadow: 0px 0px 8px @primary_fixed;
+}
+
+#workspaces button.current_output {
+    color: @secondary_fixed;
+}
+
+#workspaces button.urgent {
+    color: #e78a4e;
+    text-shadow: 0px 0px 6px #e78a4e;
+}
+
+#battery.warning,
+#battery.critical,
+#battery.urgent {
+    color: #fcf520;
 }
 
 #battery.critical:not(.charging) {
@@ -90,10 +168,6 @@ tooltip label {
 #tray > .needs-attention {
     -gtk-icon-effect: highlight;
     color: #eb4d4b;
-}
-
-label:focus {
-    background-color: @primary_fixed;
 }
 
 #custom-expand,

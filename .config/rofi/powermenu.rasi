@@ -15,12 +15,12 @@ window {
 
     enabled:                    true;
     margin:                     0px;
-    padding:                    18px;
+    padding:                    8px;
     border:                     1px solid;
-    border-radius:              18px;
-    border-color:               @primary-container;
+    border-radius:              8px;
+    border-color:               rgba(255, 255, 255, 0.35);
     cursor:                     "default";
-    background-color:           @surface-container;
+    background-color:           rgba(0, 0, 0, 0.45);
 }
 
 mainbox {
@@ -85,6 +85,7 @@ element {
     border-radius:              10px;
     cursor:                     pointer;
     font:                       "JetBrainsMono Nerd Font 12";
+    text-color:                 @on-surface;
 }
 
 element-text {
@@ -96,16 +97,20 @@ element-text {
 }
 
 element normal.normal {
-    background-color:           @surface-container;
+    background-color:           transparent;
     text-color:                 @on-surface;
 }
 
 element alternate.normal {
-    background-color:           @surface-container;
+    background-color:           transparent;
     text-color:                 @on-surface;
 }
 
 element selected.normal {
-    background-color:           @primary;
-    text-color:                 @on-primary;
+    text-color:                 rgba(255, 255, 255, 0.7);
+    background-color:           transparent;
+    border-color:               rgba(255, 255, 255, 0.35);
+    border:                     1px solid;
+    border-radius:              80px;
+
 }

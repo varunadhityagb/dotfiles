@@ -1,0 +1,104 @@
+@import "colors.css";
+
+* {
+    font-family: "SF Pro Display";
+    font-size: 15px;
+}
+
+.modules-left,
+.modules-right,
+.modules-center {
+    padding: 7px 7px 7px 0px;
+}
+
+window#waybar {
+    all: unset;
+    background-color: rgba(27, 27, 27, 0.7);
+}
+
+tooltip {
+    border-radius: 10px;
+    background-color: @on_primary_fixed;
+    opacity: 0.8;
+}
+
+tooltip label {
+    color: @primary_fixed;
+}
+
+#clock,
+#pulseaudio,
+#network,
+#battery,
+#bluetooth,
+#power-profiles-daemon,
+#custom-expand,
+#custom-expand2,
+#custom-updates,
+#cpu,
+#memory,
+#disk,
+#custom-exit,
+#custom-dnd,
+#workspaces,
+#mpris,
+#cava,
+#tray,
+#submap {
+    color: @primary_fixed;
+    margin: 0px 5px 0px 5px;
+    padding-right: 8px;
+    font-weight: bold;
+    border-radius: 6px;
+}
+
+#image {
+    padding: 0px;
+    margin: -3px;
+}
+
+#workspaces button {
+    all: unset;
+    margin: 0px 10px;
+    color: alpha(@primary_fixed, 0.7);
+    transition: all 0.3s ease-in-out;
+}
+
+#workspaces button.active {
+    color: @on_primary_fixed;
+    background-color: @primary_fixed;
+    border-radius: 5px;
+    padding: 0px 20px;
+    transition: all 0.3s ease-in-out;
+}
+
+#battery.critical:not(.charging) {
+    color: red;
+}
+#battery.warning:not(.charging) {
+    color: #ffdb81;
+}
+
+#battery.charging {
+    color: green;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    color: #eb4d4b;
+}
+
+label:focus {
+    background-color: @primary_fixed;
+}
+
+#custom-expand,
+#custom-expand2 {
+    font-size: 16px;
+    color: @primary;
+    transition: all 0.3s ease;
+}

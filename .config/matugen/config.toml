@@ -39,6 +39,7 @@ output_path = '~/dotfiles/.config/kitty/colors.conf'
 [templates.swaync]
 input_path = '~/.config/matugen/templates/matugen-swaync.css'
 output_path = '~/.config/swaync/matugen/matugen-swaync.css'
+post_hook = "swaync-client -rs"
 
 [templates.zathura]
 input_path = '~/dotfiles/.config/matugen/templates/zathura-colors'
