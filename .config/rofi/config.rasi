@@ -28,7 +28,7 @@ window {
     border-radius:              8px;
     border-color:               rgba(255, 255, 255, 0.35);
     cursor:                     "default";
-    background-color:           rgba(0, 0, 0, 0.45);
+    background-color:           rgba(27, 27, 27, 0.45);
 }
 
 mainbox {

@@ -1,10 +1,10 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 16 :weight 'regular))
-(setq doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font" :size 14 :weight 'regular))
+(setq doom-font (font-spec :family "TerminessTTF Nerd Font Mono" :size 20 :weight 'regular))
+(setq doom-variable-pitch-font (font-spec :family "TerminessTTF Nerd Font Mono" :size 24 :weight 'regular))
 
 (setq doom-theme 'doom-matugen)
-(add-to-list 'default-frame-alist '(alpha-background . 80))
+(add-to-list 'default-frame-alist '(alpha-background . 50))
 
 (setq display-line-numbers-type 'relative)
 
@@ -75,6 +75,18 @@
       "f o" #'ffap)
 
 
+(use-package! gptel
+  :config
+  (setq! gptel-model 'gemini-2.5-pro
+         gptel-backend (gptel-make-gemini "Gemini"
+                         :key "REDACTED"
+                         :stream t))
+  gptel-default-mode 'org-mode)
+
+(map! :leader
+      :n "o g" #'gptel
+      :v "o g" #'gptel-rewrite)
+
 ;; for custom theme
 (setq custom-safe-themes t)
 
@@ -107,17 +119,6 @@
       :desc "Reload theme" "h h" #'my/reload-theme)
 
 
-;; disable doom dashboard
-(remove-hook 'doom-init-ui-hook #'+doom-dashboard-init-h)
-(setq +doom-dashboard-functions nil)
-
-;; make scratch buffer the fallback buffer
-(setq inhibit-startup-screen t
-      initial-buffer-choice (lambda () (get-buffer "*scratch*"))
-      doom-fallback-buffer-name "*scratch*"
-      doom-fallback-buffer-major-mode 'lisp-interaction-mode)
-
-
 (add-hook 'dired-mode-hook 'dired-hide-details-mode t)
 
 (defun projectile-gc-projects ()
@@ -129,3 +130,82 @@
     (unless (= (length old-projects) (length projectile-known-projects))
       (message "Projectile: Cleaned up %d non-existent project(s)."
                (- (length old-projects) (length projectile-known-projects))))))
+
+(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
+
+(defvar my/server-local-ip "192.168.1.4")
+(defvar my/server-tailscale-ip "100.70.52.122")
+
+(defun my/on-home-lan-p ()
+  "Return non-nil if the system is on 192.168.1.x network."
+  (let ((output (shell-command-to-string "ip -4 addr show")))
+    (string-match-p "192\\.168\\.1\\." output)))
+
+(defun my/server-url (port)
+  "Return correct URL (LAN or Tailscale) for PORT."
+  (format "http://%s:%s"
+          (if (my/on-home-lan-p)
+              my/server-local-ip
+            my/server-tailscale-ip)
+          port))
+
+(defun my/open-server (port)
+  "Open the correct local/tailscale server link for PORT."
+  (browse-url (my/server-url port)))
+
+
+(defun doom-dashboard-widget-footer ()
+  (insert
+   "\n"
+   (+doom-dashboard--center
+    (- +doom-dashboard--width 4)
+    (with-temp-buffer
+
+      ;; VNC (7900)
+      (insert-text-button
+       (or (nerd-icons-mdicon "nf-md-remote_desktop"
+                              :face 'doom-dashboard-footer-icon :height 1.3)
+           (propertize "VNC" 'face 'doom-dashboard-footer))
+       'action (lambda (_) (my/open-server 7900))
+       'follow-link t
+       'help-echo "Open VNC Browser")
+
+      (insert "   ")
+
+      ;; Deluge (8112)
+      (insert-text-button
+       (or (nerd-icons-mdicon "nf-md-download"
+                              :face 'doom-dashboard-footer-icon :height 1.3)
+           (propertize "Deluge" 'face 'doom-dashboard-footer))
+       'action (lambda (_) (my/open-server 8112))
+       'follow-link t
+       'help-echo "Open Deluge Web UI")
+
+      (insert "   ")
+
+      ;; Jellyfin (8096)
+      (insert-text-button
+       (or (nerd-icons-mdicon "nf-md-video"
+                              :face 'doom-dashboard-footer-icon :height 1.3)
+           (propertize "Jellyfin" 'face 'doom-dashboard-footer))
+       'action (lambda (_) (my/open-server 8096))
+       'follow-link t
+       'help-echo "Open Jellyfin")
+
+      (insert "   ")
+
+      ;; Vaultwarden (10380)
+      (insert-text-button
+       (or (nerd-icons-mdicon "nf-md-lock"
+                              :face 'doom-dashboard-footer-icon :height 1.3)
+           (propertize "Vaultwarden" 'face 'doom-dashboard-footer))
+       'action (lambda (_) (browse-url  "https://vault.varunadhityagb.live"))
+       'follow-link t
+       'help-echo "Open Vaultwarden")
+
+      (buffer-string)))
+   "\n"))
+
+(require 'org-tempo)
+
+(add-to-list 'auto-mode-alist '("\\.astro\\'" . web-mode))

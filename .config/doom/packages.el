@@ -64,6 +64,7 @@
 (package! yeetube)
 (package! mines)
 (package! ruff-format)
+(package! gptel :recipe (:nonrecursive t))
 
 (package! doom-matugen-theme
   :recipe (:local-repo "themes"))

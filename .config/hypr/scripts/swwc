@@ -1,3 +1,5 @@
 #!/bin/bash
+WALLPAPER_DIR="$HOME/wallpaper"
 swww img $1
+cp $1 ${WALLPAPER_DIR}/curr.jpg
 /home/varunadhityagb/dotfiles/.config/hypr/scripts/generate_clipse_theme.py /home/varunadhityagb/.cache/wal/colors.json /home/varunadhityagb/dotfiles/.config/clipse/custom_theme.json

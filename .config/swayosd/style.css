@@ -2,7 +2,7 @@ window#osd {
     padding: 12px 20px;
     border-radius: 10px;
     border: none;
-    background: #004b6f;
+    background: #523c73;
 }
 
 window#osd #container {
@@ -11,7 +11,7 @@ window#osd #container {
 
 window#osd image,
 window#osd label {
-    color: #c9e6ff;
+    color: #ecdcff;
 }
 
 window#osd progressbar:disabled,
@@ -30,12 +30,12 @@ window#osd progressbar trough {
     min-height: inherit;
     border-radius: inherit;
     border: none;
-    background: #001e2f;
+    background: #250e45;
 }
 
 window#osd progressbar progress {
     min-height: inherit;
     border-radius: inherit;
     border: none;
-    background: #c9e6ff;
+    background: #ecdcff;
 }

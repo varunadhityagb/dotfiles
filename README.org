@@ -1,0 +1,9 @@
+* dotfiles?
+
+This repository contains my dotfiles.
+
+[[file:./images/screenshot.png]]
+
+i used python fabric for my waybar [[https://github.com/varunadhityagb/fabric-widgets][widgets]]
+
+[[file:./images/widgets.gif]]

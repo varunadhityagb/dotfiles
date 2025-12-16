@@ -1,28 +1,32 @@
 #!/bin/bash
-mode=$(echo -e "screen1\nscreen2\nmult\nmirror" | rofi -dmenu)
+mode=$(echo -e "screen1\nscreen2\nmult\nmirror" | rofi -kb-element-prev "Ctrl+[45]" -kb-element-next "Ctrl+[44]" -dmenu)
 monitor_file="$HOME/dotfiles/.config/hypr/modules/monitors.conf"
 monitor_curr="$HOME/dotfiles/.config/hypr/modules/monitor"
 
-screen1="monitor = HDMI-A-1, disable\nmonitor = eDP-1, highress@highrr, auto, 1"
-screen2="monitor = HDMI-A-1, highress@highrr, auto, 1\nmonitor = eDP-1, disable"
-mult="monitor = HDMI-A-1, highress@highrr, auto-left, 1\nmonitor = eDP-1, highress@highrr, auto, 1"
-mirror="monitor = HDMI-A-1, highress@highrr, auto, 1, mirror, eDP-1\nmonitor = eDP-1, highress@highrr, auto, 1"
+# Read rotation states for both monitors
+hdmi_state=$(cat "$HOME/.hyprctl_x_state_HDMI-A-1" 2>/dev/null || echo "0")
+edp_state=$(cat "$HOME/.hyprctl_x_state_eDP-1" 2>/dev/null || echo "0")
+
+screen1="monitor = HDMI-A-1, disable\nmonitor = eDP-1, highress@highrr, auto, 1, transform, $edp_state"
+screen2="monitor = HDMI-A-1, highress@highrr, auto, 1, transform, $hdmi_state\nmonitor = eDP-1, disable"
+mult="monitor = HDMI-A-1, highress@highrr, auto-left, 1, transform, $hdmi_state\nmonitor = eDP-1, highress@highrr, auto, 1, transform, $edp_state"
+mirror="monitor = HDMI-A-1, highress@highrr, auto, 1, mirror, eDP-1, transform, $hdmi_state\nmonitor = eDP-1, highress@highrr, auto, 1, transform, $edp_state"
 
 case $mode in
-    "screen1")
-        printf "%b\n" "$screen1" > "$monitor_file"
-        echo "0" > "$monitor_curr"
-        ;;
-    "screen2")
-        printf "%b\n" "$screen2" > "$monitor_file"
-        echo "1" > "$monitor_curr"
-        ;;
-    "mult")
-        printf "%b\n" "$mult" > "$monitor_file"
-        echo "2" > "$monitor_curr"
-        ;;
-    "mirror")
-        printf "%b\n" "$mirror" > "$monitor_file"
-        echo "3" > "$monitor_curr"
-        ;;
+"screen1")
+    printf "%b\n" "$screen1" >"$monitor_file"
+    echo "0" >"$monitor_curr"
+    ;;
+"screen2")
+    printf "%b\n" "$screen2" >"$monitor_file"
+    echo "1" >"$monitor_curr"
+    ;;
+"mult")
+    printf "%b\n" "$mult" >"$monitor_file"
+    echo "2" >"$monitor_curr"
+    ;;
+"mirror")
+    printf "%b\n" "$mirror" >"$monitor_file"
+    echo "3" >"$monitor_curr"
+    ;;
 esac

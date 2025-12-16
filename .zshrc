@@ -68,6 +68,7 @@ eval "$(atuin init zsh)"
 alias icat="kitten icat"
 alias mysql="mysql --host=127.0.0.1 --port=3306"
 source <(fzf --zsh)
+source <(eww shell-completions --shell zsh)
 
 
 source <(starship init zsh)
@@ -121,9 +122,9 @@ function no_sleep(){
     ) &
 }
 
-if [ -z "$SSH_AUTH_SOCK" ] || ! ssh-add -l &>/dev/null; then
-    eval $(keychain --quiet --eval ~/.ssh/id_ed25519)
-fi
+# if [ -z "$SSH_AUTH_SOCK" ] || ! ssh-add -l &>/dev/null; then
+#     eval $(keychain --quiet --eval ~/.ssh/id_ed25519)
+# fi
 
 function ocli() { 
     user=$2
@@ -152,34 +153,6 @@ EOF
 }
 
 
-get_amrita_photo() {
-  if [ -z "$1" ]; then
-    echo "Usage: get_amrita_photo <ROLL_NO>"
-    return 1
-  fi
-
-  ROLL_NO="$1"
-
-  if [ -z "$2" ]; then 
-      curl -sS -X GET "https://my.amrita.edu/icts/admn_port_down/profpic_student.php?roll_no=${ROLL_NO}" \
-        -H 'Accept: image/avif,image/webp,image/apng,image/*,*/*;q=0.8' \
-        -H 'Accept-Encoding: gzip, deflate, br, zstd' \
-        -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) Chrome/138.0.0.0 Safari/537.36' \
-        -H 'Cookie: PHPSESSID=veqnujlek0r5mjs5s76g0h9j91' \
-        -H 'Host: my.amrita.edu' \
-        -H 'Referer: https://students.amrita.edu/' \
-        --compressed | icat
-  else
-      curl --output "$1.jpeg" -sS -X GET "https://my.amrita.edu/icts/admn_port_down/profpic_student.php?roll_no=${ROLL_NO}" \
-        -H 'Accept: image/avif,image/webp,image/apng,image/*,*/*;q=0.8' \
-        -H 'Accept-Encoding: gzip, deflate, br, zstd' \
-        -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) Chrome/138.0.0.0 Safari/537.36' \
-        -H 'Cookie: PHPSESSID=veqnujlek0r5mjs5s76g0h9j91' \
-        -H 'Host: my.amrita.edu' \
-        -H 'Referer: https://students.amrita.edu/' \
-        --compressed
-  fi
-}
 
 file_types=()           # Array for file type filters (leave empty to include all)
 
@@ -271,11 +244,12 @@ alias archdays='echo $(( ( $(date +%s) - $(date -d "$(sudo tune2fs -l /dev/nvme0
 alias pyact="source .venv/bin/activate"
 alias ppt2pdf="libreoffice --headless --convert-to pdf"
 alias emacsd="emacs --daemon"
-alias hy="hyprctl"
 alias ls="lsd"
 alias l="lsd -l"
 alias list_packages_by_time="lsd -lt /var/lib/pacman/local | awk '{print $9}'"
 alias em="emacsclient"
+alias i="yay -S"
+alias s="yay -Ss"
 
 export MESA_LOADER_DRIVER_OVERRIDE=iris
 
