@@ -23,6 +23,7 @@
   "notification-inline-replies": true,
   "notification-visibility": {},
   "notification-window-width": 500,
+  "notification-margin-bottom": 0,
   "positionX": "right",
   "positionY": "top",
   "script-fail-notify": true,

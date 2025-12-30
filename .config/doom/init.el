@@ -87,46 +87,51 @@
 
        :tools
        ;;ansible
-       ;;biblio            ; Writes a PhD for you (citation needed)
-       ;;collab            ; buffers with friends
-       ;;debugger          ; FIXME stepping through code, to help you add bugs
+       ;;biblio                    ; Writes a PhD for you (citation needed)
+       ;;collab                    ; buffers with friends
+       ;;debugger                  ; FIXME stepping through code, to help you add bugs
        ;;direnv
        docker
-       ;;editorconfig      ; let someone else argue about tabs vs spaces
-       ;;ein               ; tame Jupyter notebooks with emacs
-       (eval +overlay)     ; run code, run (also, repls)
-       (lookup +docsets)   ; navigate your code and its documentation
-       (lsp +peek)               ; M-x vscode
-       magit             ; a git porcelain for Emacs
-       ;;make              ; run make tasks from Emacs
-       ;;pass              ; password manager for nerds
-       pdf               ; pdf enhancements
-       ;;prodigy           ; FIXME managing external services & code builders
-       ;;terraform         ; infrastructure as code
-       ;;tmux              ; an API for interacting with tmux
-       tree-sitter       ; syntax and parsing, sitting in a tree...
-       ;;upload            ; map local to remote projects via ssh/ftp
+       ;;editorconfig              ; let someone else argue about tabs vs spaces
+       ;;ein                       ; tame Jupyter notebooks with emacs
+       (eval +overlay)             ; run code, run (also, repls)
+       (lookup +docsets)           ; navigate your code and its documentation
+       (lsp +peek)                 ; M-x vscode
+       magit                       ; a git porcelain for Emacs
+       ;;make                      ; run make tasks from Emacs
+       ;;pass                      ; password manager for nerds
+       pdf                         ; pdf enhancements
+       ;;prodigy                   ; FIXME managing external services & code builders
+       ;;terraform                 ; infrastructure as code
+       ;;tmux                      ; an API for interacting with tmux
+       tree-sitter                 ; syntax and parsing, sitting in a tree...
+       ;;upload                    ; map local to remote projects via ssh/ftp
 
        :os
-       (:if (featurep :system 'macos) macos)  ; improve compatibility with macOS
-       tty               ; improve the terminal Emacs experience
+       (if (featurep :system 'macos)
+           macos)                  ; improve compatibility with macOS
+       tty                         ; improve the terminal Emacs experience
 
        :lang
-       (emacs-lisp +lsp)        ; drown in parentheses
-       (json +tree-sitter +lsp)             ; At least it ain't XML
-       (java +tree-sitter +lsp)       ; the poster child for carpal tunnel syndrome
-       (javascript +tree-sitter)        ; all(hope(abandon(ye(who(enter(here))))))
-       (julia +tree-sitter)             ; a better, faster MATLAB
-       (latex +cdlatex +fold +lsp +latexmk)             ; writing papers in Emacs has never been so fun
-       lua               ; one-based indices? one-based indices
-       (markdown +grip)          ; writing docs for people to ignore
-       (org +gnuplot +jupyter +ipython +pretty +present)               ; organize your plain life in plain text
-       (python +lsp +tree-sitter)            ; beautiful is better than ugly
-       ;; qt                ; the 'cutest' gui framework ever
-       (rust +tree-sitter +lsp)       ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
-       ;; scala             ; java, but good
-       sh                ; she sells {ba,z,fi}sh shells on the C xor
-       (web +tree-sitter)               ; the tubes
+       (emacs-lisp +lsp)           ; drown in parentheses
+       (json +tree-sitter)         ; At least it ain't XML
+       (java +tree-sitter +lsp)    ; the poster child for carpal tunnel syndrome
+       (javascript +tree-sitter)   ; (hope(abandon(ye(who(enter(here))))))
+       (julia +tree-sitter)        ; a better, faster MATLAB
+       (latex +cdlatex +fold
+              +lsp +latexmk)       ; writing papers in Emacs has never been so fun
+       lua                         ; one-based indices? one-based indices
+       (markdown +grip)            ; writing docs for people to ignore
+       (org +gnuplot +jupyter
+            +ipython +pretty
+            +present)              ; organize your plain life in plain text
+       (python +lsp
+               +tree-sitter)       ; beautiful is better than ugly
+       ;; qt                       ; the 'cutest' gui framework ever
+       (rust +tree-sitter +lsp)    ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+       ;; scala                    ; java, but good
+       sh                          ; she sells {ba,z,fi}sh shells on the C xor
+       (web +tree-sitter)          ; the tubes
 
        :email
        ;;(mu4e +org +gmail)
@@ -136,9 +141,9 @@
        :app
        calendar
        emms
-       everywhere        ; *leave* Emacs!? You must be joking
-       ;;irc               ; how neckbeards socialize
-       ;;(rss +org)        ; emacs as an RSS reader
+       everywhere                  ; *leave* Emacs!? You must be joking
+       ;;irc                       ; how neckbeards socialize
+       ;;(rss +org)                ; emacs as an RSS reader
 
        :config
        ;;literate

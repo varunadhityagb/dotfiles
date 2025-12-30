@@ -151,14 +151,14 @@ tooltip label {
 }
 
 #battery.critical:not(.charging) {
-    color: red;
+    color: #800a00;
 }
 #battery.warning:not(.charging) {
     color: #ffdb81;
 }
 
 #battery.charging {
-    color: green;
+    color: #90ee90;
 }
 
 #tray > .passive {

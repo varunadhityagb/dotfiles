@@ -3,11 +3,14 @@
 SHADER_DIR="$HOME/.config/hypr/modules/shaders"
 CONF_FILE="$HOME/.config/hypr/modules/shader.conf"
 
-choice=$(printf "Night Mode\nDark Room\nFocus Mode\nDisable Shader" | rofi -kb-element-prev "Ctrl+[45]" -kb-element-next "Ctrl+[44]" -dmenu -p "Screen Shader")
+choice=$(printf "Night Mode\nSunlight Mode\nDark Room\nFocus Mode\nDisable Shader" | rofi -kb-element-prev "Ctrl+[45]" -kb-element-next "Ctrl+[44]" -dmenu -p "Screen Shader")
 
 case "$choice" in
 "Night Mode")
   shader="$SHADER_DIR/nightMode.frag"
+  ;;
+"Sunlight Mode")
+  shader="$SHADER_DIR/sunlightMode.frag"
   ;;
 "Dark Room")
   shader="$SHADER_DIR/darkRoom.frag"

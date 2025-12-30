@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: output-block
+# key: osb
+# condition: t
+# --
+
+#+begin_src $0 :results output raw :wrap src :exports both
+$1
+#+end_src

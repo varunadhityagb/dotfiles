@@ -1,0 +1,6 @@
+[Unit]
+Description=Update album art for hyprlock
+
+[Service]
+Type=oneshot
+ExecStart=/home/varunadhityagb/dotfiles/.config/hypr/scripts/album_art.sh

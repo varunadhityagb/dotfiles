@@ -53,7 +53,7 @@ export LIBVIRT_DEFAULT_URI="qemu:///system"
 export EDITOR=emacsclient
 alias nvimdiff='nvim -d'
 
-nitch
+fastfetch
 
 # Remove a directory and all files
 alias rmd='/bin/rm  --recursive --force --verbose '
@@ -225,11 +225,23 @@ _is_included_file_type() {
 }
 
 get_group_id() {mudslide groups 2>/dev/null | grep "$1" | jq -r '.id'}
+
 send_whatsapp_msg() { mudslide send $(get_group_id "$1") $2 }
+
 http_status(){
   for port in "$@"; do
     curl -s https://http.cat/$port | icat
   done
+}
+
+tscale() {
+    sudo tailscale down
+    if [[ $# == 0 ]]; then
+      sudo tailscale up --accept-dns=true --accept-routes=false
+    elif [[ $1 == 1 ]]; then
+      sudo tailscale up --accept-dns=true --accept-routes=true
+    fi
+
 }
 
 source <(kubectl completion zsh)
@@ -282,3 +294,4 @@ autoload -Uz compinit
 compinit -C
 
 zstyle ':completion:*' menu select
+export QT_PLUGIN_PATH=/usr/lib/qt/plugins
