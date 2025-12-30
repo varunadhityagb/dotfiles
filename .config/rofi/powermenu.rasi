@@ -1,8 +1,8 @@
+@import "./matugen-colors.rasi"
+
 configuration {
     show-icons:                 false;
 }
-
-@import "./matugen-colors.rasi"
 
 window {
     transparency:               "real";

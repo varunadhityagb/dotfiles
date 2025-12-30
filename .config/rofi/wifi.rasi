@@ -4,6 +4,7 @@
     font: "SF Pro Regular Bold 13 ";
 }
 
+
 window {
     transparency: "real";
     location: east;

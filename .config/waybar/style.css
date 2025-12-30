@@ -90,6 +90,7 @@ tooltip label {
     color: rgba(220, 220, 220, 1);
     padding: 4px;
 }
+
 #tray menu menuitem {
     background-image: linear-gradient(
         to bottom,

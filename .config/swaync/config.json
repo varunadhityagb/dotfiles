@@ -37,14 +37,17 @@
       "image-radius": 12,
       "image-size": 96
     },
+
     "title": {
       "text": "Notifications",
       "button-text": "Clear All",
       "clear-all-button": true
     },
+
     "dnd": {
       "text": "Do Not Disturb"
     },
+
     "volume": {
       "label": "",
       "show-per-app": true,

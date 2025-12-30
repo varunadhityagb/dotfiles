@@ -1,8 +1,8 @@
+@import                          "./matugen-colors.rasi"
+
 configuration {
     show-icons:                 false;
 }
-
-@import                          "./matugen-colors.rasi"
 
 window {
     transparency:                "real";
@@ -59,7 +59,6 @@ element-text {
     horizontal-align:            0.5;
     padding:                     0px 0px 10px 0px;
 }
-
 
 element normal.normal {
     background-color: @surface-container;
