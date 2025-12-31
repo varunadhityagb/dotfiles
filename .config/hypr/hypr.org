@@ -1,3 +1,33 @@
+#+TITLE: Hyprland Config
+#+AUTHOR: Varun Adhitya G B
+
+* Table of Contents :toc:
+- [[#defaults][Defaults]]
+- [[#autostart][Autostart]]
+- [[#environment][Environment]]
+- [[#decoration][Decoration]]
+- [[#rules][Rules]]
+  - [[#window-rules][Window rules]]
+  - [[#layer-rules][Layer rules]]
+- [[#submaps][Submaps]]
+  - [[#apps][Apps]]
+  - [[#media][Media]]
+  - [[#nokeybinds][NoKeyBinds]]
+  - [[#screen][Screen]]
+  - [[#server][Server]]
+- [[#keybinds][Keybinds]]
+  - [[#keyboard][Keyboard]]
+  - [[#mouse][Mouse]]
+- [[#shaders][Shaders]]
+  - [[#dark-room-mode][Dark Room Mode]]
+  - [[#focus-mode][Focus Mode]]
+  - [[#night-mode][Night Mode]]
+  - [[#sunlight-mode][Sunlight Mode]]
+- [[#hypridle][Hypridle]]
+- [[#hyprlock][Hyprlock]]
+
+* Defaults
+#+begin_src conf :tangle hyprland.conf
 $terminal = kitty
 $fileManager = thunar
 $menu =  rofi -kb-element-prev "Ctrl+[45]" -kb-element-next "Ctrl+[44]" -kb-mode-previous "Ctrl+[43]" -kb-mode-next "Ctrl+[46]"
@@ -6,7 +36,10 @@ $browser = brave --enable-features=UseOzonePlatform,TouchpadOverscrollHistoryNav
 source = ./colors.conf
 source = ./shader.conf
 source = ./monitors.conf
+#+end_src
 
+* Autostart
+#+begin_src conf :tangle hyprland.conf
 exec-once = [workspace 1 silent] $terminal
 exec-once = bash -c '/usr/bin/screen_timer start'
 exec-once = sleep 1; waybar
@@ -22,7 +55,10 @@ exec-once = /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec-once = swaync
 exec-once = kdeconnect-indicator
 exec-once = kdeconnectd
+#+end_src
 
+* Environment
+#+begin_src conf :tangle hyprland.conf
 env = XCURSOR_SIZE,24
 env = XCURSOR_THEME,Bibata-Modern-Ice
 env = HYPRCURSOR_SIZE,24
@@ -40,7 +76,10 @@ env = QT_IM_MODULE,fcitx
 env = XMODIFIERS,@im=fcitx
 env = MESA_LOADER_DRIVER_OVERRIDE,iris
 # env = QT_PLUGIN_PATH, /usr/lib/qt/plugins
+#+end_src
 
+* Decoration
+#+begin_src conf :tangle hyprland.conf
 general {
     gaps_in = 2
     gaps_out = 5
@@ -126,6 +165,11 @@ input {
     }
 }
 
+#+end_src
+
+* Rules
+** Window rules
+#+begin_src conf :tangle hyprland.conf
 windowrulev2 = float, stayfocused, class:^(qalculate-gtk)$
 windowrulev2 = size 802 537, class:^(qalculate-gtk)$
 
@@ -163,6 +207,10 @@ windowrulev2 = move 460 75, title:(I2223)
 windowrulev2 = bordercolor rgb(144D37), initialTitle:(web.whatsapp.com_/)
 #tyuiox
 
+#+end_src
+
+** Layer rules
+#+begin_src conf :tangle hyprland.conf
 layerrule = animation popin, rofi
 layerrule = animation popin, avizo
 layerrule = animation slide top, waybar
@@ -180,7 +228,11 @@ layerrule = blur, kitty
 layerrule = blur, wofi
 layerrule = ignorezero, wofi
 layerrule = xray 0, wofi
+#+end_src
 
+* Submaps
+** Apps
+#+begin_src conf :tangle hyprland.conf
 bind = SUPER, R, submap, apps
 submap = apps, reset
 
@@ -212,6 +264,9 @@ bind = SUPER, B, exec, $browser
 bind = SUPER SHIFT, B, exec, $browser --incognito
 bind = SUPER, Q, exec, emacsclient -c -a 'emacs'
 
+#+end_src
+** Media
+#+begin_src conf :tangle hyprland.conf
 bind = SUPER, M, submap, media
 submap = media
 
@@ -234,12 +289,16 @@ bind = , P, exec, brave --app=https://primevideo.com/
 bind = , N, exec, brave --app=https://netflix.com/
 bind = , code:66, submap, reset
 submap = reset
-
+#+end_src
+** NoKeyBinds
+#+begin_src conf :tangle hyprland.conf
 bind = SUPER alt, N, submap, nobinds
 submap = nobinds
 bind = SUPER alt, code:66, submap, reset
 submap = reset
-
+#+end_src
+** Screen
+#+begin_src conf :tangle hyprland.conf
 submap = screen
 
 bind = SHIFT ,R, exec, ~/dotfiles/.config/hypr/scripts/screenRotate 0
@@ -258,7 +317,9 @@ bind = shift, j, movewindow, d
 
 bind = , code:66, submap, reset
 submap = reset
-
+#+end_src
+** Server
+#+begin_src conf :tangle hyprland.conf
 bind = SUPER, S, submap, homeserver
 submap = homeserver, reset
 
@@ -270,7 +331,11 @@ bind = , code:9, exec, $terminal -e kitten ssh -t varunadhityagb@100.70.52.122 b
 
 bind = , code:66, submap, reset
 submap = reset
+#+end_src
 
+* Keybinds
+** Keyboard
+#+begin_src conf :tangle hyprland.conf
 bind = SUPER, return, exec, $terminal
 
 # guestures
@@ -375,6 +440,10 @@ bindl= ctrl alt, left, exec, playerctl previous
 bindl = ctrl alt, space, exec, playerctl play-pause
 bind = ctrl alt, L, exec, hyprlock
 
+#+end_src
+**
+** Mouse
+#+begin_src conf :tangle hyprland.conf
 # Scroll through existing workspaces with mainMod + scroll
 bind = SUPER, mouse_down, workspace, e+1
 bind = SUPER, mouse_up, workspace, e-1
@@ -390,3 +459,202 @@ bind = SUPER ctrl, mouse_up, exec, hyprctl -q keyword cursor:zoom_factor $(hyprc
 #browser navigation
 bind = ALT, mouse:272, exec, wtype -M alt -k left
 bind = ALT, mouse:273, exec, wtype -M alt -k right
+
+#+end_src
+* Shaders
+** Dark Room Mode
+#+begin_src glsl :tangle shaders/darkRoom.frag :mkdirp yes
+#version 300 es
+
+precision mediump float;
+in vec2 v_texcoord;
+layout(location = 0) out vec4 fragColor;
+uniform sampler2D tex;
+
+void main() {
+
+    vec4 pixColor = texture(tex, v_texcoord);
+
+    float brightness = -0.05;
+    float contrast = 1.1;
+
+    pixColor.rgb = (pixColor.rgb - 0.5) * contrast + 0.5;
+    pixColor.rgb += brightness;
+
+    fragColor = pixColor;
+}
+#+end_src
+** Focus Mode
+#+begin_src glsl :tangle shaders/focusMode.frag :mkdirp yes
+#version 300 es
+
+precision mediump float;
+in vec2 v_texcoord;
+layout(location = 0) out vec4 fragColor;
+uniform sampler2D tex;
+
+void main() {
+
+    vec4 pixColor = texture(tex, v_texcoord);
+
+    float gray = dot(pixColor.rgb, vec3(0.299, 0.587, 0.114));
+    pixColor.rgb = vec3(gray);
+
+    fragColor = pixColor;
+}
+#+end_src
+** Night Mode
+#+begin_src glsl :tangle shaders/nightMode.frag :mkdirp yes
+#version 300 es
+
+precision mediump float;
+in vec2 v_texcoord;
+layout(location = 0) out vec4 fragColor;
+uniform sampler2D tex;
+
+void main() {
+
+    vec4 pixColor = texture(tex, v_texcoord);
+
+    pixColor.r *= 1.05;
+    pixColor.g *= 0.98;
+    pixColor.b *= 0.85;
+
+    fragColor = pixColor;
+}
+#+end_src
+** Sunlight Mode
+#+begin_src glsl :tangle shaders/sunlightMode.frag :mkdirp yes
+#version 300 es
+precision mediump float;
+
+in vec2 v_texcoord;
+out vec4 fragColor;
+
+uniform sampler2D tex;
+
+void main() {
+    vec4 color = texture(tex, v_texcoord);
+
+    // Contrast boost
+    float contrast = 1.25;
+    color.rgb = (color.rgb - 0.5) * contrast + 0.5;
+
+    // Slight brightness lift
+    color.rgb += 0.04;
+
+    // Mild gamma correction
+    color.rgb = pow(color.rgb, vec3(1.0 / 1.08));
+
+    fragColor = color;
+}
+#+end_src
+* Hypridle
+#+begin_src conf :tangle hypridle.conf
+general {
+    lock_cmd = pidof hyprlock || hyprlock
+    before_sleep_cmd = ~/dotfiles/.config/hypr/scripts/before_sleep
+    after_sleep_cmd = ~/dotfiles/.config/hypr/scripts/wallpaper_on_resume
+}
+
+listener {
+    timeout = 360
+    on-timeout = loginctl lock-session
+}
+
+listener {
+    timeout = 300
+    on-timeout = hyprctl dispatch dpms off
+    on-resume = hyprctl dispatch dpms on
+}
+
+listener {
+    timeout = 1800
+    on-timeout = systemctl suspend
+}
+#+end_src
+
+* Hyprlock
+#+begin_src conf :tangle hyprlock.conf
+source = ./colors.conf
+
+
+background {
+    monitor =
+    color = $surface
+    blur_size = 5
+    blur_passes = 2
+    contrast = 1.3000
+    vibrancy = 0.2100
+    vibrancy_darkness = 0.05
+}
+
+
+general {
+    screencopy_mode = 0
+}
+
+label {
+    monitor =
+    text = cmd[update:1000] echo "<span>$(date +"%I:%M")</span>"
+    color =rgba(216, 222, 233, 0.80)
+    font_size = 128
+    font_family = SF Pro Display Bold
+    position = 0, 50
+    halign = center
+    valign = center
+}
+
+label {
+    monitor =
+    text = cmd[update:1000] echo -e "$(date +"%A, %B %d")"
+    color = rgba(216, 222, 233, .80)
+    font_size = 19
+    font_family = SF Pro Display Bold
+    position = 0, -80
+    halign = center
+    valign = center
+}
+
+label {
+    monitor =
+    text = cmd[update:1000] ~/dotfiles/.config/hypr/scripts/songinfo
+    color = rgba(255, 255, 255, 0.65)
+    font_size = 14
+    font_family =  SF Pro Display Bold
+    position = -100, 40
+    halign = right
+    valign = center
+    animation = scroll
+ }
+
+input-field {
+    monitor =
+    size = 320, 55
+    outline_thickness = 0
+    dots_size = 0.2
+    dots_spacing = 0.2
+    dots_center = true
+    outer_color = rgba(255, 255, 255, 0)
+    inner_color = rgba(255, 255, 255, 0.1)
+    font_color = rgb(200, 200, 200)
+    fade_on_empty = false
+    font_family = SF Pro Display Bold
+    placeholder_text = <i><span foreground="##ffffff99">Enter Password</span></i>
+    hide_input = false
+    position = 0, -275
+    halign = center
+    valign = center
+}
+
+
+image {
+    path = /tmp/cover.jpeg
+    size = 250
+    position = 200 , 40
+    rounding = 10
+    halign = left
+    valign = center
+}
+
+#+end_src

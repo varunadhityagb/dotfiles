@@ -1,7 +1,7 @@
 #!/bin/bash
 mode=$(echo -e "screen1\nscreen2\nmult\nmirror" | rofi -kb-element-prev "Ctrl+[45]" -kb-element-next "Ctrl+[44]" -dmenu)
-monitor_file="$HOME/dotfiles/.config/hypr/modules/monitors.conf"
-monitor_curr="$HOME/dotfiles/.config/hypr/modules/monitor"
+monitor_file="$HOME/dotfiles/.config/hypr/monitors.conf"
+monitor_curr="$HOME/dotfiles/.config/hypr/monitor"
 
 # Read rotation states for both monitors
 hdmi_state=$(cat "$HOME/.hyprctl_x_state_HDMI-A-1" 2>/dev/null || echo "0")

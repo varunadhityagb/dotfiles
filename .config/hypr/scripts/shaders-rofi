@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-SHADER_DIR="$HOME/.config/hypr/modules/shaders"
-CONF_FILE="$HOME/.config/hypr/modules/shader.conf"
+SHADER_DIR="$HOME/.config/hypr/shaders"
+CONF_FILE="$HOME/.config/hypr/shader.conf"
 
 choice=$(printf "Night Mode\nSunlight Mode\nDark Room\nFocus Mode\nDisable Shader" | rofi -kb-element-prev "Ctrl+[45]" -kb-element-next "Ctrl+[44]" -dmenu -p "Screen Shader")
 

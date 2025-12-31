@@ -1,6 +1,6 @@
 #!/bin/bash
-monitor_file="$HOME/dotfiles/.config/hypr/modules/monitors.conf"
-monitor_curr="$HOME/dotfiles/.config/hypr/modules/monitor"
+monitor_file="$HOME/dotfiles/.config/hypr/monitors.conf"
+monitor_curr="$HOME/dotfiles/.config/hypr/monitor"
 
 screen1="monitor = HDMI-A-1, disable\nmonitor = eDP-1, highress@highrr, auto, 1"
 screen2="monitor = HDMI-A-1, highress@highrr, auto, 1\nmonitor = eDP-1, disable"
@@ -9,10 +9,10 @@ mirror="monitor = HDMI-A-1, highress@highrr, auto, 1, mirror, eDP-1\nmonitor = e
 
 apply_mode() {
     case "$1" in
-        screen1) printf "%b\n" "$screen1" > "$monitor_file" ;;
-        screen2) printf "%b\n" "$screen2" > "$monitor_file" ;;
-        mult) printf "%b\n" "$mult" > "$monitor_file" ;;
-        mirror) printf "%b\n" "$mirror" > "$monitor_file" ;;
+    screen1) printf "%b\n" "$screen1" >"$monitor_file" ;;
+    screen2) printf "%b\n" "$screen2" >"$monitor_file" ;;
+    mult) printf "%b\n" "$mult" >"$monitor_file" ;;
+    mirror) printf "%b\n" "$mirror" >"$monitor_file" ;;
     esac
     hyprctl reload
     notify-send "Display mode" "$1 activated"
@@ -22,15 +22,15 @@ apply_mode() {
 if grep -q "^connected" /sys/class/drm/card*-HDMI-A-1/status 2>/dev/null; then
     curr=$(cat "$monitor_curr")
     case $mode in
-        "1")
-            apply_mode screen2
-            ;;
-        "2")
-            apply_mode mult
-            ;;
-        "3")
-            apply_mode mirror
-            ;;
+    "1")
+        apply_mode screen2
+        ;;
+    "2")
+        apply_mode mult
+        ;;
+    "3")
+        apply_mode mirror
+        ;;
     esac
 
 else
