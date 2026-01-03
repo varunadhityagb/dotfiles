@@ -1,0 +1,12 @@
+[Unit]
+Description=Battery Level Monitor
+After=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/home/varunadhityagb/dotfiles/.config/hypr/scripts/battery-check
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,113 @@
+#!/usr/bin/env python3
+import dbus
+import dbus.mainloop.glib
+import subprocess
+from gi.repository import GLib
+from pathlib import Path
+
+# Warning levels
+WARN_LEVELS = [20, 15, 10]
+CRIT_LEVELS = [8, 5, 3, 1]
+
+state_dir = Path.home() / ".local/state/battery"
+state_dir.mkdir(parents=True, exist_ok=True)
+
+def get_flag_file(percent):
+    """Get flag file for specific percentage"""
+    return state_dir / f"notified_{percent}"
+
+def clear_all_flags():
+    """Clear all notification flags"""
+    for file in state_dir.glob("notified_*"):
+        file.unlink()
+
+def notify(level, percent):
+    print(f"Sending {level} notification for {percent}%")
+    if level == "warn":
+        subprocess.Popen([
+            "notify-send",
+            "-u", "normal",
+            "-i", "battery-caution",
+            "-a", "Battery Monitor",
+            "Battery Low",
+            f"{percent}% remaining"
+        ])
+    elif level == "crit":
+        subprocess.Popen([
+            "notify-send",
+            "-u", "critical",
+            "-i", "battery-caution",
+            "-a", "Battery Monitor",
+            "-t", "0",
+            "Battery Critical",
+            f"{percent}% remaining. Plug in NOW!"
+        ])
+
+def check_battery():
+    """Check current battery level and send notifications if needed"""
+    props = dbus.Interface(upower, "org.freedesktop.DBus.Properties")
+    percent = int(props.Get("org.freedesktop.UPower.Device", "Percentage"))
+    state = int(props.Get("org.freedesktop.UPower.Device", "State"))
+
+    print(f"Checking battery: {percent}%, State: {state}")
+
+    # If not discharging, clear all flags
+    if state != 2:
+        print("Not discharging, clearing flags")
+        clear_all_flags()
+        return True
+
+    # Check critical levels first (highest priority)
+    for crit_level in CRIT_LEVELS:
+        flag_file = get_flag_file(crit_level)
+        if percent <= crit_level and not flag_file.exists():
+            notify("crit", percent)
+            flag_file.touch()
+            return True
+
+    # Check warning levels
+    for warn_level in WARN_LEVELS:
+        flag_file = get_flag_file(warn_level)
+        if percent <= warn_level and not flag_file.exists():
+            notify("warn", percent)
+            flag_file.touch()
+            return True
+
+    return True
+
+def properties_changed(interface, changed, invalidated):
+    print(f"Property changed: {changed}")
+    check_battery()
+
+print("Starting battery monitor...")
+print(f"Warning levels: {WARN_LEVELS}%")
+print(f"Critical levels: {CRIT_LEVELS}%")
+
+dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
+bus = dbus.SystemBus()
+
+upower = bus.get_object(
+    "org.freedesktop.UPower",
+    "/org/freedesktop/UPower/devices/DisplayDevice"
+)
+
+# Get initial state
+props = dbus.Interface(upower, "org.freedesktop.DBus.Properties")
+percent = int(props.Get("org.freedesktop.UPower.Device", "Percentage"))
+state = int(props.Get("org.freedesktop.UPower.Device", "State"))
+print(f"Initial battery: {percent}%, State: {state}")
+
+# Check immediately on startup
+check_battery()
+
+# Also check every 60 seconds as a fallback
+GLib.timeout_add_seconds(60, check_battery)
+
+upower.connect_to_signal(
+    "PropertiesChanged",
+    properties_changed,
+    dbus_interface="org.freedesktop.DBus.Properties"
+)
+
+print("Listening for battery changes...")
+GLib.MainLoop().run()
