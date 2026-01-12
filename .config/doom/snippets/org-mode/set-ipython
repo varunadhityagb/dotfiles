@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: set-ipython
+# key: set-ipython
+# --
+#+begin_src elisp :exports none
+(setq org-babel-python-command "$1 --simple-prompt --no-color-info")
+#+end_src

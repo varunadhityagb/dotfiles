@@ -90,14 +90,14 @@ function mhd() {
 function umhd() {
     sudo umount /dev/sda1
 }
-export QT_QPA_PLATFORMTHEME=qt5ct
+# export QT_QPA_PLATFORMTHEME=qt5ct
 
 
 function get_timetable() {
     if [[ -z $1 ]]; then 
-        ~/random_scripts/timetable.sh 2023 aie-e 5
+        ~/random_scripts/timetable.sh 2023 aie-e 6
     elif [[ $1 == +* || $1 == -* ]]; then
-        ~/random_scripts/timetable.sh 2023 aie-e 5 $1
+        ~/random_scripts/timetable.sh 2023 aie-e 6 $1
     else
         ~/random_scripts/timetable.sh $1 $2 $3 $4
     fi
@@ -294,4 +294,4 @@ autoload -Uz compinit
 compinit -C
 
 zstyle ':completion:*' menu select
-export QT_PLUGIN_PATH=/usr/lib/qt/plugins
+# export QT_PLUGIN_PATH=/usr/lib/qt/plugins

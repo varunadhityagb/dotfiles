@@ -53,6 +53,7 @@
 
 (package! matlab-mode)
 (package! ob-async)
+(package! ob-mongo)
 (package! jupyter)
 (package! auto-complete)
 (package! code-cells)
@@ -68,3 +69,6 @@
 
 (package! doom-matugen-theme
   :recipe (:local-repo "themes"))
+
+(package! timetabel
+  :recipe (:host github :repo "nairadithya/timetab.el"))

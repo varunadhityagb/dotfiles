@@ -81,8 +81,8 @@ env = MESA_LOADER_DRIVER_OVERRIDE,iris
 * Decoration
 #+begin_src conf :tangle hyprland.conf
 general {
-    gaps_in = 2
-    gaps_out = 5
+    gaps_in = 4
+    gaps_out = 2
     border_size = 3
     resize_on_border = true
     allow_tearing = false
@@ -94,7 +94,7 @@ general {
 source = ./shader.conf
 
 decoration {
-    rounding = 25
+    rounding = 1
     rounding_power = 4
     blur {
         enabled = true

@@ -123,7 +123,7 @@
        lua                         ; one-based indices? one-based indices
        (markdown +grip)            ; writing docs for people to ignore
        (org +gnuplot +jupyter
-            +ipython +pretty
+            +pretty
             +present)              ; organize your plain life in plain text
        (python +lsp
                +tree-sitter)       ; beautiful is better than ugly

@@ -2,11 +2,10 @@
     "layer": "top",
     "spacing": 0,
     "position": "top",
-    "height": 30,
     "reload_style_on_change": true,
-    "modules-left": ["hyprland/workspaces", "hyprland/submap"],
-    "modules-center": [],
-    "modules-right": ["tray", "custom/updates", "bluetooth", "battery", "pulseaudio", "network", "clock"],
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": ["hyprland/window"],
+    "modules-right": ["hyprland/submap", "tray", "custom/updates", "bluetooth", "battery", "pulseaudio", "network", "clock"],
 
     "image#album-art": {
         "exec": "~/album_art.sh",
@@ -49,6 +48,15 @@
             "9": "M4",
             "10": "M5"
         }
+    },
+
+    "hyprland/window": {
+        "format": "{}",
+        "rewrite": {
+            "(.*) - Brave": "$1",
+            "web.whatsapp.com" : "WhatsApp Web"
+        },
+        "separate-outputs": true
     },
 
     "custom/exit": {

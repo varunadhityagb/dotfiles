@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: property-header
+# key: prop
+# --
+#+PROPERTY: header-args:$1 :eval never-export :results output :exports both :session $2
