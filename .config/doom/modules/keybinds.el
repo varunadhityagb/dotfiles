@@ -30,5 +30,9 @@
        :desc "Cleanup kernels" "k" #'my/jupyter-cleanup-kernels
        :desc "Insert property header" "h" #'jupyter-property-header))
 
+;; Split window to three panes
+(map! :leader
+      :desc "Splits the window to three panes (1/5 , 2/5, 2/5)" "w 3" #'my/three-pane-layout)
+
 (provide 'keybinds)
 ;;; keybinds.el ends here
