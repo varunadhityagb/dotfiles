@@ -1,4 +1,5 @@
-;;; jupyter-notebook-org-mode
+;;; modules/jupyter.el -*- lexical-binding: t; -*-
+;;; Jupyter notebook integration for Emacs org-mode
 
 ;; LSP for Python
 (use-package lsp-pyright
@@ -6,18 +7,53 @@
   :hook (python-mode . (lambda ()
                          (require 'lsp-pyright)
                          (unless (eq major-mode 'snakemake-mode)
-                           (lsp))))
-  :config
-  (add-hook 'conda-postactivate-hook (lambda () (lsp-restart-workspace)))
-  (add-hook 'conda-postdeactivate-hook (lambda () (lsp-restart-workspace))))
+                           (lsp)))))
 
-;;; jupyter - Load FIRST
+;; Auto-detect and activate venv in project directory
+(defun my/find-venv-directory ()
+  "Find .venv directory in current directory or project root."
+  (let* ((current-dir default-directory)
+         (project-root (and (fboundp 'projectile-project-root)
+                           (projectile-project-root)))
+         (venv-current (expand-file-name ".venv" current-dir))
+         (venv-project (when project-root
+                        (expand-file-name ".venv" project-root))))
+    (cond
+     ((file-directory-p venv-current) venv-current)
+     ((and venv-project (file-directory-p venv-project)) venv-project)
+     (t nil))))
+
+(defun my/auto-activate-venv ()
+  "Automatically activate Python venv if .venv found."
+  (when-let ((venv-path (my/find-venv-directory)))
+    (pyvenv-activate venv-path)
+    (message "Activated venv: %s" venv-path)
+    ;; Restart LSP if it's running
+    (when (bound-and-true-p lsp-mode)
+      (lsp-restart-workspace))))
+
+(add-hook 'python-mode-hook #'my/auto-activate-venv)
+(add-hook 'org-mode-hook #'my/auto-activate-venv)
+
+;; Jupyter - Load FIRST
 (use-package jupyter
   :commands (jupyter-run-server-repl
              jupyter-run-repl
-             jupyter-connect-repl))
+             jupyter-connect-repl)
+  :config
+  ;; Use ipython from .venv if available
+  (defun my/jupyter-use-venv-python ()
+    "Set jupyter to use ipython from .venv if it exists."
+    (when-let ((venv-path (my/find-venv-directory)))
+      (let ((ipython-path (expand-file-name "bin/ipython" venv-path)))
+        (when (file-executable-p ipython-path)
+          (setq-local jupyter-runtime-directory 
+                     (expand-file-name "share/jupyter/runtime" venv-path))
+          (message "Using ipython from: %s" ipython-path)))))
+  
+  (add-hook 'jupyter-repl-mode-hook #'my/jupyter-use-venv-python))
 
-;;; code cells
+;; Code cells for notebook-like experience
 (use-package code-cells
   :config
   (setq code-cells-convert-ipynb-style
@@ -25,13 +61,12 @@
           ("pandoc" "--to" "org" "--from" "ipynb")
           org-mode)))
 
-;;; org-mode configuration - Load AFTER jupyter
+;; Org-mode Jupyter configuration - Load AFTER jupyter
 (use-package org
   :defer t
   :config
   ;; Don't confirm code block evaluation
   (setq org-confirm-babel-evaluate nil)
-
   ;; Load babel languages (jupyter must be loaded first)
   (with-eval-after-load 'jupyter
     (org-babel-do-load-languages
@@ -39,31 +74,36 @@
      '((python . t)
        (shell . t)
        (jupyter . t))))
-
   ;; Add template for jupyter-python blocks
   (add-to-list 'org-structure-template-alist '("py" . "src jupyter-python"))
-
   :hook
   (org-babel-after-execute . org-display-inline-images))
 
 ;;; Helper functions for Jupyter kernel management
+
+(defun my/get-jupyter-runtime-folder ()
+  "Get Jupyter runtime folder, preferring venv if available."
+  (if-let ((venv-path (my/find-venv-directory)))
+      (expand-file-name "share/jupyter/runtime" venv-path)
+    (expand-file-name "~/.local/share/jupyter/runtime")))
+
 (defun my/get-open-ports ()
   "Get list of open ports on the system."
   (mapcar
    #'string-to-number
    (split-string (shell-command-to-string "ss -tulpnH | awk '{print $5}' | sed -e 's/.*://'") "\n")))
 
-(setq my/jupyter-runtime-folder (expand-file-name "~/.local/share/jupyter/runtime"))
-
 (defun my/list-jupyter-kernel-files ()
   "List Jupyter kernel files with their ports."
-  (mapcar
-   (lambda (file)
-     (cons (car file)
-           (cdr (assq 'shell_port (json-read-file (car file))))))
-   (sort
-    (directory-files-and-attributes my/jupyter-runtime-folder t ".*kernel.*json$")
-    (lambda (x y) (not (time-less-p (nth 6 x) (nth 6 y)))))))
+  (let ((runtime-folder (my/get-jupyter-runtime-folder)))
+    (when (file-directory-p runtime-folder)
+      (mapcar
+       (lambda (file)
+         (cons (car file)
+               (cdr (assq 'shell_port (json-read-file (car file))))))
+       (sort
+        (directory-files-and-attributes runtime-folder t ".*kernel.*json$")
+        (lambda (x y) (not (time-less-p (nth 6 x) (nth 6 y)))))))))
 
 (defun my/select-jupyter-kernel ()
   "Select an active Jupyter kernel from running kernels."
@@ -113,3 +153,5 @@
          (kernel-name (read-string "Kernel name: ")))
     (insert (format "\n#+PROPERTY: header-args:jupyter-python :session %s :kernel %s\n"
                     session-name kernel-name))))
+
+(provide 'jupyter)

@@ -51,7 +51,6 @@
 
 (package! highlight-indent-guides)
 
-(package! matlab-mode)
 (package! ob-async)
 (package! ob-mongo)
 (package! jupyter)
@@ -61,9 +60,6 @@
 
 (package! latex-preview-pane)
 (package! forge)
-(package! mpv)
-(package! yeetube)
-(package! mines)
 (package! ruff-format)
 (package! gptel :recipe (:nonrecursive t))
 

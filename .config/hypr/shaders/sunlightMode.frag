@@ -10,11 +10,11 @@ void main() {
     vec4 color = texture(tex, v_texcoord);
 
     // Contrast boost
-    float contrast = 1.25;
+    float contrast = 1.9;
     color.rgb = (color.rgb - 0.5) * contrast + 0.5;
 
     // Slight brightness lift
-    color.rgb += 0.04;
+    color.rgb += 0.15;
 
     // Mild gamma correction
     color.rgb = pow(color.rgb, vec3(1.0 / 1.08));

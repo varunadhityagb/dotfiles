@@ -95,9 +95,9 @@ function umhd() {
 
 function get_timetable() {
     if [[ -z $1 ]]; then 
-        ~/random_scripts/timetable.sh 2023 aie-e 6
+        ~/random_scripts/timetable.sh  aie-e 6
     elif [[ $1 == +* || $1 == -* ]]; then
-        ~/random_scripts/timetable.sh 2023 aie-e 6 $1
+        ~/random_scripts/timetable.sh  aie-e 6 $1
     else
         ~/random_scripts/timetable.sh $1 $2 $3 $4
     fi
@@ -264,6 +264,7 @@ alias i="yay -S"
 alias s="yay -Ss"
 
 export MESA_LOADER_DRIVER_OVERRIDE=iris
+export OPENCV_LOG_LEVEL=ERROR
 
 load_nvm() {
   export NVM_DIR="$HOME/.nvm"
@@ -295,3 +296,14 @@ compinit -C
 
 zstyle ':completion:*' menu select
 # export QT_PLUGIN_PATH=/usr/lib/qt/plugins
+
+unalias br 2>/dev/null  # br installer - remove conflicting alias
+#
+#compdef rendercv
+
+_rendercv_completion() {
+  eval $(env _TYPER_COMPLETE_ARGS="${words[1,$CURRENT]}" _RENDERCV_COMPLETE=complete_zsh rendercv)
+}
+
+compdef _rendercv_completion rendercv
+

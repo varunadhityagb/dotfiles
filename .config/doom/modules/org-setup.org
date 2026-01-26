@@ -21,6 +21,5 @@
 #+LATEX_HEADER: \usepackage{xcolor}
 #+LATEX_HEADER: \definecolor{bg}{rgb}{0.95,0.95,0.95}
 #+LATEX_HEADER: \setminted{bgcolor=bg, linenos=true, frame=lines}
-#+LATEX_HEADER: \usepackage{fvextra}
 #+LATEX_HEADER: \DefineVerbatimEnvironment{verbatim}{Verbatim}{breaklines=true,breakanywhere=true}
 #+OPTIONS: ^:nil

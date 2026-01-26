@@ -41,6 +41,7 @@ source = ./monitors.conf
 * Autostart
 #+begin_src conf :tangle hyprland.conf
 exec-once = [workspace 1 silent] $terminal
+exec-once = [workspace 4 silent] /home/varunadhityagb/.config/hypr/scripts/open_whatsapp
 exec-once = bash -c '/usr/bin/screen_timer start'
 exec-once = sleep 1; waybar
 exec-once = emacs --daemon
@@ -55,6 +56,7 @@ exec-once = /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec-once = swaync
 exec-once = kdeconnect-indicator
 exec-once = kdeconnectd
+exec-once = wayscriber --no-tray -d
 #+end_src
 
 * Environment
@@ -75,7 +77,7 @@ env = GTK_IM_MODULE,fcitx
 env = QT_IM_MODULE,fcitx
 env = XMODIFIERS,@im=fcitx
 env = MESA_LOADER_DRIVER_OVERRIDE,iris
-# env = QT_PLUGIN_PATH, /usr/lib/qt/plugins
+env = QT_PLUGIN_PATH, /usr/lib/qt/plugins
 #+end_src
 
 * Decoration
@@ -439,8 +441,8 @@ submap = reset
 
 bind = SUPER, B, exec, $browser
 bind = SUPER SHIFT, B, exec, $browser --incognito
-bind = SUPER, Q, exec, emacsclient -c -a 'emacs'
-
+bind = SUPER, Q, exec, emacsclient -c -a ""
+bind = SUPER, D, exec, pkill -SIGUSR1 wayscriber
 #+end_src
 ** Media
 #+begin_src conf :tangle hyprland.conf
@@ -714,11 +716,11 @@ void main() {
     vec4 color = texture(tex, v_texcoord);
 
     // Contrast boost
-    float contrast = 1.25;
+    float contrast = 1.9;
     color.rgb = (color.rgb - 0.5) * contrast + 0.5;
 
     // Slight brightness lift
-    color.rgb += 0.04;
+    color.rgb += 0.15;
 
     // Mild gamma correction
     color.rgb = pow(color.rgb, vec3(1.0 / 1.08));

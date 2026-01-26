@@ -3,11 +3,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files '("/home/varunadhityagb/org/agenda/timetable.org"))
- '(package-selected-packages
-   '(2048-game chess csv-mode mines minesweeper ob-browser reader vala-mode))
- '(package-vc-selected-packages
-   '((reader :url "https://codeberg.org/divyaranjan/emacs-reader" :make "all"))))
+ '(custom-safe-themes
+   '("cc3fa180f86a519d53f14899e3e91d211ba3831f17f4ef350f317eb025604ad7" default))
+ '(org-agenda-files '("~/org/agenda/timetable.org")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
