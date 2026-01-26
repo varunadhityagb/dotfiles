@@ -5,7 +5,8 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    '("cc3fa180f86a519d53f14899e3e91d211ba3831f17f4ef350f317eb025604ad7" default))
- '(org-agenda-files '("~/org/agenda/timetable.org")))
+ '(org-agenda-files '("/home/varunadhityagb/org/agenda/timetable.org"))
+ '(package-selected-packages '(scrollable-quick-peek)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

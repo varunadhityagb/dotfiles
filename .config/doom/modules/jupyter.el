@@ -14,10 +14,10 @@
   "Find .venv directory in current directory or project root."
   (let* ((current-dir default-directory)
          (project-root (and (fboundp 'projectile-project-root)
-                           (projectile-project-root)))
+                            (projectile-project-root)))
          (venv-current (expand-file-name ".venv" current-dir))
          (venv-project (when project-root
-                        (expand-file-name ".venv" project-root))))
+                         (expand-file-name ".venv" project-root))))
     (cond
      ((file-directory-p venv-current) venv-current)
      ((and venv-project (file-directory-p venv-project)) venv-project)
@@ -48,7 +48,7 @@
       (let ((ipython-path (expand-file-name "bin/ipython" venv-path)))
         (when (file-executable-p ipython-path)
           (setq-local jupyter-runtime-directory 
-                     (expand-file-name "share/jupyter/runtime" venv-path))
+                      (expand-file-name "share/jupyter/runtime" venv-path))
           (message "Using ipython from: %s" ipython-path)))))
   
   (add-hook 'jupyter-repl-mode-hook #'my/jupyter-use-venv-python))
@@ -82,10 +82,15 @@
 ;;; Helper functions for Jupyter kernel management
 
 (defun my/get-jupyter-runtime-folder ()
-  "Get Jupyter runtime folder, preferring venv if available."
-  (if-let ((venv-path (my/find-venv-directory)))
-      (expand-file-name "share/jupyter/runtime" venv-path)
-    (expand-file-name "~/.local/share/jupyter/runtime")))
+  "Get Jupyter runtime folder."
+  (let ((runtime-dir (string-trim
+                      (shell-command-to-string
+                       (if-let ((venv-path (my/find-venv-directory)))
+                           (format "%s/bin/jupyter --runtime-dir" venv-path)
+                         "jupyter --runtime-dir")))))
+    (if (string-empty-p runtime-dir)
+        (expand-file-name "~/.local/share/jupyter/runtime")
+      runtime-dir)))
 
 (defun my/get-open-ports ()
   "Get list of open ports on the system."
@@ -124,7 +129,9 @@
 (defun my/jupyter-connect-repl ()
   "Open emacs-jupyter REPL, connected to a Jupyter kernel."
   (interactive)
-  (jupyter-connect-repl (my/select-jupyter-kernel) nil nil nil t))
+  (let ((kernel-file (my/select-jupyter-kernel))
+        (session-name (read-string "Session name (for org-mode): " "main")))
+    (jupyter-connect-repl kernel-file nil nil nil t session-name)))
 
 (defun my/jupyter-qtconsole ()
   "Open Jupyter QtConsole, connected to a Jupyter kernel."
@@ -151,7 +158,7 @@
   (interactive)
   (let* ((session-name (read-string "Session name: "))
          (kernel-name (read-string "Kernel name: ")))
-    (insert (format "\n#+PROPERTY: header-args:jupyter-python :session %s :kernel %s\n"
+    (insert (format "\n#+PROPERTY: header-args:jupyter-python :session %s :kernel %s :eval never-export :results output :exports both\n"
                     session-name kernel-name))))
 
 (provide 'jupyter)
