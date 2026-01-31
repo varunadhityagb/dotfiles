@@ -8,6 +8,7 @@
 (load! "modules/utilities")
 (load! "modules/keybinds")
 (load! "modules/jupyter")
+(load! "modules/cpp-org")
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
