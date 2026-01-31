@@ -7,6 +7,10 @@ screenrecording() {
   notify-send "Screen Recorder" "Screen recording starting..."
   sleep 1
   wf-recorder -f "$filename" "$@"
+  if [[ -f "$filename" ]]; then
+    printf 'file://%s' "$(realpath "$filename")" | wl-copy --type text/uri-list
+    notify-send "Screen Recorder" "Video ready to paste"
+  fi
 }
 
 if pgrep -x wf-recorder >/dev/null; then
