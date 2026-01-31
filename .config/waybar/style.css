@@ -5,36 +5,16 @@
     border: none;
     border-radius: 8;
     min-height: 0;
-    font-family: "SF Pro Display";
-    font-size: 15px;
+    font-family: "SF Pro Display Bold";
+    font-size: 14px;
     padding: 0px;
     padding-left: 0px;
     padding-right: 0px;
     background: transparent;
 }
 
-#window,
-.modules-left,
-.modules-right {
-    margin: 3px 2px;
-    padding: 0px 1px;
-    color: rgb(255, 255, 255);
-    border-style: none;
-    border-bottom-style: solid;
-    border-top-style: solid;
-    border-bottom-color: alpha(@primary_fixed, 0.15);
-    border-top-color: alpha(@primary_fixed, 0.45);
-    border-width: 1px;
-    background: alpha(@background, 0.37);
-    box-shadow: inset 1 1 2 1 alpha(white, 0.2);
-    border-radius: 100px;
-}
-
 #window {
     padding: 0px 100px;
-    transition:
-        background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-        border 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 window#waybar.empty #window {
@@ -45,8 +25,19 @@ window#waybar.empty #window {
 }
 
 window#waybar {
+    margin: 3px 2px;
+    padding: 0px 1px;
+    color: rgb(255, 255, 255);
+    border-style: none;
+    border-bottom-style: solid;
+    border-top-style: solid;
+    border-bottom-color: alpha(@primary_fixed, 0.45);
+    border-top-color: alpha(@primary_fixed, 0.95);
+    border-width: 1px;
+    background: alpha(@background, 0.37);
+    box-shadow: inset 1 1 2 1 alpha(white, 0.2);
+    border-radius: 50px;
     padding: 0px;
-    background: alpha(@background, 0.25);
 }
 
 tooltip {
