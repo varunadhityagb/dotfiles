@@ -67,6 +67,7 @@
   :config
   ;; Don't confirm code block evaluation
   (setq org-confirm-babel-evaluate nil)
+
   ;; Load babel languages (jupyter must be loaded first)
   (with-eval-after-load 'jupyter
     (org-babel-do-load-languages
@@ -74,8 +75,25 @@
      '((python . t)
        (shell . t)
        (jupyter . t))))
+
   ;; Add template for jupyter-python blocks
   (add-to-list 'org-structure-template-alist '("py" . "src jupyter-python"))
+
+  ;; Make sure jupyter-python blocks open in python-mode
+  (setq org-src-lang-modes '(("jupyter-python" . python)
+                             ("python" . python)))
+
+  ;; Enable LSP in Python source block edit buffers
+  (defun my/org-babel-edit-prep:python (info)
+    "Enable LSP in Python source block edit buffers."
+    (setq-local buffer-file-name (concat default-directory "org-src-babel.py"))
+    (lsp-deferred))
+
+  (add-hook 'org-src-mode-hook
+            (lambda ()
+              (when (eq major-mode 'python-mode)
+                (my/org-babel-edit-prep:python nil))))
+
   :hook
   (org-babel-after-execute . org-display-inline-images))
 
