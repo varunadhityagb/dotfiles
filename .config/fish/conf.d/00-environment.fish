@@ -1,6 +1,6 @@
 # TeX Live paths
-set -gx MANPATH "/usr/local/texlive/2024/texmf-dist/doc/man" $MANPATH
-set -gx INFOPATH "/usr/local/texlive/2024/texmf-dist/doc/info" $INFOPATH
+set -gx MANPATH /usr/local/texlive/2024/texmf-dist/doc/man $MANPATH
+set -gx INFOPATH /usr/local/texlive/2024/texmf-dist/doc/info $INFOPATH
 fish_add_path /usr/local/texlive/2024/bin/x86_64-linux
 
 # User paths
@@ -33,6 +33,9 @@ set -gx EDITOR emacsclient
 set -gx MESA_LOADER_DRIVER_OVERRIDE iris
 set -gx OPENCV_LOG_LEVEL ERROR
 set -gx DOCKER_HOST unix:///var/run/docker.sock
+
+set -x QT_QPA_PLATFORMTHEME qt6ct
+set -x QT_QPA_PLATFORMTHEME_QT5 qt5ct
 
 # dont stage these
 set -gx ANTHROPIC_API_KEY "78704e3c94ab4bf3bdbd50b69a8c772b.n37zhJodlsfopa8N-q3NoqNc"

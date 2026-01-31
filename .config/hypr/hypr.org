@@ -6,6 +6,7 @@
 - [[#autostart][Autostart]]
 - [[#environment][Environment]]
 - [[#decoration][Decoration]]
+- [[#plugins][Plugins]]
 - [[#rules][Rules]]
   - [[#window-rules][Window rules]]
   - [[#layer-rules][Layer rules]]
@@ -57,6 +58,7 @@ exec-once = swaync
 exec-once = kdeconnect-indicator
 exec-once = kdeconnectd
 exec-once = wayscriber --no-tray -d
+exec-once = hyprpm reload
 #+end_src
 
 * Environment
@@ -77,14 +79,15 @@ env = GTK_IM_MODULE,fcitx
 env = QT_IM_MODULE,fcitx
 env = XMODIFIERS,@im=fcitx
 env = MESA_LOADER_DRIVER_OVERRIDE,iris
-env = QT_PLUGIN_PATH, /usr/lib/qt/plugins
+env = QT_QPA_PLATFORMTHEME,qt6ct
+env = QT_QPA_PLATFORMTHEME_QT5,qt5ct
 #+end_src
 
 * Decoration
 #+begin_src conf :tangle hyprland.conf
 general {
-    gaps_in = 4
-    gaps_out = 2
+    gaps_in = 5
+    gaps_out = 8
     border_size = 3
     resize_on_border = true
     allow_tearing = false
@@ -92,11 +95,10 @@ general {
     layout = dwindle
 }
 
-
 source = ./shader.conf
 
 decoration {
-    rounding = 1
+    rounding = 10
     rounding_power = 4
     blur {
         enabled = true
@@ -169,6 +171,21 @@ input {
 
 #+end_src
 
+* Plugins
+#+begin_src cong :tangle hyprland.conf
+plugin {
+    hyprexpo {
+        columns = 2
+        gap_size = 5
+        bg_col = rgb(111111)
+        workspace_method = center current # [center/first] [workspace] e.g. first 1 or center m+1
+
+        gesture_distance = 300 # how far is the "max" for the gesture
+    }
+}
+
+bind = SUPER, TAB, hyprexpo:expo, toggle
+#+end_src
 * Rules
 ** Window rules
 #+begin_src conf :tangle hyprland.conf
@@ -407,6 +424,18 @@ layerrule {
   xray = 0
   match:namespace = wofi
 }
+
+layerrule {
+  name = layerrule-9
+  ignore_alpha = 0.2
+  match:namespace = waybar
+}
+
+layerrule {
+  name = layerrule-10
+  blur_popups = on
+  match:namespace = waybar
+}
 #+end_src
 
 * Submaps
@@ -443,6 +472,7 @@ bind = SUPER, B, exec, $browser
 bind = SUPER SHIFT, B, exec, $browser --incognito
 bind = SUPER, Q, exec, emacsclient -c -a ""
 bind = SUPER, D, exec, pkill -SIGUSR1 wayscriber
+bind = SUPERSHIFT, D, exec, ~/dotfiles/.config/hypr/scripts/define
 #+end_src
 ** Media
 #+begin_src conf :tangle hyprland.conf
