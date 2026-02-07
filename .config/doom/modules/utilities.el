@@ -47,5 +47,29 @@
 ;; Optional: show all headers sorted by date
 (setq mu4e-headers-sort-direction 'descending)
 
+
+;; THE BEST YANK PATH
+(defun my/yank-file-uri ()
+  "Copy file URI(s) to clipboard using wl-copy."
+  (interactive)
+  (let* ((files (if (derived-mode-p 'dired-mode)
+                    (dired-get-marked-files)
+                  (list (buffer-file-name))))
+         (uris (mapconcat (lambda (f)
+                            (concat "file://" (expand-file-name f)))
+                          files
+                          "\n")))
+    (when uris
+      (with-temp-buffer
+        (insert uris)
+        (call-process-region (point-min) (point-max)
+                             "wl-copy" nil nil nil
+                             "--type" "text/uri-list"))
+      (message "Copied %d file URI(s)" (length files)))))
+
+;; Bind to SPC y (leader key)
+(map! :leader
+      :desc "Yank file URI" "y" #'my/yank-file-uri)
+
 (provide 'utilities)
 ;;; utilities.el ends here
