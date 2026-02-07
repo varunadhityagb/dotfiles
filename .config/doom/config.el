@@ -10,6 +10,8 @@
 (load! "modules/jupyter")
 (load! "modules/cpp-org")
 
+(load! "modules/external/ob-mongo")
+
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.

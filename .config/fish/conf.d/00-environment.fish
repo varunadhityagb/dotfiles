@@ -36,6 +36,7 @@ set -gx DOCKER_HOST unix:///var/run/docker.sock
 
 set -x QT_QPA_PLATFORMTHEME qt6ct
 set -x QT_QPA_PLATFORMTHEME_QT5 qt5ct
+set -x QML2_IMPORT_PATH /usr/lib/qt6/qml
 
 # dont stage these
 set -gx ANTHROPIC_API_KEY "78704e3c94ab4bf3bdbd50b69a8c772b.n37zhJodlsfopa8N-q3NoqNc"

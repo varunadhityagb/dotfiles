@@ -22,15 +22,18 @@ run_rofi() {
 chosen="$(run_rofi)"
 case ${chosen} in
 $shutdown)
+    /home/varunadhityagb/.local/bin/wellbeing off
     shutdown now
     ;;
 $reboot)
+    /home/varunadhityagb/.local/bin/wellbeing off
     reboot
     ;;
 $sleep)
     systemctl suspend
     ;;
 $logout)
+    /home/varunadhityagb/.local/bin/wellbeing off
     hyprctl dispatch exit
     ;;
 esac

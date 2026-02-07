@@ -24,4 +24,6 @@ if type -q eww
     eww shell-completions --shell fish | source
 end
 
+fnm env --use-on-cd | source
+
 zoxide init fish | source

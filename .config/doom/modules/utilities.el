@@ -26,6 +26,26 @@
   ;; Focus center pane
   (other-window 1))
 
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
+(require 'mu4e)
+
+;; Root of your Maildir
+(setq mu4e-maildir "~/Mail/gmail")
+
+(setq user-mail-address "varunadhitya.balaji@gmail.com")
+
+;; Map Gmail special folders exactly as they appear
+(setq mu4e-sent-folder   "/[Gmail]/Sent Mail"
+      mu4e-drafts-folder "/[Gmail]/Drafts"
+      mu4e-trash-folder  "/[Gmail]/Trash"
+      mu4e-refile-folder "/[Gmail]/All Mail")
+
+;; Fetch mail with mbsync and update every 5 minutes
+(setq mu4e-get-mail-command "mbsync -a"
+      mu4e-update-interval 300)
+
+;; Optional: show all headers sorted by date
+(setq mu4e-headers-sort-direction 'descending)
 
 (provide 'utilities)
 ;;; utilities.el ends here

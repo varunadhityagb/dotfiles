@@ -6,12 +6,12 @@ MUTE=$(pamixer --default-source --get-mute)
 
 # Choose appropriate icon
 if [ "$MUTE" = "true" ]; then
-    ICON="mic_muted"
+    ICON="mic_muted_dark"
 else
-    ICON="mic_unmuted"
+    ICON="mic_unmuted_dark"
 fi
 
 VAL=$(awk -v vol="$VOL" 'BEGIN { printf "%.2f", vol / 100 }')
 
 avizo-client --image-resource="$ICON" \
-             --progress="$VAL"
+    --progress="$VAL"

@@ -1,25 +1,33 @@
-
-#+OPTIONS: toc:nil
+#+OPTIONS: toc:nil ^:nil
 #+LATEX_CLASS: article
 #+LATEX_CLASS_OPTIONS: [a4paper]
-#+LATEX_HEADER: \usepackage{xcolor}
-#+LATEX_HEADER: \usepackage{listings}
-#+LATEX_HEADER: \lstset{frame=single, basicstyle=\ttfamily\footnotesize}
-#+LATEX_HEADER: \hypersetup{pdfauthor={Varun Adhitya G B}, pdflang={English}}
+#+LATEX_COMPILER: xelatex
 #+AUTHOR: Varun Adhitya G B
 #+DATE: \today
 
-# #+LATEX_HEADER\setmonofont[scale=matchlowercase]{firacode nerd font}
-#+LATEX_HEADER:\usepackage{sectsty}
+# XeLaTeX font configuration - use system fonts
+#+LATEX_HEADER: \usepackage{fontspec}
+#+LATEX_HEADER: \setmainfont{Liberation Serif}
+#+LATEX_HEADER: \setsansfont{Liberation Sans}
+#+LATEX_HEADER: \setmonofont{Liberation Mono}
+
+# Page geometry
 #+LATEX_HEADER: \usepackage[tmargin=2cm,rmargin=0.5in,lmargin=0.5in,margin=0.85in,bmargin=2cm,footskip=.2in]{geometry}
-#+LATEX_HEADER: \usepackage{minted}
-#+OPTIONS: toc:nil
-#+LATEX_COMPILER: xelatex
-#+LATEX_HEADER: \usepackage[utf8]{inputenc}
-#+LATEX_HEADER: \usepackage[T1]{fontenc}
-#+LATEX_HEADER: \usemintedstyle{colorful}
+
+# Colors and syntax highlighting
 #+LATEX_HEADER: \usepackage{xcolor}
+#+LATEX_HEADER: \usepackage{minted}
+#+LATEX_HEADER: \usemintedstyle{colorful}
 #+LATEX_HEADER: \definecolor{bg}{rgb}{0.95,0.95,0.95}
-#+LATEX_HEADER: \setminted{bgcolor=bg, linenos=true, frame=lines}
+#+LATEX_HEADER: \setminted{bgcolor=bg, linenos=true, frame=lines, breaklines=true}
+
+# Hyperlinks
+#+LATEX_HEADER: \usepackage{hyperref}
+#+LATEX_HEADER: \hypersetup{pdfauthor={Varun Adhitya G B}, pdflang={English}, colorlinks=true}
+
+# Section styling
+#+LATEX_HEADER: \usepackage{sectsty}
+
+# Verbatim with line breaks
+#+LATEX_HEADER: \usepackage{fancyvrb}
 #+LATEX_HEADER: \DefineVerbatimEnvironment{verbatim}{Verbatim}{breaklines=true,breakanywhere=true}
-#+OPTIONS: ^:nil

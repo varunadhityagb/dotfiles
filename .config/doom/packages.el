@@ -52,7 +52,6 @@
 (package! highlight-indent-guides)
 
 (package! ob-async)
-(package! ob-mongo)
 (package! jupyter)
 (package! auto-complete)
 (package! code-cells)

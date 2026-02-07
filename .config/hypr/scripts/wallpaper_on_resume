@@ -6,3 +6,5 @@ export WAYLAND_DISPLAY="wayland-1"
 hyprctl dispatch dpms on
 
 /usr/bin/screen_timer on
+
+/home/varunadhityagb/.local/bin/wellbeing on

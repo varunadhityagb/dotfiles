@@ -30,5 +30,3 @@ fi
 
 avizo-client --image-resource="$ICON" \
     --progress=$(echo "scale=2; $BRIGHTNESS_PERCENT / 100" | bc)
-
-# --background=STRING

@@ -37,5 +37,8 @@
   (interactive)
   (insert "#+SETUPFILE:/home/varunadhityagb/.config/doom/modules/org-setup.org\n"))
 
+(after! org
+  (setq org-latex-image-default-width ".5\\linewidth"))
+
 (provide 'org-mode)
 ;;; org-mode.el ends here

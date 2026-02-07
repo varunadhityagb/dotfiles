@@ -87,6 +87,7 @@
   (defun my/org-babel-edit-prep:python (info)
     "Enable LSP in Python source block edit buffers."
     (setq-local buffer-file-name (concat default-directory "org-src-babel.py"))
+    (setq-local org-element-use-cache nil)
     (lsp-deferred))
 
   (add-hook 'org-src-mode-hook
@@ -151,12 +152,6 @@
         (session-name (read-string "Session name (for org-mode): " "main")))
     (jupyter-connect-repl kernel-file nil nil nil t session-name)))
 
-(defun my/jupyter-qtconsole ()
-  "Open Jupyter QtConsole, connected to a Jupyter kernel."
-  (interactive)
-  (start-process "jupyter-qtconsole" nil "setsid" "jupyter" "qtconsole" "--existing"
-                 (file-name-nondirectory (my/select-jupyter-kernel))))
-
 (defun my/jupyter-cleanup-kernels ()
   "Clean up stale Jupyter kernel files."
   (interactive)
@@ -180,3 +175,4 @@
                     session-name kernel-name))))
 
 (provide 'jupyter)
+;;; jupyter.el ends here

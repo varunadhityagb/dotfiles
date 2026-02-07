@@ -119,7 +119,7 @@
        (javascript +tree-sitter)   ; (hope(abandon(ye(who(enter(here))))))
        (julia +tree-sitter)        ; a better, faster MATLAB
        (latex +cdlatex +fold
-              +lsp +latexmk)       ; writing papers in Emacs has never been so fun
+              +lsp)                ; writing papers in Emacs has never been so fun
        lua                         ; one-based indices? one-based indices
        (markdown +grip)            ; writing docs for people to ignore
        (org +gnuplot +jupyter

@@ -1,3 +1,4 @@
 #!/bin/bash
 loginctl lock-session
 /usr/bin/screen_timer off
+/home/varunadhityagb/.local/bin/wellbeing off

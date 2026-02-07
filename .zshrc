@@ -266,12 +266,7 @@ alias s="yay -Ss"
 export MESA_LOADER_DRIVER_OVERRIDE=iris
 export OPENCV_LOG_LEVEL=ERROR
 
-load_nvm() {
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-  unfunction nvm node npm npx 2>/dev/null
-}
+eval "$(fnm env --use-on-cd --shell zsh)"
 
 load_bun() {
   export BUN_INSTALL="$HOME/.bun"
@@ -280,13 +275,6 @@ load_bun() {
   [ -s "$BUN_INSTALL/_bun" ] && source "$BUN_INSTALL/_bun"
   unfunction bun 2>/dev/null
 }
-
-
-# ----- NVM lazy shims -----
-nvm()  { load_nvm; nvm "$@"; }
-node() { load_nvm; node "$@"; }
-npm()  { load_nvm; npm "$@"; }
-npx()  { load_nvm; npx "$@"; }
 
 # ----- Bun lazy shim -----
 bun()  { load_bun; bun "$@"; }
@@ -307,3 +295,6 @@ _rendercv_completion() {
 
 compdef _rendercv_completion rendercv
 
+
+# OpenClaw Completion
+source <(openclaw completion --shell zsh)
