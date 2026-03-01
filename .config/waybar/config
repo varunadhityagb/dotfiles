@@ -138,7 +138,7 @@
 
     "group/system": {
         "orientation": "horizontal",
-        "modules": ["network",  "pulseaudio", "bluetooth", "hyprland/submap"],
+        "modules": ["network",  "pulseaudio", "bluetooth", "custom/hyprland-windows", "hyprland/submap" ],
     },
 
     "power-profiles-daemon": {
@@ -164,5 +164,12 @@
         "format": "󰘳   {}",
         "tooltip": false
     },
+
+    "custom/hyprland-windows": {
+        "exec": "~/dotfiles/.config/hypr/scripts/hyprland-windows",
+        "return-type": "json",
+        "signal": 8,
+        "markup": "pango"
+    }
 
 }

@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+STATE_FILE="/tmp/waybar-window-count"
+
+WORKSPACE=$(hyprctl activeworkspace -j | jq '.id')
+COUNT=$(hyprctl clients -j | jq "[.[] | select(.workspace.id==$WORKSPACE)] | length")
+
+if [ "$COUNT" -le 5 ]; then
+    ICON=""
+else
+    ICON="󰣆"
+fi
+
+CLASS=""
+
+if [ -f "$STATE_FILE" ]; then
+    PREV=$(cat "$STATE_FILE")
+    if [ "$PREV" != "$COUNT" ]; then
+        CLASS="changed"
+    fi
+else
+    CLASS="changed"
+fi
+
+echo "$COUNT" >"$STATE_FILE"
+
+echo "{\"text\": \"$ICON   $COUNT\", \"class\": \"$CLASS\", \"tooltip\": \"Open windows: $COUNT\"}"

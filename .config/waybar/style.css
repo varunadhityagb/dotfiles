@@ -72,6 +72,7 @@ tooltip label {
 #network,
 #battery,
 #bluetooth,
+#custom-hyprland-windows,
 #power-profiles-daemon,
 #custom-expand,
 #custom-expand2,
@@ -103,7 +104,7 @@ tooltip label {
 }
 
 #clock,
-#bluetooth {
+#custom-hyprland-windows {
     margin-right: 10px;
 }
 
@@ -218,4 +219,19 @@ tooltip label {
     font-size: 16px;
     color: @primary;
     transition: all 0.3s ease;
+}
+
+#custom-hyprland-windows.changed {
+    animation: numberRoll 220ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes numberRoll {
+    0% {
+        margin-top: -10px;
+        opacity: 0;
+    }
+    100% {
+        margin-top: 0px;
+        opacity: 1;
+    }
 }

@@ -10,6 +10,7 @@
 - [[#rules][Rules]]
   - [[#window-rules][Window rules]]
   - [[#layer-rules][Layer rules]]
+  - [[#workspace-rules][Workspace Rules]]
 - [[#submaps][Submaps]]
   - [[#apps][Apps]]
   - [[#media][Media]]
@@ -60,6 +61,7 @@ exec-once = kdeconnect-indicator
 exec-once = kdeconnectd
 exec-once = wayscriber --no-tray -d
 exec-once = qs -c overview
+exec-once = bash -c 'socat -u UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock - | while read -r line; do pkill -RTMIN+8 waybar; done'
 #+end_src
 
 * Environment
@@ -179,7 +181,7 @@ input {
 #+end_src
 
 * Plugins
-#+begin_src cong :tangle hyprland.conf
+#+begin_src conf :tangle hyprland.conf
 #+end_src
 * Rules
 ** Window rules
@@ -457,6 +459,13 @@ layerrule {
 }
 #+end_src
 
+** Workspace Rules
+#+begin_src conf :tangle hyprland.conf
+workspace = 1, layout:scrolling
+workspace = 2, layout:monocle
+workspace = 4, layout:monocle
+#+end_src
+
 * Submaps
 ** Apps
 #+begin_src conf :tangle hyprland.conf
@@ -578,6 +587,8 @@ bind = SUPER, F, exec, hyprctl dispatch fullscreen 0
 bind = ALT, TAB, cyclenext
 bind = ALT, TAB, bringactivetotop
 bind = SUPER, TAB, exec, qs ipc -c overview call overview toggle
+bind = SUPER, period, layoutmsg, cyclenext
+bind = SUPER, comma, layoutmsg, swapcol r
 
 #applications
 bind = alt, space, exec, $menu -show drun -sort false
