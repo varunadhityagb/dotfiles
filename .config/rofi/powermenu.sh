@@ -1,16 +1,30 @@
 #!/usr/bin/env bash
 uptime="$(uptime -p | sed -e 's/up //g')"
 
-shutdown=' Shutdown'
-reboot=' Reboot'
-sleep='󰒲 Sleep'
-logout=' Logout'
+shutdown='  Shutdown'
+reboot='  Reboot'
+sleep='󰒲    Sleep'
+logout='  Logout'
 
 screen_time="$(screen_timer status)"
+power_mode="$(powerprofilesctl get)"
+
+case ${power_mode} in
+"power-saver")
+    icon=""
+    ;;
+"balanced")
+    icon=""
+    ;;
+"performance")
+    icon="󱐌"
+    ;;
+esac
+
 # Rofi CMD
 rofi_cmd() {
     rofi -kb-element-prev "Ctrl+[45]" -kb-element-next "Ctrl+[44]" -kb-mode-previous "Ctrl+[43]" -kb-mode-next "Ctrl+[46]" -dmenu \
-        -mesg "$screen_time" \
+        -mesg "$icon  $screen_time" \
         -theme ~/.config/rofi/powermenu.rasi
 }
 

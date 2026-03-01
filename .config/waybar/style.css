@@ -24,8 +24,12 @@ window#waybar.empty #window {
     box-shadow: inset 1 1 2 1 alpha(white, 0);
 }
 
-window#waybar {
+.modules-center,
+.modules-right,
+#system,
+#music {
     color: rgb(255, 255, 255);
+    margin: 5px;
     border-style: none;
     border-bottom-style: solid;
     border-top-style: solid;
@@ -37,17 +41,11 @@ window#waybar {
     background: alpha(@background, 0.37);
     box-shadow: inset 1 1 2 1 alpha(white, 0.2);
     border-radius: 50px;
-    margin: 10px;
 }
 
-.modules-right {
-    padding-right: 5px;
-    padding-top: 1px;
-}
-
-.modules-left {
-    padding-left: 5px;
-    padding-top: 1px;
+#custom-blank {
+    margin-left: 50px;
+    margin-right: 50px;
 }
 
 tooltip {
@@ -62,7 +60,7 @@ tooltip {
     border-width: 1px;
     background: alpha(#101010, 0.37);
     box-shadow: inset 1 1 2 1 alpha(white, 0.2);
-    border-radius: 0px;
+    border-radius: 25px;
 }
 
 tooltip label {
@@ -98,11 +96,15 @@ tooltip label {
     border-top-color: alpha(@primary_fixed, 0.45);
     border-width: 0px;
     background: alpha(@background, 0);
-    /* box-shadow: inset 1 1 2 1 alpha(white, 0.2); */
     border-radius: 10px;
     transition:
         background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
         border 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#clock,
+#bluetooth {
+    margin-right: 10px;
 }
 
 #tray menu {

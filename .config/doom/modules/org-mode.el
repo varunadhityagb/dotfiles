@@ -26,10 +26,13 @@
 
 ;; Org heading sizes
 (after! org
-  (set-face-attribute 'org-level-1 nil :height 1.1 :weight 'normal)
-  (set-face-attribute 'org-level-2 nil :height 1.1 :weight 'normal)
-  (set-face-attribute 'org-level-3 nil :height 1.1 :weight 'normal)
-  (set-face-attribute 'org-document-title nil :height 1.5 :weight 'bold))
+  (set-face-attribute 'org-level-1 nil :foreground "#51afef" :weight 'bold :height 1.3)
+  (set-face-attribute 'org-level-2 nil :foreground "#c678dd" :weight 'bold :height 1.2)
+  (set-face-attribute 'org-level-3 nil :foreground "#98be65" :weight 'bold :height 1.1)
+  (set-face-attribute 'org-level-4 nil :foreground "#da8548" :weight 'semi-bold)
+  (set-face-attribute 'org-level-5 nil :foreground "#5699af" :weight 'semi-bold)
+  (set-face-attribute 'org-level-6 nil :foreground "#a9a1e1" :weight 'semi-bold)
+  (set-face-attribute 'org-document-title nil :height 1.8 :weight 'bold))
 
 ;; Setup file insertion function
 (defun insert-setupfile()
@@ -39,6 +42,12 @@
 
 (after! org
   (setq org-latex-image-default-width ".5\\linewidth"))
+
+(defun my-org-latex-export-to-pdf-async ()
+  "Export Org file to PDF asynchronously on save."
+  (interactive)
+  (when (eq major-mode 'org-mode)
+    (org-latex-export-to-pdf nil nil nil t)))
 
 (provide 'org-mode)
 ;;; org-mode.el ends here

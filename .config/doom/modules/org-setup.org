@@ -5,11 +5,11 @@
 #+AUTHOR: Varun Adhitya G B
 #+DATE: \today
 
-# XeLaTeX font configuration - use system fonts
+# XeLaTeX font configuration
 #+LATEX_HEADER: \usepackage{fontspec}
 #+LATEX_HEADER: \setmainfont{Liberation Serif}
 #+LATEX_HEADER: \setsansfont{Liberation Sans}
-#+LATEX_HEADER: \setmonofont{Liberation Mono}
+#+LATEX_HEADER: \setmonofont{IosevkaTermSlab Nerd Font}
 
 # Page geometry
 #+LATEX_HEADER: \usepackage[tmargin=2cm,rmargin=0.5in,lmargin=0.5in,margin=0.85in,bmargin=2cm,footskip=.2in]{geometry}
@@ -21,12 +21,27 @@
 #+LATEX_HEADER: \definecolor{bg}{rgb}{0.95,0.95,0.95}
 #+LATEX_HEADER: \setminted{bgcolor=bg, linenos=true, frame=lines, breaklines=true}
 
+# Define custom colors
+#+LATEX_HEADER: \definecolor{primarycolor}{RGB}{0, 102, 204}
+#+LATEX_HEADER: \definecolor{secondarycolor}{RGB}{51, 153, 102}
+
 # Hyperlinks
 #+LATEX_HEADER: \usepackage{hyperref}
 #+LATEX_HEADER: \hypersetup{pdfauthor={Varun Adhitya G B}, pdflang={English}, colorlinks=true}
 
 # Section styling
-#+LATEX_HEADER: \usepackage{sectsty}
+#+LATEX_HEADER: \usepackage{titlesec}
+#+LATEX_HEADER: \titleformat{\section}{\color{primarycolor}\Large\bfseries}{\thesection}{1em}{}
+#+LATEX_HEADER: \titleformat{\subsection}{\color{secondarycolor}\large\bfseries}{\thesubsection}{1em}{}
+#+LATEX_HEADER: \titleformat{\subsubsection}{\color{black}\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+# Header and footer
+#+LATEX_HEADER: \usepackage{fancyhdr}
+#+LATEX_HEADER: \pagestyle{fancy}
+#+LATEX_HEADER: \fancyhf{}
+#+LATEX_HEADER: \fancyhead[R]{\textbf{NLP Lab Cheatsheet} \\ \small Varun Adhitya G B}
+#+LATEX_HEADER: \renewcommand{\headrulewidth}{0.4pt}
+#+LATEX_HEADER: \setlength{\headheight}{28pt}
 
 # Verbatim with line breaks
 #+LATEX_HEADER: \usepackage{fancyvrb}

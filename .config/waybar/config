@@ -3,18 +3,27 @@
     "spacing": 0,
     "position": "top",
     "reload_style_on_change": true,
-    "modules-left": ["hyprland/workspaces"],
-    "modules-center": [],
-    "modules-right": ["hyprland/submap", "tray", "custom/updates", "bluetooth", "battery", "pulseaudio", "network", "clock"],
+    "modules-left": ["group/system", "group/music"],
+    "modules-center": ["hyprland/workspaces", ],
+    "modules-right": ["tray", "custom/updates", "battery", "clock"],
 
     "image#album-art": {
-        "exec": "~/album_art.sh",
+        "exec": "/home/varunadhityagb/dotfiles/.config/hypr/scripts/album_art.sh",
         "size": 28,
         "interval": 5,
     },
 
     "clock": {
         "format": "{:%a %b %d %R %p}",
+        "tooltip": true,
+        "tooltip-format": "{tz_list}",
+        "timezones": [
+                "Asia/Kolkata",
+                "Etc/UTC",
+                "America/New_York",
+                "America/Montevideo",
+                "America/Los_Angeles"
+            ],
         "on-click": "~/dotfiles/.config/waybar/scripts/calendar.sh"
     },
 
@@ -24,8 +33,9 @@
         "format-disconnected": "󱛅 ",
         "format-disabled": "󰖪 ",
         "on-click": "~/dotfiles/.config/rofi/wifi.sh",
-        "tooltip-format-wifi": "{signalStrength} % -- {ipaddr}/{cidr} -- ({frequency} GHz)",
+        "tooltip-format-wifi": "{essid} {signalStrength}% {frequency} GHz\n {ipaddr}/{cidr} \n {netmask}",
     },
+
     "hyprland/workspaces": {
         "on-scroll-up": "hyprctl dispatch workspace r-1",
         "on-scroll-down": "hyprctl dispatch workspace r+1",
@@ -33,20 +43,13 @@
         "active-only": false,
         "all-outputs": false,
         "format": "{icon}",
+        "format-icons": {
+            "active": "",
+            "default": "",
+            "empty": ""
+            },
         "persistent-workspaces": {
             "*": [1,2,3,4,5]
-        },
-        "format-icons": {
-            "1": "Code",
-            "2": "Documents",
-            "3": "Browser",
-            "4": "Messages",
-            "5": "Media",
-            "6": "M1",
-            "7": "M2",
-            "8": "M3",
-            "9": "M4",
-            "10": "M5"
         }
     },
 
@@ -66,13 +69,14 @@
     },
 
     "custom/updates": {
-        "format": "  {}",
+        "format": "   {}",
         "escape": true,
         "return-type": "json",
         "exec": "~/.config/hypr/scripts/updates.sh",
         "interval": 1800,
-        "signal": 1,
-        "hide-empty-text": true,
+        "signal": 8,
+        "on-click": "~/.config/hypr/scripts/update-menu.sh",
+        "on-click-right": "pkill -SIGRTMIN+8 waybar",
     },
 
     "tray": {
@@ -132,20 +136,10 @@
         "modules": ["mpris", "image#album-art" ],
     },
 
-    "custom/expand": {
-            "format": "",
-            "tooltip": false
-        },
-    "group/expand": {
+    "group/system": {
         "orientation": "horizontal",
-        "drawer": {
-            "transition-duration": 600,
-            "transition-to-left": true,
-            "click-to-reveal": false
-        },
-        "modules": ["custom/expand", "group/music", "tray", "power-profiles-daemon"],
+        "modules": ["network",  "pulseaudio", "bluetooth", "hyprland/submap"],
     },
-
 
     "power-profiles-daemon": {
       "format": "{icon}",
@@ -163,11 +157,8 @@
         "format": "{title}",
         "format-paused": "",
         "tooltip-format": "{player}\n{artist}\n{album}\n{title}",
-        "ignored-players": ["firefox", "brave"],
-        "on-click": "",
-        "on-click-middle": "play-pause",
+        "ignored-players": ["firefox", "brave"]
     },
-
 
     "hyprland/submap": {
         "format": "󰘳   {}",

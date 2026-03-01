@@ -206,7 +206,7 @@
 .widget-title {
     color: @text;
     font-size: 1.2em;
-    margin: 6px;
+    margin: 25px 50px;
 }
 
 .widget-title button {
@@ -236,8 +236,8 @@
 /* Do Not Disturb - Glass Toggle */
 .widget-dnd {
     color: @text;
-    margin: 6px;
-    font-size: 1.2rem;
+    margin: 25px 50px;
+    font-size: 2rem;
 }
 
 .widget-dnd > switch {

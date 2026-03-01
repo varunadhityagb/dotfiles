@@ -67,3 +67,6 @@
 
 (package! timetabel
   :recipe (:host github :repo "nairadithya/timetab.el"))
+
+(package! qml-mode)
+

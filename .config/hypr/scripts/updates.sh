@@ -1,102 +1,104 @@
 #!/usr/bin/env bash
-#  _   _           _       _
-# | | | |_ __   __| | __ _| |_ ___  ___
-# | | | | '_ \ / _` |/ _` | __/ _ \/ __|
-# | |_| | |_) | (_| | (_| | ||  __/\__ \
-#  \___/| .__/ \__,_|\__,_|\__\___||___/
-#       |_|
-#
+
+# Cache file to store results
+CACHE_FILE="${XDG_CACHE_HOME:-$HOME/.cache}/waybar-updates"
+CACHE_DURATION=1800 # 30 minutes in seconds
 
 # Check if command exists
 _checkCommandExists() {
-  cmd="$1"
-  if ! command -v "$cmd" >/dev/null; then
-    echo 1
-    return
-  fi
-  echo 0
-  return
+  command -v "$1" &>/dev/null
 }
 
-script_name=$(basename "$0")
+# Check for lock files with timeout
+check_lock_files() {
+  local pacman_lock="/var/lib/pacman/db.lck"
+  local checkup_lock="${TMPDIR:-/tmp}/checkup-db-${UID}/db.lck"
+  local timeout=60
+  local elapsed=0
 
-# Count the instances
-instance_count=$(ps aux | grep -F "$script_name" | grep -v grep | grep -v $$ | wc -l)
+  while [ -f "$pacman_lock" ] || [ -f "$checkup_lock" ]; do
+    if [ $elapsed -ge $timeout ]; then
+      echo '{"text": "⏳", "tooltip": "Update check locked", "class": "yellow"}' >&2
+      exit 1
+    fi
+    sleep 1
+    ((elapsed++))
+  done
+}
 
-if [ $instance_count -gt 1 ]; then
-  sleep $instance_count
+# Use cached result if fresh enough
+if [ -f "$CACHE_FILE" ]; then
+  cache_age=$(($(date +%s) - $(stat -c %Y "$CACHE_FILE" 2>/dev/null || echo 0)))
+  if [ $cache_age -lt $CACHE_DURATION ]; then
+    cat "$CACHE_FILE"
+    exit 0
+  fi
 fi
 
-# -----------------------------------------------------
-# Define threshholds for color indicators
-# -----------------------------------------------------
-
+# Thresholds for color indicators
 threshhold_green=0
 threshhold_yellow=25
 threshhold_red=100
 
-# -----------------------------------------------------
-# Check for updates
-# -----------------------------------------------------
+updates_pacman=0
+updates_aur=0
 
-# Arch
-if [[ $(_checkCommandExists "pacman") == 0 ]]; then
-
-  check_lock_files() {
-    local pacman_lock="/var/lib/pacman/db.lck"
-    local checkup_lock="${TMPDIR:-/tmp}/checkup-db-${UID}/db.lck"
-
-    while [ -f "$pacman_lock" ] || [ -f "$checkup_lock" ]; do
-      sleep 1
-    done
-  }
-
+# Check for updates based on distro
+if _checkCommandExists "pacman"; then
   check_lock_files
 
-  yay_installed="false"
-  paru_installed="false"
-  if [[ $(_checkCommandExists "yay") == 0 ]]; then
-    yay_installed="true"
-  fi
-  if [[ $(_checkCommandExists "paru") == 0 ]]; then
-    paru_installed="true"
-  fi
-  if [[ $yay_installed == "true" ]] && [[ $paru_installed == "false" ]]; then
-    aur_helper="yay"
-  elif [[ $yay_installed == "false" ]] && [[ $paru_installed == "true" ]]; then
-    aur_helper="paru"
-  else
-    aur_helper="yay"
-  fi
-  updates_aur=$($aur_helper -Qum | wc -l)
-  updates_pacman=$(checkupdates | wc -l)
-  updates=$((updates_aur + updates_pacman))
+  # Get pacman updates
+  updates_pacman=$(checkupdates 2>/dev/null | wc -l)
 
-# Fedora
-elif [[ $(_checkCommandExists "dnf") == 0 ]]; then
-  updates=$(dnf check-update -q | grep -c ^[a-z0-9])
-# Others
-else
-  updates=0
+  # Detect AUR helper
+  if _checkCommandExists "paru"; then
+    aur_helper="paru"
+  elif _checkCommandExists "yay"; then
+    aur_helper="yay"
+  else
+    aur_helper=""
+  fi
+
+  # Get AUR updates
+  if [ -n "$aur_helper" ]; then
+    updates_aur=$($aur_helper -Qum 2>/dev/null | wc -l)
+  fi
+
+elif _checkCommandExists "dnf"; then
+  updates_pacman=$(dnf check-update -q 2>/dev/null | grep -c '^[a-z0-9]' || echo 0)
 fi
 
-# -----------------------------------------------------
-# Output in JSON format for Waybar Module custom-updates
-# -----------------------------------------------------
+updates=$((updates_pacman + updates_aur))
 
+# Determine CSS class
 css_class="green"
-
-if [ "$updates" -gt $threshhold_yellow ]; then
+if [ "$updates" -gt $threshhold_red ]; then
+  css_class="red"
+elif [ "$updates" -gt $threshhold_yellow ]; then
   css_class="yellow"
 fi
 
-if [ "$updates" -gt $threshhold_red ]; then
-  css_class="red"
-fi
-if [ "$updates" != 0 ]; then
-  if [ "$updates" -gt $threshhold_green ]; then
-    printf '{"text": "%s", "alt": "%s", "tooltip": "Click to update your system", "class": "%s"}' "$updates" "$updates" "$css_class"
-  else
-    printf '{"text": "0", "alt": "0", "tooltip": "No updates available", "class": "green"}'
+# Build tooltip with breakdown
+if [ "$updates" -gt 0 ]; then
+  tooltip="Total: $updates updates"
+  if [ "$updates_pacman" -gt 0 ] && [ "$updates_aur" -gt 0 ]; then
+    tooltip="$updates updates (Pacman: $updates_pacman, AUR: $updates_aur)"
+  elif [ "$updates_pacman" -gt 0 ]; then
+    tooltip="$updates_pacman Pacman updates"
+  elif [ "$updates_aur" -gt 0 ]; then
+    tooltip="$updates_aur AUR updates"
   fi
+else
+  tooltip="No updates available"
 fi
+
+# Generate output
+if [ "$updates" -gt 0 ]; then
+  output=$(printf '{"text": "%s", "alt": "%s", "tooltip": "%s", "class": "%s"}' \
+    "$updates" "$updates" "$tooltip" "$css_class")
+else
+  output='{"text": "", "alt": "0", "tooltip": "No updates available", "class": "green"}'
+fi
+
+# Save to cache and output
+echo "$output" | tee "$CACHE_FILE"
