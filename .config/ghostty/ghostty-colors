@@ -1,0 +1,9 @@
+# Cursor
+cursor-color = "#e0e2e8"
+
+# Base colors
+foreground = "#e0e2e8"
+background = "#101418"
+
+selection-foreground = "#243240"
+selection-background = "#b9c8da"

@@ -87,3 +87,7 @@ output_path = "~/dotfiles/.config/quickshell/overview/common/Appearance.colors.q
 [templates.android]
 input_path = '~/dotfiles/.config/matugen/templates/android-colors.xml'
 output_path = "~/Syncthing/College/Sem6/MAD/ExplicitIntent/app/src/main/res/values/colors.xml"
+
+[templates.ghostty]
+input_path = '~/dotfiles/.config/matugen/templates/ghostty-colors'
+output_path = '~/dotfiles/.config/ghostty/ghostty-colors'

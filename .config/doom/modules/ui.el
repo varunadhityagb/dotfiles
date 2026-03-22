@@ -19,7 +19,7 @@
 (setq doom-variable-pitch-font (font-spec :family "SF Pro Text" :size 24 :weight 'regular))
 
 ;; Transparency
-(add-to-list 'default-frame-alist '(alpha-background . 50))
+(add-to-list 'default-frame-alist '(alpha-background . 70))
 
 ;; Line numbers
 (setq display-line-numbers-type 'relative)
@@ -32,6 +32,20 @@
 
 ;; Using fish
 (setq vterm-shell "/usr/bin/fish")
+
+(use-package! ultimate-print
+  :commands (ultimate-print ultimate-print-repeat-last ultimate-print-file)
+  :config
+  ;; Set your default printer if desired
+  (setq ultimate-print-default-printer nil)  ; nil uses system default
+
+  ;; Set default number of copies
+  (setq ultimate-print-default-copies 1)
+
+  ;; Optional: Configure PostScript printing
+  (setq ps-paper-type 'letter)  ; or 'a4
+  (setq ps-print-header t)
+  (setq ps-print-color-p t))
 
 (provide 'ui)
 ;;; ui.el ends here

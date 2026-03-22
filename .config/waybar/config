@@ -4,7 +4,7 @@
     "position": "top",
     "reload_style_on_change": true,
     "modules-left": ["group/system", "group/music"],
-    "modules-center": ["hyprland/workspaces", ],
+    "modules-center": ["hyprland/workspaces"],
     "modules-right": ["tray", "custom/updates", "battery", "clock"],
 
     "image#album-art": {
@@ -110,8 +110,7 @@
     "bluetooth": {
         "format-on": "󰂯",
         "format-off": "󰂲",
-        "format-connected": "󰋋",
-        "tooltip-format-connected": "Battery : {device_battery_percentage}%",
+        "format-connected": "󰋋   {device_battery_percentage}%",
         "on-click-right": "bluetoothctl power $(bluetoothctl show | grep -i \"Powered\" | awk '{print $2}' | xargs -I {} sh -c 'if [ \"$1\" = \"yes\" ]; then echo \"off\"; else echo \"on\"; fi' sh {})",
         "on-click": "~/dotfiles/.config/waybar/scripts/bluetooth.sh"
     },
@@ -131,9 +130,8 @@
         "drawer": {
             "transition-duration": 600,
             "transition-to-left": true,
-            "click-to-reveal": true
         },
-        "modules": ["mpris", "image#album-art" ],
+        "modules": ["cffi/nowplaying"],
     },
 
     "group/system": {
@@ -170,6 +168,17 @@
         "return-type": "json",
         "signal": 8,
         "markup": "pango"
+    },
+
+    "cffi/lyrics": {
+        "module_path": "/home/varunadhityagb/Syncthing/waylyrics/build/waylyrics.so"
+    },
+
+    "cffi/nowplaying": {
+        "module_path": "/home/varunadhityagb/Syncthing/nowplaying/build/libnowplaying.so",
+        "on-click":        "",
+        "on-click-middle": "",
+        "on-click-right":  ""
     }
 
 }

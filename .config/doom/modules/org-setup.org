@@ -39,7 +39,7 @@
 #+LATEX_HEADER: \usepackage{fancyhdr}
 #+LATEX_HEADER: \pagestyle{fancy}
 #+LATEX_HEADER: \fancyhf{}
-#+LATEX_HEADER: \fancyhead[R]{\textbf{NLP Lab Cheatsheet} \\ \small Varun Adhitya G B}
+#+LATEX_HEADER: \fancyhead[R]{\textbf{} \\ \small Varun Adhitya G B}
 #+LATEX_HEADER: \renewcommand{\headrulewidth}{0.4pt}
 #+LATEX_HEADER: \setlength{\headheight}{28pt}
 

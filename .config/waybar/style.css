@@ -27,9 +27,10 @@ window#waybar.empty #window {
 .modules-center,
 .modules-right,
 #system,
+#lyrics,
 #music {
     color: rgb(255, 255, 255);
-    margin: 5px;
+    margin: 2px 4px;
     border-style: none;
     border-bottom-style: solid;
     border-top-style: solid;
@@ -38,9 +39,13 @@ window#waybar.empty #window {
     border-left-color: alpha(@primary, 0.3);
     border-right-color: alpha(@primry, 0.3);
     border-width: 2px;
-    background: alpha(@background, 0.37);
+    background: alpha(@background, 0.2);
     box-shadow: inset 1 1 2 1 alpha(white, 0.2);
     border-radius: 50px;
+}
+
+#lyrics {
+    padding: 0px 10px;
 }
 
 #custom-blank {
@@ -72,6 +77,7 @@ tooltip label {
 #network,
 #battery,
 #bluetooth,
+#image,
 #custom-hyprland-windows,
 #power-profiles-daemon,
 #custom-expand,
@@ -88,7 +94,7 @@ tooltip label {
 #tray,
 #submap {
     margin: 4px;
-    padding: 0px 10px;
+    padding: 0px 5px;
     color: rgb(255, 255, 255);
     border-style: none;
     border-bottom-style: solid;
@@ -104,8 +110,18 @@ tooltip label {
 }
 
 #clock,
+#submap,
 #custom-hyprland-windows {
-    margin-right: 10px;
+    margin-right: 12px;
+}
+
+#submap {
+    margin-left: -2px;
+}
+
+#network,
+#tray {
+    margin-left: 10px;
 }
 
 #tray menu {
@@ -234,4 +250,62 @@ tooltip label {
         margin-top: 0px;
         opacity: 1;
     }
+}
+
+/* ── Now Playing module ───────────────────────────────────────────────────── */
+
+#nowplaying {
+    padding: 0 8px;
+    background: transparent;
+}
+
+#nowplaying-art {
+    min-width: 32px;
+    min-height: 32px;
+    margin-left: 10px;
+}
+
+#nowplaying-title {
+    font-weight: 500;
+    color: #cdd6f4;
+    min-width: 220px;
+    margin: 0px 5px;
+}
+
+/* ── Progress bar ─────────────────────────────────────────────────────────── */
+
+#nowplaying-progress {
+    min-height: 3px;
+    min-width: 220px;
+    margin: 0px 5px;
+}
+
+#nowplaying-progress trough {
+    min-height: 3px;
+    border-radius: 2px;
+    background: alpha(#cdd6f4, 0.15);
+    border: none;
+    margin-top: 5px;
+    box-shadow: none;
+}
+
+#nowplaying-progress trough progress {
+    min-height: 5px;
+    border-radius: 2px;
+    background: #1db954;
+    border: none;
+    box-shadow: none;
+}
+
+/* ── Lyrics tooltip ───────────────────────────────────────────────────────── */
+
+tooltip {
+    background: alpha(#1e1e2e, 0.95);
+    border: 2px solid alpha(#cdd6f4, 0.15);
+    padding: 8px;
+}
+
+tooltip label {
+    font-size: 20px;
+    color: #cdd6f4;
 }

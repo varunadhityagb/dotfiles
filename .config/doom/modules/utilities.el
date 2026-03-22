@@ -71,5 +71,9 @@
 (map! :leader
       :desc "Yank file URI" "y" #'my/yank-file-uri)
 
+
+(after! emojify
+  (setq emojify-display-style 'unicode))
+
 (provide 'utilities)
 ;;; utilities.el ends here

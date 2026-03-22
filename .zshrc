@@ -295,6 +295,3 @@ _rendercv_completion() {
 
 compdef _rendercv_completion rendercv
 
-
-# OpenClaw Completion
-source <(openclaw completion --shell zsh)

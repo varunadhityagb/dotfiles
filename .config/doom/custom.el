@@ -4,7 +4,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("cc3fa180f86a519d53f14899e3e91d211ba3831f17f4ef350f317eb025604ad7" default))
+   '("792e11958f4d813f4fabbe0ef886ca7491777c0553ba4e49d1f3b0afe8450326"
+     "cc3fa180f86a519d53f14899e3e91d211ba3831f17f4ef350f317eb025604ad7" default))
  '(org-agenda-files '("/home/varunadhityagb/org/agenda/timetable.org"))
  '(package-selected-packages '(scrollable-quick-peek))
  '(send-mail-function 'mailclient-send-it))
