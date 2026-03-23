@@ -3,9 +3,10 @@
     "spacing": 0,
     "position": "top",
     "reload_style_on_change": true,
-    "modules-left": ["group/system", "group/music"],
+    "margin": "5 5",
+    "modules-left": ["group/music", "custom/hyprland-windows", "hyprland/submap"],
     "modules-center": ["hyprland/workspaces"],
-    "modules-right": ["tray", "custom/updates", "battery", "clock"],
+    "modules-right": ["tray", "custom/updates", "group/system", "clock"],
 
     "image#album-art": {
         "exec": "/home/varunadhityagb/dotfiles/.config/hypr/scripts/album_art.sh",
@@ -14,7 +15,7 @@
     },
 
     "clock": {
-        "format": "{:%a %b %d %R %p}",
+        "format": "{:%a %b %d \n  %R %p}",
         "tooltip": true,
         "tooltip-format": "{tz_list}",
         "timezones": [
@@ -136,7 +137,7 @@
 
     "group/system": {
         "orientation": "horizontal",
-        "modules": ["network",  "pulseaudio", "bluetooth", "custom/hyprland-windows", "hyprland/submap" ],
+        "modules": ["network",  "pulseaudio", "bluetooth", "battery"],
     },
 
     "power-profiles-daemon": {

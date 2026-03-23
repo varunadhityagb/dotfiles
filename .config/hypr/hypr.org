@@ -91,7 +91,7 @@ env = QML2_IMPORT_PATH, /usr/lib/qt6/qml
 #+begin_src conf :tangle hyprland.conf
 general {
     gaps_in = 5
-    gaps_out = 8
+    gaps_out = 5
     border_size = 3
     resize_on_border = true
     allow_tearing = false
@@ -102,8 +102,8 @@ general {
 source = ./shader.conf
 
 decoration {
-    rounding = 20
-    rounding_power = 4
+    rounding = 10
+    rounding_power = 2
     blur {
         enabled = true
         size = 1
@@ -453,7 +453,7 @@ layerrule {
 
 layerrule {
   name = layerrule-10
-  ignore_alpha = 0.2
+  animation = slide top
   match:namespace = waybar
 }
 

@@ -13,23 +13,7 @@
     background: transparent;
 }
 
-#window {
-    padding: 0px 100px;
-}
-
-window#waybar.empty #window {
-    background-color: transparent;
-    padding: 0px 10px;
-    border-width: 0px;
-    box-shadow: inset 1 1 2 1 alpha(white, 0);
-}
-
-.modules-center,
-.modules-right,
-#system,
-#lyrics,
-#music {
-    color: rgb(255, 255, 255);
+window#waybar {
     margin: 2px 4px;
     border-style: none;
     border-bottom-style: solid;
@@ -39,37 +23,21 @@ window#waybar.empty #window {
     border-left-color: alpha(@primary, 0.3);
     border-right-color: alpha(@primry, 0.3);
     border-width: 2px;
-    background: alpha(@background, 0.2);
+    background: alpha(@background, 0.4);
     box-shadow: inset 1 1 2 1 alpha(white, 0.2);
-    border-radius: 50px;
-}
-
-#lyrics {
-    padding: 0px 10px;
-}
-
-#custom-blank {
-    margin-left: 50px;
-    margin-right: 50px;
+    border-radius: 10px;
 }
 
 tooltip {
-    margin: 4px;
-    padding: 10px 10px;
-    color: rgb(255, 255, 255);
-    border-style: none;
-    border-bottom-style: solid;
-    border-top-style: solid;
-    border-bottom-color: alpha(@primary_fixed, 0.15);
-    border-top-color: alpha(@primary_fixed, 0.45);
-    border-width: 1px;
-    background: alpha(#101010, 0.37);
-    box-shadow: inset 1 1 2 1 alpha(white, 0.2);
-    border-radius: 25px;
+    background: alpha(@surface, 0.6);
+    border: 2px solid alpha(@primary_container, 0.15);
+    padding: 8px;
+    border-radius: 10px;
 }
 
 tooltip label {
-    color: white;
+    font-size: 18px;
+    color: @primary;
 }
 
 #clock,
@@ -95,83 +63,60 @@ tooltip label {
 #submap {
     margin: 4px;
     padding: 0px 5px;
-    color: rgb(255, 255, 255);
-    border-style: none;
-    border-bottom-style: solid;
-    border-top-style: solid;
-    border-bottom-color: alpha(@primary_fixed, 0.15);
-    border-top-color: alpha(@primary_fixed, 0.45);
-    border-width: 0px;
-    background: alpha(@background, 0);
-    border-radius: 10px;
+    color: @primary_fixed;
     transition:
         background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
         border 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-#clock,
-#submap,
 #custom-hyprland-windows {
-    margin-right: 12px;
-}
-
-#submap {
-    margin-left: -2px;
-}
-
-#network,
-#tray {
     margin-left: 10px;
 }
 
 #tray menu {
     margin: 4px;
-    padding: 10px 10px;
+    padding: 6px;
     color: rgb(255, 255, 255);
     border-style: none;
     border-bottom-style: solid;
     border-top-style: solid;
-    border-bottom-color: alpha(@primary_fixed, 0.15);
-    border-top-color: alpha(@primary_fixed, 0.45);
-    border-width: 1px;
-    background: alpha(#101010, 0.37);
+    border-bottom-color: alpha(@primary, 0.45);
+    border-top-color: alpha(@primary, 0.95);
+    border-width: 2px;
+    background: alpha(@background, 0.2);
     box-shadow: inset 1 1 2 1 alpha(white, 0.2);
     border-radius: 10px;
 }
 
 #tray menu menuitem {
     margin: 4px;
-    padding: 10px 10px;
-    color: rgb(255, 255, 255);
+    padding: 6px 10px;
+    color: @primary_fixed;
     border-style: none;
     border-bottom-style: solid;
     border-top-style: solid;
-    border-bottom-color: alpha(@primary_fixed, 0.15);
-    border-top-color: alpha(@primary_fixed, 0.45);
+    border-bottom-color: alpha(@primary, 0.15);
+    border-top-color: alpha(@primary, 0.45);
     border-width: 1px;
-    background: alpha(#101010, 0.37);
-    box-shadow: inset 1 1 2 1 alpha(white, 0.2);
-    border-radius: 10px;
+    background: alpha(@surface, 0.15);
+    box-shadow: inset 1 1 2 1 alpha(white, 0.1);
+    border-radius: 8px;
+    transition:
+        background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+        border 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 #tray menu menuitem:hover {
     color: @accent_color;
     text-shadow: 0px 0px 6px @accent_color;
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
+    background: alpha(@primary_container, 0.15);
+    box-shadow: inset 1 1 2 1 alpha(white, 0.2);
 }
 
 #workspaces {
     margin: 4px;
     padding: 10px 10px;
-    color: rgb(255, 255, 255);
-    border-style: none;
-    border-bottom-style: solid;
-    border-top-style: solid;
-    border-bottom-color: alpha(@primary_fixed, 0.15);
-    border-top-color: alpha(@primary_fixed, 0.45);
-    border-width: 0px;
-    /* background: alpha(@background, 0.37); */
-    /* box-shadow: inset 1 1 2 1 alpha(white, 0.2); */
-    border-radius: 100px;
+    color: @primary_fixed;
 }
 
 #workspaces button {
@@ -181,7 +126,6 @@ tooltip label {
     color: rgb(200, 200, 200);
     margin-right: 0.2cm;
     margin-left: 0.2cm;
-    text-shadow: 0px 0px 4px rgb(135, 135, 135);
 }
 
 #workspaces button.active {
@@ -193,10 +137,6 @@ tooltip label {
     transition-duration: 120ms;
     color: @primary_fixed;
     text-shadow: 0px 0px 8px @primary_fixed;
-}
-
-#workspaces button.current_output {
-    color: @secondary_fixed;
 }
 
 #workspaces button.urgent {
@@ -221,15 +161,6 @@ tooltip label {
     color: #90ee90;
 }
 
-#tray > .passive {
-    -gtk-icon-effect: dim;
-}
-
-#tray > .needs-attention {
-    -gtk-icon-effect: highlight;
-    color: #eb4d4b;
-}
-
 #custom-expand,
 #custom-expand2 {
     font-size: 16px;
@@ -252,8 +183,6 @@ tooltip label {
     }
 }
 
-/* ── Now Playing module ───────────────────────────────────────────────────── */
-
 #nowplaying {
     padding: 0 8px;
     background: transparent;
@@ -262,22 +191,19 @@ tooltip label {
 #nowplaying-art {
     min-width: 32px;
     min-height: 32px;
-    margin-left: 10px;
 }
 
 #nowplaying-title {
     font-weight: 500;
     color: #cdd6f4;
     min-width: 220px;
-    margin: 0px 5px;
+    margin: 0px 2px;
 }
-
-/* ── Progress bar ─────────────────────────────────────────────────────────── */
 
 #nowplaying-progress {
     min-height: 3px;
     min-width: 220px;
-    margin: 0px 5px;
+    margin: 0px 2px;
 }
 
 #nowplaying-progress trough {
@@ -295,17 +221,4 @@ tooltip label {
     background: #1db954;
     border: none;
     box-shadow: none;
-}
-
-/* ── Lyrics tooltip ───────────────────────────────────────────────────────── */
-
-tooltip {
-    background: alpha(#1e1e2e, 0.95);
-    border: 2px solid alpha(#cdd6f4, 0.15);
-    padding: 8px;
-}
-
-tooltip label {
-    font-size: 20px;
-    color: #cdd6f4;
 }
