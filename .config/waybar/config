@@ -4,8 +4,8 @@
     "position": "top",
     "reload_style_on_change": true,
     "margin": "5 5",
-    "modules-left": ["group/music", "custom/hyprland-windows", "hyprland/submap"],
-    "modules-center": ["hyprland/workspaces"],
+    "modules-left": ["hyprland/workspaces", "custom/hyprland-windows", "hyprland/submap"],
+    "modules-center": ["group/music"],
     "modules-right": ["tray", "custom/updates", "group/system", "clock"],
 
     "image#album-art": {
@@ -51,6 +51,13 @@
             },
         "persistent-workspaces": {
             "*": [1,2,3,4,5]
+        },
+        "format-icons": {
+            "1": "Code",
+            "2": "Documents",
+            "3": "Browser",
+            "4": "Messages",
+            "5": "Media"
         }
     },
 

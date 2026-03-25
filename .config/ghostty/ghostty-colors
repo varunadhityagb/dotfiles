@@ -5,5 +5,5 @@ cursor-color = "#e0e2e8"
 foreground = "#e0e2e8"
 background = "#101418"
 
-selection-foreground = "#243240"
-selection-background = "#b9c8da"
+selection-foreground = "#23323f"
+selection-background = "#b8c8da"

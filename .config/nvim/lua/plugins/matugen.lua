@@ -24,36 +24,36 @@ return {
 
         -- Surface colors
         surface = "#101418",
-        surface_bright = "#36393e",
+        surface_bright = "#363a3e",
         surface_container = "#1c2024",
-        surface_container_high = "#272a2f",
-        surface_container_highest = "#323539",
+        surface_container_high = "#272a2e",
+        surface_container_highest = "#313539",
         surface_container_low = "#181c20",
         surface_container_lowest = "#0b0f12",
 
         -- Primary colors
-        primary = "#9ccbfb",
-        primary_container = "#0f4a73",
-        primary_fixed = "#cee5ff",
-        primary_fixed_dim = "#9ccbfb",
-        on_primary = "#003354",
-        on_primary_container = "#cee5ff",
+        primary = "#98ccf9",
+        primary_container = "#054b72",
+        primary_fixed = "#cce5ff",
+        primary_fixed_dim = "#98ccf9",
+        on_primary = "#003351",
+        on_primary_container = "#cce5ff",
 
         -- Secondary colors
-        secondary = "#b9c8da",
-        secondary_container = "#3a4857",
-        secondary_fixed = "#d5e4f7",
-        secondary_fixed_dim = "#b9c8da",
-        on_secondary = "#243240",
-        on_secondary_container = "#d5e4f7",
+        secondary = "#b8c8da",
+        secondary_container = "#394857",
+        secondary_fixed = "#d4e4f6",
+        secondary_fixed_dim = "#b8c8da",
+        on_secondary = "#23323f",
+        on_secondary_container = "#d4e4f6",
 
         -- Tertiary colors
-        tertiary = "#d3bfe6",
-        tertiary_container = "#504061",
-        tertiary_fixed = "#efdbff",
-        tertiary_fixed_dim = "#d3bfe6",
-        on_tertiary = "#392a49",
-        on_tertiary_container = "#efdbff",
+        tertiary = "#d1bfe7",
+        tertiary_container = "#4e4162",
+        tertiary_fixed = "#ecdcff",
+        tertiary_fixed_dim = "#d1bfe7",
+        on_tertiary = "#372a4a",
+        on_tertiary_container = "#ecdcff",
 
         -- Error colors
         error = "#ffb4ab",
@@ -62,13 +62,13 @@ return {
         on_error_container = "#ffdad6",
 
         -- Other colors
-        outline = "#8c9199",
+        outline = "#8c9198",
         outline_variant = "#42474e",
         on_surface = "#e0e2e8",
-        on_surface_variant = "#c2c7cf",
+        on_surface_variant = "#c2c7ce",
         inverse_surface = "#e0e2e8",
         inverse_on_surface = "#2d3135",
-        inverse_primary = "#30628c",
+        inverse_primary = "#2b638b",
         shadow = "#000000",
         scrim = "#000000",
       }
