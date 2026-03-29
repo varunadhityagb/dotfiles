@@ -50,7 +50,7 @@ exec-once = bash -c '/home/varunadhityagb/.local/bin/wellbeing on'
 exec-once = bash -c 'waybar'
 exec-once = emacs --daemon
 exec-once = cliphist wipe
-exec-once = swww-daemon
+exec-once = awww-daemon
 exec-once = hypridle
 exec-once = avizo-service
 exec-once = /usr/bin/clipse -clear
@@ -85,6 +85,7 @@ env = MESA_LOADER_DRIVER_OVERRIDE,iris
 env = QT_QPA_PLATFORMTHEME,qt6ct
 env = QT_QPA_PLATFORMTHEME_QT5,qt5ct
 env = QML2_IMPORT_PATH, /usr/lib/qt6/qml
+env = QT_QPA_PLATFORM_PLUGIN_PATH, /usr/lib/qt/plugins/platforms
 #+end_src
 
 * Decoration
@@ -113,23 +114,36 @@ decoration {
         popups = true
         popups_ignorealpha = 0.1
     }
-
-shadow {
-
 }
-}
-
 
 animations {
     enabled = true
-    bezier = myBezier, 0.05, 0.9, 0.1, 1.05
-    bezier = circBezier, 0.445, 0.05, 0.55, 0.95
-    bezier = overshoot, 0.05, 0.9, 0.1, 1.1
-    animation = windows, 1, 5, overshoot, gnomed
-    animation = windowsMove, 1, 2, overshoot
-    animation = fade, 1, 7, circBezier
-    animation = workspaces, 1, 2, overshoot, slidefade 75%
-    animation = layers, 1, 3, circBezier, slide
+
+    # Curves
+    bezier = elastic,    0.68, -0.55,  0.265,  1.55
+    bezier = smooth,     0.25,  0.46,   0.45,  0.94
+    bezier = snappy,     0.23,     1,   0.32,     1
+    bezier = easeOut,    0.16,     1,    0.3,     1
+
+    # Windows
+    animation = windowsIn,   1, 3,  smooth, gnomed
+    animation = windowsOut,  1, 3,  smooth , gnomed
+    animation = windowsMove, 1, 3,  elastic, slide
+
+    # Fades
+    animation = fade,        1, 4,  smooth
+    animation = fadeIn,      1, 3,  smooth
+    animation = fadeOut,     1, 3,  smooth
+    animation = fadeDim,     1, 4,  smooth
+
+    # Workspaces
+    animation = workspaces,      1, 4, easeOut, slidefade 20%
+    animation = specialWorkspace, 1, 4, easeOut, slidefadevert
+
+    # Layers
+    animation = layers,    1, 3, snappy, slide
+    animation = layersIn,  1, 3, snappy, slide
+    animation = layersOut, 1, 2, smooth, fade
 }
 
 
@@ -580,13 +594,13 @@ submap = reset
 submap = tv
 
 # Navigation
-bind = , up,     exec, adb shell input keyevent 19   # D-Pad Up
-bind = , down,   exec, adb shell input keyevent 20   # D-Pad Down
-bind = , left,   exec, adb shell input keyevent 21   # D-Pad Left
-bind = , right,  exec, adb shell input keyevent 22   # D-Pad Right
-bind = , return, exec, adb shell input keyevent 23   # D-Pad Center (Select/OK)
-bind = , escape, exec, adb shell input keyevent 4    # Back
-bind = , H,      exec, adb shell input keyevent 3    # Home
+binde = , up,     exec, adb shell input keyevent 19   # D-Pad Up
+binde = , down,   exec, adb shell input keyevent 20   # D-Pad Down
+binde = , left,   exec, adb shell input keyevent 21   # D-Pad Left
+binde = , right,  exec, adb shell input keyevent 22   # D-Pad Right
+binde = , return, exec, adb shell input keyevent 23   # D-Pad Center (Select/OK)
+binde = , escape, exec, adb shell input keyevent 4    # Back
+binde = , H,      exec, adb shell input keyevent 3    # Home
 
 # Volume
 bind = , equal,  exec, adb shell input keyevent 24   # Volume Up
@@ -719,7 +733,7 @@ bindel = ctrl alt, down, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && ~/do
 bindl= ctrl alt, right, exec, playerctl next
 bindl= ctrl alt, left, exec, playerctl previous
 bindl = ctrl alt, space, exec, playerctl play-pause
-bind = ctrl alt, L, exec, hyprlock
+bind = ctrl alt, L, exec, qs -c lockscreen
 #+end_src
 **
 ** Mouse
