@@ -39,8 +39,43 @@
               vc-ignore-dir-regexp
               tramp-file-name-regexp))
 
- (autoload 'qml-mode "qml-mode" "Editing Qt Declarative." t)
- (add-to-list 'auto-mode-alist '("\\.qml$" . qml-mode))
+(autoload 'qml-mode "qml-mode" "Editing Qt Declarative." t)
+(add-to-list 'auto-mode-alist '("\\.qml$" . qml-mode))
+
+;; Scala mode
+(use-package! scala-mode
+  :interpreter ("scala" . scala-mode))
+
+;; SBT
+(use-package! sbt-mode
+  :commands sbt-start sbt-command
+  :config
+  (substitute-key-definition
+   'minibuffer-complete-word
+   'self-insert-command
+   minibuffer-local-completion-map)
+  (setq sbt:program-options '("-Dsbt.supershell=false")))
+
+;; LSP + Metals
+(use-package! lsp-mode
+  :hook ((scala-mode . lsp)
+         (lsp-mode . lsp-lens-mode))
+  :config
+  (setq lsp-prefer-flymake nil
+        lsp-keep-workspace-alive nil))
+
+(use-package! lsp-metals)
+
+;; Navigate into jar sources (e.g. M-. on stdlib symbols)
+(use-package! jarchive
+  :config (jarchive-mode 1))
+
+;; Completions
+(use-package! company
+  :hook (scala-mode . company-mode)
+  :config
+  (setq lsp-completion-provider :capf))
+
 
 (provide 'programming)
 ;;; programming.el ends here
