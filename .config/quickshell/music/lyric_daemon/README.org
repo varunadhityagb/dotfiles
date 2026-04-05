@@ -1,0 +1,7 @@
+* lyric daemon
+
+#+begin_src sh
+mkdir build && cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release
+make -j$(nproc)
+#+end_src
