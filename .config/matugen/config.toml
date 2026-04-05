@@ -91,3 +91,7 @@ output_path = "~/Syncthing/College/Sem6/MAD/ExplicitIntent/app/src/main/res/valu
 [templates.ghostty]
 input_path = '~/dotfiles/.config/matugen/templates/ghostty-colors'
 output_path = '~/dotfiles/.config/ghostty/ghostty-colors'
+
+[templates.quickshell]
+input_path = "~/dotfiles/.config/matugen/templates/lockscreen-template.json"
+output_path = "/tmp/qs_colors.json"

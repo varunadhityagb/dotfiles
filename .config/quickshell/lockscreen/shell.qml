@@ -674,8 +674,8 @@ WlSessionLock {
             // ---------------------------------------------------------
             RowLayout {
                 anchors.bottom: parent.bottom
-                anchors.bottomMargin: 40
-                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.left: parent.left
+                anchors.margins: 40
                 spacing: 16
 
                 opacity: screenRoot.introState
