@@ -5,7 +5,6 @@
     "reload_style_on_change": true,
     "margin": "5 5",
     "modules-left": ["hyprland/workspaces", "custom/hyprland-windows", "hyprland/submap"],
-    "modules-center": ["group/music"],
     "modules-right": ["tray", "custom/updates", "group/system", "clock"],
 
     "image#album-art": {
@@ -25,7 +24,7 @@
                 "America/Montevideo",
                 "America/Los_Angeles"
             ],
-        "on-click": "~/dotfiles/.config/waybar/scripts/calendar.sh"
+        "on-click": "qs -c calendar"
     },
 
     "network": {
@@ -33,7 +32,7 @@
         "format-ethernet": " ",
         "format-disconnected": "󱛅 ",
         "format-disabled": "󰖪 ",
-        "on-click": "~/dotfiles/.config/rofi/wifi.sh",
+        "on-click": "kitty -o background_opacity=0.9 --class clipse -e 'nmtui-connect'",
         "tooltip-format-wifi": "{essid} {signalStrength}% {frequency} GHz\n {ipaddr}/{cidr} \n {netmask}",
     },
 
@@ -44,11 +43,6 @@
         "active-only": false,
         "all-outputs": false,
         "format": "{icon}",
-        "format-icons": {
-            "active": "",
-            "default": "",
-            "empty": ""
-            },
         "persistent-workspaces": {
             "*": [1,2,3,4,5]
         },
@@ -83,7 +77,7 @@
         "exec": "~/.config/hypr/scripts/updates.sh",
         "interval": 1800,
         "signal": 8,
-        "on-click": "~/.config/hypr/scripts/update-menu.sh",
+        "on-click": "qs -c updates",
         "on-click-right": "pkill -SIGRTMIN+8 waybar",
     },
 
@@ -100,7 +94,7 @@
         },
         "format": "{icon}  {capacity}%",
         "format-icons": [" ", " ", " ", " ", " "],
-        "on-click": "~/dotfiles/.config/waybar/scripts/battery.sh",
+        "on-click": "qs -c battery",
     },
 
     "pulseaudio": {
@@ -113,14 +107,14 @@
         "headphone": " ",
         "default": [" ", " ", " "]
         },
-        "on-click": "~/dotfiles/.config/waybar/scripts/volume.sh"
+        "on-click": "qs -c volume"
     },
     "bluetooth": {
         "format-on": "󰂯",
         "format-off": "󰂲",
         "format-connected": "󰋋   {device_battery_percentage}%",
         "on-click-right": "bluetoothctl power $(bluetoothctl show | grep -i \"Powered\" | awk '{print $2}' | xargs -I {} sh -c 'if [ \"$1\" = \"yes\" ]; then echo \"off\"; else echo \"on\"; fi' sh {})",
-        "on-click": "~/dotfiles/.config/waybar/scripts/bluetooth.sh"
+        "on-click": "kitty -o background_opacity=0.9 --class clipse -e 'bluetui'"
     },
 
     "custom/dnd": {
@@ -144,7 +138,7 @@
 
     "group/system": {
         "orientation": "horizontal",
-        "modules": ["network",  "pulseaudio", "bluetooth", "battery"],
+        "modules": ["network", "bluetooth", "pulseaudio", "battery"],
     },
 
     "power-profiles-daemon": {
@@ -184,7 +178,7 @@
 
     "cffi/nowplaying": {
         "module_path": "/home/varunadhityagb/Syncthing/nowplaying/build/libnowplaying.so",
-        "on-click":        "",
+        "on-click":  "~/dotfiles/.config/quickshell/music/show_music.sh",
         "on-click-middle": "",
         "on-click-right":  ""
     }

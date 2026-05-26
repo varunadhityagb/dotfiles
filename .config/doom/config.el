@@ -12,7 +12,7 @@
 (load! "modules/gpt-el")
 
 (load! "modules/external/ob-mongo")
-
+(load! "modules/external/comics")
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an

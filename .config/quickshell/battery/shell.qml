@@ -69,17 +69,14 @@ PanelWindow {
         property int upHours: 0
         property int upMins: 0
 
-        property real sysVolume: 0
         property bool sysMuted: false
         property real sysBrightness: 0
 
         property string currentUserName: ""
 
         // Anti-Jitter Sync States
-        property bool isDraggingVol: false
         property bool isDraggingBri: false
 
-        Timer { id: volSyncDelay; interval: 800; onTriggered: window.isDraggingVol = false; triggeredOnStart: true; }
         Timer { id: briSyncDelay; interval: 800; onTriggered: window.isDraggingBri = false; triggeredOnStart: true; }
 
         readonly property bool isCharging: batStatus === "Charging"
@@ -153,12 +150,6 @@ PanelWindow {
                         if (upParts.length === 2) {
                             window.upHours = parseInt(upParts[0]) || 0;
                             window.upMins = parseInt(upParts[1].replace("m", "")) || 0;
-                        }
-
-                        if (!window.isDraggingVol) {
-                            let volParts = (lines[4] || "0 on").trim().split(" ");
-                            window.sysVolume = parseInt(volParts[0]) || 0;
-                            window.sysMuted = (volParts[1] === "off");
                         }
 
                         if (!window.isDraggingBri) {
@@ -771,104 +762,6 @@ PanelWindow {
                                 }
                             }
 
-                            // Volume Slider
-                            RowLayout {
-                                Layout.fillWidth: true
-                                spacing: 15
-
-                                Rectangle {
-                                    Layout.preferredWidth: 32
-                                    Layout.preferredHeight: 32
-                                    radius: 16
-                                    color: volIconMa.containsMouse ? "#1affffff" : "transparent"
-                                    border.color: volIconMa.containsMouse ? window.profileStart : "transparent"
-                                    Behavior on color { ColorAnimation { duration: 150 } }
-                                    Behavior on border.color { ColorAnimation { duration: 150 } }
-
-                                    Text {
-                                        anchors.centerIn: parent
-                                        text: window.sysMuted || window.sysVolume === 0 ? "󰖁" : (window.sysVolume > 50 ? "󰕾" : "󰖀")
-                                        font.family: "Iosevka Nerd Font"
-                                        font.pixelSize: 22
-                                        color: window.sysMuted ? window.overlay0 : window.profileStart
-                                        Behavior on color { ColorAnimation { duration: 200 } }
-                                    }
-                                    MouseArea {
-                                        id: volIconMa
-                                        anchors.fill: parent
-                                        hoverEnabled: true
-                                        cursorShape: Qt.PointingHandCursor
-                                        onClicked: {
-                                            volSyncDelay.stop();
-                                            window.isDraggingVol = true;
-                                            window.sysMuted = !window.sysMuted;
-                                            Quickshell.execDetached(["wpctl", "set-mute", "@DEFAULT_AUDIO_SINK@", "toggle"]);
-                                            volSyncDelay.restart();
-                                        }
-                                    }
-                                }
-
-                                Item {
-                                    Layout.fillWidth: true
-                                    height: 18
-
-                                    Timer {
-                                        id: volCmdThrottle
-                                        interval: 50
-                                        property int targetPct: -1
-                                        onTriggered: {
-                                            if (targetPct >= 0) {
-                                                if (targetPct > 0 && window.sysMuted) {
-                                                    window.sysMuted = false;
-                                                    Quickshell.execDetached(["wpctl", "set-mute", "@DEFAULT_AUDIO_SINK@", "0"]);
-                                                }
-                                                Quickshell.execDetached(["wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", targetPct + "%"]);
-                                                targetPct = -1;
-                                            }
-                                        }
-                                    }
-
-                                    Rectangle {
-                                        anchors.fill: parent
-                                        radius: 9
-                                        color: "#0dffffff"
-                                        border.color: "#1affffff"
-                                        border.width: 1
-                                        clip: true
-
-                                        Rectangle {
-                                            height: parent.height
-                                            width: parent.width * (window.sysVolume / 100)
-                                            radius: 9
-                                            opacity: window.sysMuted ? 0.5 : (volMa.containsMouse ? 1.0 : 0.85)
-                                            Behavior on opacity { NumberAnimation { duration: 200 } }
-                                            Behavior on width { enabled: !window.isDraggingVol; NumberAnimation { duration: 200; easing.type: Easing.OutQuint } }
-
-                                            gradient: Gradient {
-                                                orientation: Gradient.Horizontal
-                                                GradientStop { position: 0.0; color: window.sysMuted ? window.surface2 : window.profileStart; Behavior on color { ColorAnimation { duration: 300 } } }
-                                                GradientStop { position: 1.0; color: window.sysMuted ? Qt.lighter(window.surface2, 1.15) : window.profileEnd; Behavior on color { ColorAnimation { duration: 300 } } }
-                                            }
-                                        }
-                                    }
-                                    MouseArea {
-                                        id: volMa
-                                        anchors.fill: parent
-                                        hoverEnabled: true
-                                        cursorShape: Qt.PointingHandCursor
-                                        onPressed: (mouse) => { volSyncDelay.stop(); window.isDraggingVol = true; updateVol(mouse.x); }
-                                        onPositionChanged: (mouse) => { if (pressed) updateVol(mouse.x); }
-                                        onReleased: { volSyncDelay.restart(); }
-
-                                        function updateVol(mx) {
-                                            let pct = Math.max(0, Math.min(100, Math.round((mx / width) * 100)));
-                                            window.sysVolume = pct;
-                                            volCmdThrottle.targetPct = pct;
-                                            if (!volCmdThrottle.running) volCmdThrottle.start();
-                                        }
-                                    }
-                                }
-                            }
                         }
                     }
 

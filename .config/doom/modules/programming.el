@@ -76,6 +76,12 @@
   :config
   (setq lsp-completion-provider :capf))
 
+(add-to-list 'exec-path "/home/varunadhityagb/.local/share/coursier/bin")
+(setenv "PATH"
+        (concat "/home/varunadhityagb/.local/share/coursier/bin:"
+                (getenv "PATH")))
+
+(setq TeX-command-default "LaTeX")
 
 (provide 'programming)
 ;;; programming.el ends here

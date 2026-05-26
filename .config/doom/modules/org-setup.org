@@ -46,3 +46,6 @@
 # Verbatim with line breaks
 #+LATEX_HEADER: \usepackage{fancyvrb}
 #+LATEX_HEADER: \DefineVerbatimEnvironment{verbatim}{Verbatim}{breaklines=true,breakanywhere=true}
+
+#+LATEX_HEADER: \usepackage{enumitem}
+#+LATEX_HEADER: \setlist[itemize]{leftmargin=1.5em, topsep=2pt, itemsep=1pt}

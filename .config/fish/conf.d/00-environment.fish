@@ -9,10 +9,19 @@ fish_add_path $HOME/.local/bin
 fish_add_path $HOME/.config/emacs/bin
 fish_add_path $HOME/.local/share/gem/ruby/3.4.0/bin
 fish_add_path /usr/local/bin
+fish_add_path $HOME/.local/share/fnm/node-versions/v22.22.0/installation/bin
 
 # Library paths
 set -gx LD_LIBRARY_PATH "$HOME/.local/lib" $LD_LIBRARY_PATH
 set -gx PKG_CONFIG_PATH "$HOME/.local/lib/pkgconfig" $PKG_CONFIG_PATH
+set -gx HADOOP_HOME /opt/hadoop
+set -gx SPARK_HOME /opt/spark
+set -gx HADOOP_CONF_DIR /opt/hadoop/etc/hadoop/
+set -gx HDFS_NAMENODE_USER varunadhityagb
+set -gx HDFS_DATANODE_USER varunadhityagb
+set -gx HDFS_SECONDARYNAMENODE_USER varunadhityagb
+set -gx YARN_RESOURCEMANAGER_USER varunadhityagb
+set -gx YARN_NODEMANAGER_USER varunadhityagb
 
 # Application paths
 fish_add_path $HOME/.local/share/coursier/bin
@@ -22,6 +31,10 @@ fish_add_path /.local/share/flatpak/exports/bin
 fish_add_path $HOME/Softwares/ideaIU-2024.2.4/bin
 fish_add_path $HOME/.spicetify
 fish_add_path $HOME/development/flutter/bin
+fish_add_path $HADOOP_HOME/bin
+fish_add_path $SPARK_HOME/bin
+fish_add_path $HADOOP_HOME/sbin
+fish_add_path $SPARK_HOME/sbin
 
 # Bun
 set -gx BUN_INSTALL "$HOME/.bun"

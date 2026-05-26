@@ -1,9 +1,9 @@
 # Cursor
-cursor-color = "#e0e2e8"
+cursor-color = "#f0dfd7"
 
 # Base colors
-foreground = "#e0e2e8"
-background = "#101418"
+foreground = "#f0dfd7"
+background = "#1a120d"
 
-selection-foreground = "#23323f"
-selection-background = "#b8c8da"
+selection-foreground = "#432b1d"
+selection-background = "#e6beab"

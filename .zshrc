@@ -15,6 +15,8 @@ export PATH="$HOME/.local/bin:$PATH"
 export LD_LIBRARY_PATH="$HOME/.local/lib:$LD_LIBRARY_PATH"
 export PKG_CONFIG_PATH="$HOME/.local/lib/pkgconfig:$PKG_CONFIG_PATH"
 
+export PATH=$HOME/.local/share/coursier/bin:$PATH
+
 # Uncomment the following line to enable command auto-correction.
 ENABLE_CORRECTION="true"
 
@@ -295,3 +297,6 @@ _rendercv_completion() {
 
 compdef _rendercv_completion rendercv
 
+
+# Pi
+export PATH="/home/varunadhityagb/.local/share/fnm/node-versions/v22.22.0/installation/bin:$PATH"

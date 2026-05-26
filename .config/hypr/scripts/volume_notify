@@ -18,15 +18,15 @@ fi
 VAL=$(awk -v vol="$VOL" 'BEGIN { printf "%.2f", vol / 100 }')
 
 # Check if VAL > 1
-if (( $(echo "$VAL > 1" | bc -l) )); then
+if (($(echo "$VAL > 1" | bc -l))); then
     # Wrap value into 0–1 range
     WRAPPED_VAL=$(awk -v val="$VAL" 'BEGIN { printf "%.2f", val - int(val) }')
 
     avizo-client --image-resource="$ICON" \
-                 --progress="$WRAPPED_VAL" \
-                 --bar-fg-color=red
+        --progress="$WRAPPED_VAL" \
+        --bar-fg-color=red
 
 else
     avizo-client --image-resource="$ICON" \
-                 --progress="$VAL"
+        --progress="$VAL"
 fi

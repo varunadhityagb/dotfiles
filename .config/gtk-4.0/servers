@@ -13,4 +13,24 @@
       </metadata>
     </info>
   </bookmark>
+  <bookmark href="smb://192.168.1.4/media/" added="2026-04-11T12:41:33.307296Z" modified="2026-04-11T12:41:33.307304Z" visited="2026-04-11T12:41:33.307298Z">
+    <title>media on 192.168.1.4</title>
+    <info>
+      <metadata owner="http://freedesktop.org">
+        <bookmark:applications>
+          <bookmark:application name="org.gnome.Nautilus" exec="&apos;org.gnome.Nautilus %u&apos;" modified="2026-04-11T12:41:33.307301Z" count="1"/>
+        </bookmark:applications>
+      </metadata>
+    </info>
+  </bookmark>
+  <bookmark href="smb://localhost/media/" added="2026-04-25T14:58:03.231713Z" modified="2026-04-25T14:58:03.231724Z" visited="2026-04-25T14:58:03.231716Z">
+    <title>media on localhost</title>
+    <info>
+      <metadata owner="http://freedesktop.org">
+        <bookmark:applications>
+          <bookmark:application name="org.gnome.Nautilus" exec="&apos;org.gnome.Nautilus %u&apos;" modified="2026-04-25T14:58:03.231719Z" count="1"/>
+        </bookmark:applications>
+      </metadata>
+    </info>
+  </bookmark>
 </xbel>
