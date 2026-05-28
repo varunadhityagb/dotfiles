@@ -9,7 +9,7 @@ else
     addr=$(hyprctl clients -j | jq -r --arg title "$target_title" '.[] | select(.title == $title) | .address' | head -n 1)
 
     if [ -n "$addr" ]; then
-        hyprctl dispatch focuswindow "address:$addr"
+        hyprctl dispatch "hl.dsp.focus({ window = 'address:$addr' })"
     else
         echo "No window found with title \"$target_title\""
     fi

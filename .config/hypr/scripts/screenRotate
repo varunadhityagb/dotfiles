@@ -7,20 +7,8 @@ MONITORS=(
     "eDP-1,highress@highrr,auto,1"
 )
 
-# Ensure that an index is passed as a parameter
-if [ $# -eq 0 ]; then
-    echo "Usage: $0 <monitor_index>"
-    exit 1
-fi
-
 # Get the monitor index from the parameter
 monitor_index=$1
-
-# Validate the monitor index
-if [[ $monitor_index -lt 0 || $monitor_index -ge ${#MONITORS[@]} ]]; then
-    echo "Invalid monitor index. Please provide a valid index."
-    exit 1
-fi
 
 # Get the configuration for the selected monitor
 monitor_config=${MONITORS[$monitor_index]}
@@ -49,10 +37,6 @@ esac
 # Update the state file with the new value
 echo $next_state >"$STATE_FILE"
 
-# Build the hyprctl command based on the monitor configuration
-hyprctl_command="hyprctl keyword monitor $device_name,$preferred_resolution,$auto_settings,$scale,transform,$next_state"
-
-# Run the hyprctl command with the new value of X for the selected device
-$hyprctl_command
+./project 0
 
 echo "Toggled $device_name to X=$next_state"

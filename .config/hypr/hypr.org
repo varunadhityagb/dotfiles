@@ -87,6 +87,8 @@ env = QT_QPA_PLATFORMTHEME,qt6ct
 env = QT_QPA_PLATFORMTHEME_QT5,qt5ct
 env = QML2_IMPORT_PATH, /usr/lib/qt6/qml
 env = QT_QPA_PLATFORM_PLUGIN_PATH, /usr/lib/qt/plugins/platforms
+env = GTK_USE_PORTAL,1
+env = GDK_DEBUG,portals
 #+end_src
 
 * Decoration
@@ -108,7 +110,7 @@ decoration {
     rounding_power = 2
     blur {
         enabled = true
-        size = 1
+        size = 6
         passes = 4
         ignore_opacity = true
         new_optimizations = true
@@ -395,6 +397,16 @@ windowrule {
   name = windowrule-26
   workspace = 4
   match:class = discord
+}
+
+
+windowrule {
+  name = windowrule-27
+  float = on
+  center = on
+  size = 1000 650
+  animation = popin
+  match:class = ^(file_chooser)$
 }
 #+end_src
 

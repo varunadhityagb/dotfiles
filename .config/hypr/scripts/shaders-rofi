@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 SHADER_DIR="$HOME/.config/hypr/shaders"
-CONF_FILE="$HOME/.config/hypr/shader.conf"
+CONF_FILE="$HOME/.config/hypr/shader.lua"
 
 choice=$(printf "Night Mode\nSunlight Mode\nDark Room\nFocus Mode\nDisable Shader" | rofi -kb-element-prev "Ctrl+[45]" -kb-element-next "Ctrl+[44]" -dmenu -p "Screen Shader")
 
@@ -28,14 +28,18 @@ esac
 
 if [ -z "$shader" ]; then
   cat >"$CONF_FILE" <<EOF
-decoration {
-}
+hl.config({
+    decoration = {
+    },
+})
 EOF
 else
   cat >"$CONF_FILE" <<EOF
-decoration {
-    screen_shader = $shader
-}
+hl.config({
+    decoration = {
+        screen_shader = "$shader",
+    },
+})
 EOF
 fi
 

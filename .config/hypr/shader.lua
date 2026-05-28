@@ -1,0 +1,5 @@
+hl.config({
+    decoration = {
+        screen_shader = "/home/varunadhityagb/.config/hypr/shaders/nightMode.frag",
+    },
+})

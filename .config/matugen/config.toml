@@ -12,6 +12,11 @@ arguments = []
 input_path = '~/dotfiles/.config/matugen/templates/hyprland-colors.conf'
 output_path = '~/dotfiles/.config/hypr/colors.conf'
 
+
+[templates.hyprland-lua]
+input_path = '~/dotfiles/.config/matugen/templates/hyprland-colors.lua'
+output_path = '~/dotfiles/.config/hypr/colors.lua'
+
 [templates.waybar]
 input_path = '~/dotfiles/.config/matugen/templates/colors.css'
 output_path = '~/dotfiles/.config/waybar/colors.css'

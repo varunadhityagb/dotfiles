@@ -1,0 +1,6 @@
+return {
+   image = "{{image}}",
+<* for name, value in colors *>
+   {{name}} = "rgb({{value.default.hex_stripped}})",
+<* endfor *>
+}

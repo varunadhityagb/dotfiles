@@ -48,6 +48,6 @@ $sleep)
     ;;
 $logout)
     /home/varunadhityagb/.local/bin/wellbeing off
-    hyprctl dispatch exit
+    hyprctl dispatch 'hl.dsp.exit()'
     ;;
 esac
