@@ -23,7 +23,7 @@ window#waybar {
     border-left-color: alpha(@primary, 0.3);
     border-right-color: alpha(@primry, 0.3);
     border-width: 2px;
-    background: alpha(@background, 0.4);
+    background: alpha(@background, 0.2);
     box-shadow: inset 1 1 2 1 alpha(white, 0.2);
     border-radius: 10px;
 }
