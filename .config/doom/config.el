@@ -2,6 +2,7 @@
 
 (load! "modules/ui")
 (load! "modules/org-mode")
+(load! "modules/external/qml-ts-mode")
 (load! "modules/programming")
 (load! "modules/latex-conf")
 (load! "modules/theme")
@@ -12,7 +13,7 @@
 (load! "modules/gpt-el")
 
 (load! "modules/external/ob-mongo")
-(load! "modules/external/comics")
+(load! "modules/external/xdg-launcher")
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an

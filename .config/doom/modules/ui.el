@@ -26,6 +26,7 @@
 
 ;; Dashboard customization
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
+(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
 
 ;; Dired
 (add-hook 'dired-mode-hook 'dired-hide-details-mode t)

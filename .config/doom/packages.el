@@ -68,8 +68,6 @@
 (package! timetabel
   :recipe (:host github :repo "nairadithya/timetab.el"))
 
-(package! qml-mode)
-
 (package! scala-mode)
 (package! sbt-mode)
 (package! lsp-metals)
