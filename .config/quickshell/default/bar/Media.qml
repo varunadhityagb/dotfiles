@@ -59,21 +59,20 @@ RowLayout {
     Item {
         id: clipper
 
-        Layout.maximumWidth: 250
-        implicitHeight: textItem.height
-        implicitWidth: Math.min(textItem.contentWidth, 260)
+        Layout.maximumWidth: 180
+        implicitHeight: mediaText.height
+        implicitWidth: Math.min(mediaText.contentWidth, 260)
 
         clip: true
 
         Text {
-            id: textItem
+            id: mediaText
 
             property string title: player?.trackTitle ?? ""
             property string artist: player?.trackArtist ?? ""
             property string playerName: player?.identity ?? ""
 
-            text: playerName + " | "
-                  + (artist ? artist + " — " + title : title)
+            text: title
 
             color: root.text
             font.pixelSize: root.fontSize
@@ -86,7 +85,7 @@ RowLayout {
             SequentialAnimation on marqueeOffset {
                 id: marquee
 
-                running: textItem.contentWidth > clipper.width
+                running: mediaText.contentWidth > clipper.width
 
                 loops: Animation.Infinite
 
@@ -96,7 +95,7 @@ RowLayout {
 
                 NumberAnimation {
                     from: 0
-                    to: textItem.contentWidth - clipper.width + 20
+                    to: mediaText.contentWidth - clipper.width + 20
                     duration: 8000
                     easing.type: Easing.Linear
                 }
@@ -106,15 +105,33 @@ RowLayout {
                 }
 
                 ScriptAction {
-                    script: textItem.marqueeOffset = 0
+                    script: mediaText.marqueeOffset = 0
                 }
             }
         }
 
+
+        Tooltip {
+            id: mediaTooltip
+            targetItem: mediaText
+            property string returnText :{
+                var s = ""
+                if (mediaText.artist) {
+                    s += "By " + mediaText.artist
+                }
+                if (mediaText.playerName) {
+                    s += "\nOn " + mediaText.playerName
+                }
+                return s
+            }
+            text: returnText
+        }
+
         MouseArea {
-            id: mouse
             anchors.fill: parent
             hoverEnabled: true
+            onEntered: mediaTooltip.visible = true
+            onExited: mediaTooltip.visible = false
         }
 
     }

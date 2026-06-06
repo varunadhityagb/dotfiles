@@ -9,9 +9,12 @@ import "./"
 PanelWindow {
     id: bar
 
+    property var ccPopup: null
+    property var calPopup: null
+
     anchors.top: true
     implicitHeight: 50
-    implicitWidth: 1900
+    implicitWidth: 900
     color: "transparent"
 
     margins {
@@ -52,11 +55,11 @@ PanelWindow {
                 color: root.surface2
             }
 
-            Network {}
+            Network {ccPopup: bar.ccPopup}
 
-            Bluetooth {}
+            Bluetooth {ccPopup: bar.ccPopup}
 
-            Volume {}
+            Volume {ccPopup: bar.ccPopup}
 
             Battery {}
 
@@ -69,7 +72,7 @@ PanelWindow {
                 color: root.surface2
             }
 
-            Clock {}
+            Clock {calPopup: bar.calPopup}
         }
     }
 }

@@ -1,17 +1,19 @@
 pragma ComponentBehavior: Bound
 
+
 import QtQuick
 import QtQuick.Layouts
 import Quickshell.Bluetooth
 
 Text {
     id: bluetoothText
-
+    property var ccPopup: null
     Layout.rightMargin: 12
 
-    property var adapter: Bluetooth.defaultAdapter
 
+    property var adapter: Bluetooth.defaultAdapter
     property var connectedDevices: adapter ? adapter.devices.values.filter(d => d.connected) : []
+
     property string icon: {
         if (!adapter || !adapter.enabled)
             return "󰂲"
@@ -72,5 +74,11 @@ Text {
 
         onEntered: bluetoothTooltip.visible = true
         onExited: bluetoothTooltip.visible = false
+        onClicked: {
+            if (bluetoothText.ccPopup) {
+                bluetoothText.ccPopup.targetItem = bluetoothText
+                bluetoothText.ccPopup.visible = !bluetoothText.ccPopup.visible
+            }
+        }
     }
 }

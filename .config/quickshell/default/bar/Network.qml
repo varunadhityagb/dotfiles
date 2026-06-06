@@ -7,6 +7,7 @@ import Quickshell.Networking
 
 Text {
     id: networkText
+    property var ccPopup: null
     Layout.rightMargin: 12
 
     property var wifiDev: {
@@ -59,7 +60,8 @@ Text {
 
         property string deviceName : {
             if (networkText.wiredDev) return networkText.wiredDev.name
-            else return networkText.wifiDev.name
+            else if (networkText.wifiDev) return networkText.wifiDev.name
+            return ""
         }
         command: ["nmcli", "-g", "IP4.ADDRESS", "device", "show", ipProc.deviceName]
 
@@ -83,5 +85,11 @@ Text {
         hoverEnabled: true
         onEntered: networkTooltip.visible = true
         onExited: networkTooltip.visible = false
+        onClicked: {
+            if (networkText.ccPopup) {
+                networkText.ccPopup.targetItem = networkText
+                networkText.ccPopup.visible = !networkText.ccPopup.visible
+            }
+        }
     }
 }

@@ -4,6 +4,8 @@ import QtQuick.Layouts
 
 Text {
     id: clockText
+    property var calPopup: null
+
     text: Qt.formatDateTime(new Date(), "ddd MMM dd \n hh:mm AP")
     color: root.blue
     font.pixelSize: root.fontSize
@@ -16,5 +18,15 @@ Text {
         running: true
         repeat: true
         onTriggered: clockText.text = Qt.formatDateTime(new Date(), "ddd MMM dd \n hh:mm AP")
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        onClicked: {
+            if (clockText.calPopup) {
+                clockText.calPopup.targetItem = clockText
+                clockText.calPopup.visible = !clockText.calPopup.visible
+            }
+        }
     }
 }

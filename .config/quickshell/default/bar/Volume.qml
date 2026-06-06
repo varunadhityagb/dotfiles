@@ -5,6 +5,7 @@ import Quickshell.Services.Pipewire
 
 Text {
     id: volumeText
+    property var ccPopup: null
     Layout.rightMargin: 12
 
     PwObjectTracker {
@@ -41,12 +42,18 @@ Text {
         hoverEnabled: true
         onEntered: volumeTooltip.visible = true
         onExited: volumeTooltip.visible = false
-        onClicked: Pipewire.defaultAudioSink.audio.muted = !volumeText.muted
+        onClicked: {
+            if (volumeText.ccPopup) {
+                volumeText.ccPopup.targetItem = volumeText
+                volumeText.ccPopup.visible = !volumeText.ccPopup.visible
+            }
+        }
         onWheel: wheel => {
             var sink = Pipewire.defaultAudioSink
             if (!sink) return
             var delta = wheel.angleDelta.y > 0 ? 0.05 : -0.05
             sink.audio.volume = Math.max(0, Math.min(1.5, sink.audio.volume + delta))
         }
+
     }
 }

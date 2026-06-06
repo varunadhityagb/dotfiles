@@ -9,6 +9,7 @@ import QtQuick
 import QtQuick.Layouts
 import "./"
 import "./bar"
+import "./bar/popups/"
 
 ShellRoot {
     id: root
@@ -33,11 +34,21 @@ ShellRoot {
     readonly property string fontFamily: "JetBrainsMono Nerd Font"
     readonly property int fontSize: 14
 
+    ControlCenter { id: controlCenter }
+    CalendarPopup { id: calendarPopup }
+
     Variants {
         model: Quickshell.screens
         Bar {
+            id: bar
             property var modelData
             screen: modelData
+            ccPopup: controlCenter
+            calPopup: calendarPopup
+            Component.onCompleted: {
+                controlCenter.parentWin = bar
+                calendarPopup.parentWin = bar
+            }
         }
     }
 }
