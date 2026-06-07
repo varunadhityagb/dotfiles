@@ -11,6 +11,8 @@ PanelWindow {
 
     property var ccPopup: null
     property var calPopup: null
+    property bool dnd: false
+    property int historyCount: 0
 
     anchors.top: true
     implicitHeight: 50
@@ -73,6 +75,16 @@ PanelWindow {
             }
 
             Clock {calPopup: bar.calPopup}
+
+            Text {
+                visible: bar.dnd || bar.historyCount > 0
+                text: bar.dnd ? "󰂛" : "󰂚 " + bar.historyCount
+                color: root.blue
+                font.pixelSize: root.fontSize
+                font.family: root.fontFamily
+                font.bold: true
+                Layout.rightMargin: 8
+            }
         }
     }
 }

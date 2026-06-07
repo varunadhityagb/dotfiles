@@ -10,6 +10,7 @@ import Quickshell.Services.Mpris
 PopupWindow {
     id: controlCenter
     property Item targetItem: null
+    property var parentWin: null
     visible: false
     anchor.item: targetItem
     anchor.edges: Edges.Bottom
