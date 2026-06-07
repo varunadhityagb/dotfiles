@@ -3,6 +3,7 @@ import Quickshell
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
+import Quickshell.Hyprland
 
 PopupWindow {
     id: calendarPopup
@@ -46,6 +47,12 @@ PopupWindow {
     property int todayDay: new Date().getDate()
     property int todayMonth: new Date().getMonth()
     property int todayYear: new Date().getFullYear()
+
+    HyprlandFocusGrab {
+        windows: [calendarPopup]
+        active: calendarPopup.visible
+        onCleared: calendarPopup.visible = false
+    }
 
     Rectangle {
         anchors.fill: parent
@@ -214,7 +221,7 @@ PopupWindow {
                 ScrollBar.vertical.policy: ScrollBar.AsNeeded
 
                 ColumnLayout {
-                    width: historyScroll.width
+                    width: historyScroll.availableWidth
                     spacing: 10
 
                     Text {
@@ -232,7 +239,7 @@ PopupWindow {
 
                         RowLayout {
                             required property var modelData
-                            width: historyScroll.width
+                            width: historyScroll.availableWidth
                             spacing: 8
 
                             ColumnLayout {
@@ -256,11 +263,19 @@ PopupWindow {
                                 }
                             }
 
-                            Text {
-                                text: "✕"
-                                color: root.subtext0
-                                font.pixelSize: root.fontSize - 3
-                                font.family: root.fontFamily
+                            Rectangle {
+                                Layout.preferredWidth: 20
+                                Layout.preferredHeight: 20
+                                Layout.rightMargin:10
+                                color: "transparent"
+
+                                Text {
+                                    anchors.centerIn: parent
+                                    text: "✕"
+                                    color: root.subtext0
+                                    font.pixelSize: root.fontSize - 3
+                                }
+
                                 MouseArea {
                                     anchors.fill: parent
                                     onClicked: calendarPopup.removeHistory(modelData.id)

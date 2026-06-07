@@ -9,7 +9,8 @@ import QtQuick
 import QtQuick.Layouts
 import "./"
 import "./bar"
-import "./bar/popups/"
+import "./bar/popups"
+import "./osd"
 import "./notifications"
 
 ShellRoot {
@@ -35,6 +36,8 @@ ShellRoot {
     readonly property string fontFamily: "JetBrainsMono Nerd Font"
     readonly property int fontSize: 14
 
+    Osd { id:osd }
+
     NotifServer { id: notifServer }
 
     ControlCenter { id: controlCenter }
@@ -42,9 +45,15 @@ ShellRoot {
     CalendarPopup {
         id: calendarPopup
         notifHistory: notifServer.history
-        onRemoveHistory: id => notifServer.remove(id)
+        onRemoveHistory: id => {
+            notifServer.remove(id)
+            notifServer.removeHistory(id)
+        }
         onClearAllHistory: notifServer.history = []
     }
+
+    WorkspaceOverview { id: workspaceOverview }
+
 
     Variants {
         model: Quickshell.screens
@@ -56,6 +65,7 @@ ShellRoot {
             calPopup: calendarPopup
             dnd: notifServer.dnd
             historyCount: notifServer.history.length
+            overviewPopup: workspaceOverview
             Component.onCompleted: {
                 controlCenter.parentWin = bar
                 calendarPopup.parentWin = bar

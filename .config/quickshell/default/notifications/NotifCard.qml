@@ -165,7 +165,7 @@ Rectangle {
             bottomMargin: card.shadowPad
         }
         radius: 12
-        color: Qt.alpha(root.base, 0.92)
+        color: Qt.alpha(root.base, 0.8)
         border.color: notifData && notifData.urgency === 2
                       ? Qt.alpha(root.red, 0.5) : root.surface1
 
@@ -263,8 +263,8 @@ Rectangle {
                     visible: card.notifData.appIcon.toLowerCase().includes("spotify")
                     source: card.notifData ? card.notifData.image : ""
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 120
-                    fillMode: Image.PreserveAspectCrop
+                    Layout.preferredHeight: 280
+                    fillMode: Image.TileHorizontally
                     layer.enabled: true
                     layer.effect: MultiEffect {
                         maskEnabled: true

@@ -13,6 +13,7 @@ PanelWindow {
     property var calPopup: null
     property bool dnd: false
     property int historyCount: 0
+    property var overviewPopup: null
 
     anchors.top: true
     implicitHeight: 50
@@ -28,7 +29,7 @@ PanelWindow {
 
     Rectangle {
         anchors.fill: parent
-        color: Qt.alpha(root.base, 0.7)
+        color: Qt.alpha(root.base, 0.8)
         radius: 20
         border.color: root.mantle
 

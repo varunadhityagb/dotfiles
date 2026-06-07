@@ -33,13 +33,14 @@ Item {
 
     Process {
         id: themeReader
-        command: ["cat", "/tmp/qs_colors.json"]
+        command: ["cat", "/home/varunadhityagb/.config/quickshell/qs_colors.json"]
         stdout: StdioCollector {
             onStreamFinished: {
                 let txt = this.text.trim();
                 if (txt !== "" && txt !== root.rawJson) {
                     root.rawJson = txt;
                     try {
+                        console.log("hi")
                         let c = JSON.parse(txt);
                         if (c.base) root.base = c.base;
                         if (c.mantle) root.mantle = c.mantle;

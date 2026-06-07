@@ -6,6 +6,7 @@ import Quickshell.Networking
 import Quickshell.Bluetooth
 import Quickshell.Services.Pipewire
 import Quickshell.Services.Mpris
+import Quickshell.Hyprland
 
 PopupWindow {
     id: controlCenter
@@ -15,9 +16,6 @@ PopupWindow {
     anchor.item: targetItem
     anchor.edges: Edges.Bottom
     anchor.margins.top: 8
-    // anchor.window: parentWin
-    // anchor.rect.x: parentWin ? parentWin.width - controlCenter.implicitWidth - 16 : 0
-    // anchor.rect.y: parentWin ? parentWin.height : 0
     color: "transparent"
 
     implicitWidth: 320
@@ -43,6 +41,13 @@ PopupWindow {
     }
     property real vol: Pipewire.defaultAudioSink ? Pipewire.defaultAudioSink.audio.volume : 0
     property bool muted: Pipewire.defaultAudioSink ? Pipewire.defaultAudioSink.audio.muted : false
+
+
+    HyprlandFocusGrab {
+        windows: [controlCenter]
+        active: controlCenter.visible
+        onCleared: controlCenter.visible = false
+    }
 
     Rectangle {
         anchors.fill: parent
@@ -134,51 +139,138 @@ PopupWindow {
             // ── WIFI ──
             Rectangle {
                 Layout.fillWidth: true
-                height: 54
                 radius: 12
                 color: root.surface0
+                height: wifiCol.implicitHeight + 16
 
-                RowLayout {
-                    anchors.fill: parent
-                    anchors.margins: 14
-                    spacing: 10
-
-                    Text {
-                        text: controlCenter.wifiConnected ? "󰤨" : "󰤭"
-                        color: controlCenter.wifiConnected ? root.blue : root.subtext0
-                        font.pixelSize: 18
-                        font.family: root.fontFamily
+                ColumnLayout {
+                    id: wifiCol
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                        top: parent.top
+                        margins: 14
                     }
+                    spacing: 8
 
-                    ColumnLayout {
+                    // header row
+                    RowLayout {
                         Layout.fillWidth: true
-                        spacing: 0
+
+                        Text {
+                            text: controlCenter.wifiConnected ? "󰤨" : "󰤭"
+                            color: controlCenter.wifiConnected ? root.blue : root.subtext0
+                            font.pixelSize: 18
+                            font.family: root.fontFamily
+                        }
+
                         Text {
                             text: "Wi-Fi"
                             color: root.text
                             font.pixelSize: root.fontSize
                             font.family: root.fontFamily
                             font.bold: true
+                            Layout.fillWidth: true
                         }
+
+                        // scan button
                         Text {
-                            text: controlCenter.connectedNetwork ? controlCenter.connectedNetwork.name : "Disconnected"
-                            color: root.subtext0
-                            font.pixelSize: root.fontSize - 2
+                            text: "󰑐"
+                            color: root.blue
+                            font.pixelSize: root.fontSize
                             font.family: root.fontFamily
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: {
+                                    if (controlCenter.wifiDev)
+                                        controlCenter.wifiDev.requestScan()
+                                }
+                            }
+                        }
+
+                        Rectangle {
+                            width: 40
+                            height: 22
+                            radius: 11
+                            color: controlCenter.wifiConnected ? root.blue : root.surface2
+                            Text {
+                                anchors.centerIn: parent
+                                text: controlCenter.wifiConnected ? "On" : "Off"
+                                color: controlCenter.wifiConnected ? root.base : root.subtext0
+                                font.pixelSize: root.fontSize - 3
+                                font.family: root.fontFamily
+                            }
                         }
                     }
 
-                    Rectangle {
-                        width: 40
-                        height: 22
-                        radius: 11
-                        color: controlCenter.wifiConnected ? root.blue : root.surface2
-                        Text {
-                            anchors.centerIn: parent
-                            text: controlCenter.wifiConnected ? "On" : "Off"
-                            color: controlCenter.wifiConnected ? root.base : root.subtext0
-                            font.pixelSize: root.fontSize - 3
-                            font.family: root.fontFamily
+                    // network list
+                    Repeater {
+                        model: controlCenter.wifiDev
+                            ? controlCenter.wifiDev.networks.values.slice().sort((a, b) => b.signalStrength - a.signalStrength).slice(0, 6)
+                            : []
+
+                        Rectangle {
+                            required property var modelData
+                            Layout.fillWidth: true
+                            height: 36
+                            radius: 8
+                            color: modelData.connected ? Qt.alpha(root.blue, 0.15) : "transparent"
+
+                            RowLayout {
+                                anchors.fill: parent
+                                anchors.margins: 8
+                                spacing: 8
+
+                                // signal icon
+                                Text {
+                                    text: {
+                                        var s = modelData.signalStrength
+                                        if (s > 0.75) return "󰤨"
+                                        if (s > 0.50) return "󰤥"
+                                        if (s > 0.25) return "󰤢"
+                                        return "󰤟"
+                                    }
+                                    color: modelData.connected ? root.blue : root.subtext0
+                                    font.pixelSize: root.fontSize
+                                    font.family: root.fontFamily
+                                }
+
+                                Text {
+                                    text: modelData.name
+                                    color: modelData.connected ? root.blue : root.text
+                                    font.pixelSize: root.fontSize - 1
+                                    font.family: root.fontFamily
+                                    font.bold: modelData.connected
+                                    Layout.fillWidth: true
+                                    elide: Text.ElideRight
+                                }
+
+                                // lock icon if secured
+                                Text {
+                                    text: "󰌾"
+                                    color: root.subtext0
+                                    font.pixelSize: root.fontSize - 2
+                                    font.family: root.fontFamily
+                                    visible: modelData.security !== WifiSecurityType.None
+                                }
+
+                                // connect / disconnect
+                                Text {
+                                    text: modelData.connected ? "󰅙" : "󰅒"
+                                    color: modelData.connected ? root.red : root.blue
+                                    font.pixelSize: root.fontSize
+                                    font.family: root.fontFamily
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        onClicked: {
+                                            if (modelData.connected)
+                                                modelData.disconnect()
+                                            else
+                                                modelData.connectNetwork()
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
