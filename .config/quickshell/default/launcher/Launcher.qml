@@ -201,7 +201,12 @@ PanelWindow {
                             Keys.onReturnPressed: {
                                 if (launcher.mode === "cmd") {
                                     var cmd = searchInput.text.substring(1).trim()
-                                    Quickshell.execDetached(["sh", "-c", cmd])
+                                    console.log(cmd)
+                                    Quickshell.execDetached([
+                                        "sh",
+                                        "-c",
+                                        cmd + " "
+                                    ])
                                     launcher.close()
                                 } else if (launcher.mode === "apps" && launcher.filteredApps.length > 0) {
                                     launcher.launchApp(launcher.filteredApps[0])
@@ -532,20 +537,125 @@ PanelWindow {
                         visible: launcher.mode === "calc"
 
                         property var templates: [
-                            { label: "Length",    example: "= 10 km in miles" },
-                            { label: "Length",    example: "= 5 ft in cm" },
-                            { label: "Length",    example: "= 100 m in yards" },
-                            { label: "Weight",    example: "= 70 kg in lbs" },
-                            { label: "Weight",    example: "= 5 lb in kg" },
-                            { label: "Weight",    example: "= 500 g in oz" },
-                            { label: "Temp",      example: "= 100 c in f" },
-                            { label: "Temp",      example: "= 98.6 f in c" },
-                            { label: "Temp",      example: "= 300 k in c" },
-                            { label: "Speed",     example: "= 60 mph in kph" },
-                            { label: "Speed",     example: "= 100 kph in mph" },
-                            { label: "Math",      example: "= 2 ** 10" },
-                            { label: "Math",      example: "= sqrt(144)" },
-                            { label: "Math",      example: "= (12 + 8) * 3 / 4" },
+                            // Basic Math
+                            { label: "Math", example: "= 2 + 2" },
+                            { label: "Math", example: "= (12 + 8) * 3 / 4" },
+                            { label: "Math", example: "= 2^10" },
+                            { label: "Math", example: "= 17 % 5" },
+                            { label: "Math", example: "= ans * 5" },
+
+                            // Constants
+                            { label: "Constants", example: "= pi" },
+                            { label: "Constants", example: "= 2 * pi * 10" },
+                            { label: "Constants", example: "= pi * 5^2" },
+                            { label: "Constants", example: "= tau" },
+                            { label: "Constants", example: "= e^2" },
+
+                            // Functions
+                            { label: "Functions", example: "= sqrt(144)" },
+                            { label: "Functions", example: "= cbrt(27)" },
+                            { label: "Functions", example: "= abs(-42)" },
+                            { label: "Functions", example: "= floor(3.9)" },
+                            { label: "Functions", example: "= ceil(3.1)" },
+                            { label: "Functions", example: "= round(3.14159)" },
+
+                            // Trigonometry
+                            { label: "Trig", example: "= sin(90)" },
+                            { label: "Trig", example: "= cos(45)" },
+                            { label: "Trig", example: "= tan(30)" },
+                            { label: "Trig", example: "= asin(1)" },
+                            { label: "Trig", example: "= acos(0.5)" },
+                            { label: "Trig", example: "= atan(1)" },
+
+                            // Logarithms
+                            { label: "Log", example: "= log(100)" },
+                            { label: "Log", example: "= log(1000)" },
+                            { label: "Log", example: "= ln(10)" },
+
+                            // Min / Max
+                            { label: "Advanced", example: "= min(10,20,30)" },
+                            { label: "Advanced", example: "= max(10,20,30)" },
+                            { label: "Advanced", example: "= pow(2,16)" },
+
+                            // Random
+                            { label: "Random", example: "= rand()" },
+
+                            // Factorial
+                            { label: "Factorial", example: "= 5!" },
+                            { label: "Factorial", example: "= 10!" },
+
+                            // Percentages
+                            { label: "Percent", example: "= 20% of 500" },
+                            { label: "Percent", example: "= 15% of 2000" },
+                            { label: "Percent", example: "= 500 increased by 10%" },
+                            { label: "Percent", example: "= 500 decreased by 10%" },
+                            { label: "Percent", example: "= 50%" },
+
+                            // Length
+                            { label: "Length", example: "= 10 km in miles" },
+                            { label: "Length", example: "= 5 ft in cm" },
+                            { label: "Length", example: "= 100 m in yards" },
+                            { label: "Length", example: "= 25 in in mm" },
+                            { label: "Length", example: "= 1 mi in km" },
+
+                            // Weight
+                            { label: "Weight", example: "= 70 kg in lbs" },
+                            { label: "Weight", example: "= 5 lb in kg" },
+                            { label: "Weight", example: "= 500 g in oz" },
+                            { label: "Weight", example: "= 1 oz in g" },
+
+                            // Temperature
+                            { label: "Temp", example: "= 100 c in f" },
+                            { label: "Temp", example: "= 98.6 f in c" },
+                            { label: "Temp", example: "= 300 k in c" },
+                            { label: "Temp", example: "= 0 c in k" },
+
+                            // Speed
+                            { label: "Speed", example: "= 60 mph in kph" },
+                            { label: "Speed", example: "= 100 kph in mph" },
+                            { label: "Speed", example: "= 10 m/s in mph" },
+                            { label: "Speed", example: "= 100 km/h in m/s" },
+
+                            // Time
+                            { label: "Time", example: "= 120 sec in min" },
+                            { label: "Time", example: "= 2 hr in min" },
+                            { label: "Time", example: "= 7 day in hour" },
+                            { label: "Time", example: "= 1 week in day" },
+                            { label: "Time", example: "= 48 hour in day" },
+
+                            // Storage
+                            { label: "Storage", example: "= 10 gb in mb" },
+                            { label: "Storage", example: "= 1 tb in gb" },
+                            { label: "Storage", example: "= 1024 kb in mb" },
+                            { label: "Storage", example: "= 2048 mib in gib" },
+                            { label: "Storage", example: "= 1 gib in mib" },
+
+                            // Programmer
+                            { label: "Programmer", example: "= hex(255)" },
+                            { label: "Programmer", example: "= hex(4096)" },
+                            { label: "Programmer", example: "= bin(255)" },
+                            { label: "Programmer", example: "= oct(255)" },
+                            { label: "Programmer", example: "= dec(0xFF)" },
+                            { label: "Programmer", example: "= dec(0o777)" },
+                            { label: "Programmer", example: "= dec(10101010)" },
+
+                            // Scientific
+                            { label: "Scientific", example: "= 1e6" },
+                            { label: "Scientific", example: "= 6.022e23" },
+                            { label: "Scientific", example: "= 3e8 * 10" },
+
+                            { label: "BMI", example: "= bmi 70kg 175cm" },
+                            { label: "BMI", example: "= bmi 90kg 180cm" },
+
+                            { label: "Age", example: "= age 2004-03-18" },
+
+                            { label: "Date", example: "= today + 30 days" },
+                            { label: "Date", example: "= today + 2 weeks" },
+                            { label: "Date", example: "= 2026-01-01 - 2025-01-01" },
+
+                            { label: "Color", example: "= color #89b4fa" },
+                            { label: "Color", example: "= color #ff0000" },
+                            { label: "Color", example: "= color rgb(255,0,0)" }
                         ]
 
                         ScrollView {
@@ -641,6 +751,7 @@ PanelWindow {
                                             font.family: "monospace"
                                             Layout.fillWidth: true
                                         }
+
                                     }
 
                                     MouseArea {

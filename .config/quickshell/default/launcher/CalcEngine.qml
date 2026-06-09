@@ -3,23 +3,278 @@ import QtQuick
 
 QtObject {
     id: engine
+    property double lastResult: 0
+
+    function preprocess(expr) {
+        expr = expr.trim()
+
+        expr = expr.replace(/\bans\b/gi, lastResult)
+
+        expr = expr.replace(/\bpi\b|π/gi, Math.PI)
+        expr = expr.replace(/\btau\b/gi, Math.PI * 2)
+        expr = expr.replace(/\be\b/g, Math.E)
+
+        // percentages
+        expr = expr.replace(/(\d+(?:\.\d+)?)%/g, "($1/100)")
+
+        // factorial
+        expr = expr.replace(/(\d+)!/g, function(_, n) {
+            var r = 1
+            for (var i = 2; i <= parseInt(n); i++)
+                r *= i
+            return r
+    })
+
+        return expr
+    }
+
+    function formatDate(d) {
+        var y = d.getFullYear()
+
+        var m = String(d.getMonth() + 1)
+            .padStart(2, "0")
+
+        var day = String(d.getDate())
+            .padStart(2, "0")
+
+        return y + "-" + m + "-" + day
+    }
+
+    function rgbToHex(r, g, b) {
+        return "#" +
+            [r, g, b]
+            .map(function(v) {
+                return v.toString(16)
+                    .padStart(2, "0")
+            })
+            .join("")
+            .toUpperCase()
+    }
 
     function evaluate(expr) {
-        if (!expr || expr.trim() === "") return ""
+        if (/^hex\(/i.test(expr)) {
+            var n = parseInt(expr.match(/\((.*?)\)/)[1])
+            return "0x" + n.toString(16).toUpperCase()
+        }
 
-        // unit conversion — "10 km in miles" etc
-        var convResult = tryConvert(expr.trim())
-        if (convResult !== null) return convResult
+        if (/^bin\(/i.test(expr)) {
+            var n = parseInt(expr.match(/\((.*?)\)/)[1])
+            return n.toString(2)
+        }
 
-        // basic math eval
+        if (/^oct\(/i.test(expr)) {
+            var n = parseInt(expr.match(/\((.*?)\)/)[1])
+            return "0o" + n.toString(8)
+        }
+
+        if (/^dec\(/i.test(expr)) {
+            var value = expr.match(/\((.*?)\)/)[1].trim()
+
+            if (value.startsWith("0x"))
+                return parseInt(value, 16) + ""
+
+            if (value.startsWith("0o"))
+                return parseInt(value, 8) + ""
+
+            if (/^[01]+$/.test(value))
+                return parseInt(value, 2) + ""
+
+            return parseInt(value) + ""
+        }
+
+        var m = expr.match(/^(\d+(?:\.\d+)?)\s*%\s*of\s*(\d+(?:\.\d+)?)$/i)
+        if (m)
+            return round((+m[1] / 100) * (+m[2])) + ""
+
+        m = expr.match(/^(\d+(?:\.\d+)?)\s*increased\s*by\s*(\d+(?:\.\d+)?)%$/i)
+        if (m)
+            return round((+m[1]) * (1 + (+m[2] / 100))) + ""
+
+        m = expr.match(/^(\d+(?:\.\d+)?)\s*decreased\s*by\s*(\d+(?:\.\d+)?)%$/i)
+        if (m)
+            return round((+m[1]) * (1 - (+m[2] / 100))) + ""
+
+        m = expr.match(/^bmi\s+([\d.]+)\s*kg\s+([\d.]+)\s*cm$/i)
+        if (m) {
+            var weight = parseFloat(m[1])
+            var height = parseFloat(m[2]) / 100
+
+            var bmi = weight / (height * height)
+
+            var category = "Normal"
+
+            if (bmi < 18.5)
+                category = "Underweight"
+            else if (bmi >= 25)
+                category = "Overweight"
+            else if (bmi >= 30)
+                category = "Obese"
+
+            return round(bmi) + " (" + category + ")"
+        }
+
+        m = expr.match(/^age\s+(\d{4})-(\d{2})-(\d{2})$/i)
+        if (m) {
+            var birth = new Date(
+                parseInt(m[1]),
+                parseInt(m[2]) - 1,
+                parseInt(m[3])
+            )
+
+            var today = new Date()
+
+            var age = today.getFullYear() - birth.getFullYear()
+
+            if (
+                today.getMonth() < birth.getMonth() ||
+                (
+                    today.getMonth() === birth.getMonth() &&
+                    today.getDate() < birth.getDate()
+                )
+            )
+                age--
+
+            return age + " years"
+        }
+
+        m = expr.match(/^today\s*\+\s*(\d+)\s*(day|days|week|weeks)$/i)
+        if (m) {
+            var amount = parseInt(m[1])
+
+            var d = new Date()
+
+            if (m[2].startsWith("week"))
+                amount *= 7
+
+            d.setDate(d.getDate() + amount)
+
+            return formatDate(d)
+        }
+
+        m = expr.match(
+            /^(\d{4}-\d{2}-\d{2})\s*-\s*(\d{4}-\d{2}-\d{2})$/i
+        )
+
+        if (m) {
+            var d1 = new Date(m[1])
+            var d2 = new Date(m[2])
+
+            var diff = Math.abs(d1 - d2)
+
+            return Math.floor(
+                diff / (1000 * 60 * 60 * 24)
+            ) + " days"
+        }
+
+        m = expr.match(/^color\s+#([0-9a-f]{6})$/i)
+
+        if (m) {
+            var hex = m[1]
+
+            var r = parseInt(hex.substr(0, 2), 16)
+            var g = parseInt(hex.substr(2, 2), 16)
+            var b = parseInt(hex.substr(4, 2), 16)
+
+            return (
+                "#" + hex.toUpperCase() +
+                " → rgb(" +
+                r + ", " +
+                g + ", " +
+                b + ")"
+            )
+        }
+
+        m = expr.match(
+            /^color\s+rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/i
+        )
+
+        if (m) {
+            return rgbToHex(
+                parseInt(m[1]),
+                parseInt(m[2]),
+                parseInt(m[3])
+            )
+        }
+
+        if (!expr || expr.trim() === "")
+            return ""
+
+        var conv = tryConvert(expr.trim())
+        if (conv !== null)
+            return conv
+
+        m = expr.match(/^(\d+(?:\.\d+)?)\s*%\s*of\s*(\d+(?:\.\d+)?)$/i)
+        if (m)
+            return round((+m[1] / 100) * (+m[2])) + ""
+
+        m = expr.match(/^(\d+(?:\.\d+)?)\s*increased\s*by\s*(\d+(?:\.\d+)?)%$/i)
+        if (m)
+            return round((+m[1]) * (1 + (+m[2] / 100))) + ""
+
+        m = expr.match(/^(\d+(?:\.\d+)?)\s*decreased\s*by\s*(\d+(?:\.\d+)?)%$/i)
+        if (m)
+            return round((+m[1]) * (1 - (+m[2] / 100))) + ""
+
+        expr = preprocess(expr)
+
         try {
-            var sanitized = expr.replace(/[^0-9+\-*/.() %^]/g, "")
-            sanitized = sanitized.replace(/\^/g, "**")
-            var result = Function('"use strict"; return (' + sanitized + ')')()
-            if (typeof result === "number" && isFinite(result)) {
-                return Math.round(result * 1000000) / 1000000 + ""
+            var scope = {
+                sqrt: Math.sqrt,
+                cbrt: Math.cbrt,
+                abs: Math.abs,
+                floor: Math.floor,
+                ceil: Math.ceil,
+                round: Math.round,
+                rand: Math.random,
+
+                sin: function(d) {
+                    return Math.sin(d * Math.PI / 180)
+                },
+
+                cos: function(d) {
+                    return Math.cos(d * Math.PI / 180)
+                },
+
+                tan: function(d) {
+                    return Math.tan(d * Math.PI / 180)
+                },
+
+                asin: function(x) {
+                    return Math.asin(x) * 180 / Math.PI
+                },
+
+                acos: function(x) {
+                    return Math.acos(x) * 180 / Math.PI
+                },
+
+                atan: function(x) {
+                    return Math.atan(x) * 180 / Math.PI
+                },
+
+                log: Math.log10,
+                ln: Math.log,
+
+                pow: Math.pow,
+                min: Math.min,
+                max: Math.max
             }
+
+            var fn = Function(
+                "scope",
+                'with(scope){ return (' +
+                expr.replace(/\^/g, "**") +
+                ') }'
+            )
+
+            var result = fn(scope)
+
+            if (typeof result === "number" && isFinite(result)) {
+                lastResult = result
+                return round(result) + ""
+            }
+
             return "Error"
+
         } catch(e) {
             return "Error"
         }
@@ -27,7 +282,7 @@ QtObject {
 
     function tryConvert(expr) {
         // pattern: "10 km in miles" or "10km to miles"
-        var match = expr.match(/^([\d.]+)\s*([a-zA-Z°]+)\s+(?:in|to)\s+([a-zA-Z°]+)$/i)
+        var match = expr.match(/^([\d.]+)\s*([a-zA-Z\/°]+)\s+(?:in|to)\s+([a-zA-Z\/°]+)$/i)
         if (!match) return null
 
         var val = parseFloat(match[1])
@@ -84,6 +339,59 @@ QtObject {
         if (speedToMs[from] !== undefined && speedToMs[to] !== undefined) {
             var ms = val * speedToMs[from]
             return round(ms / speedToMs[to]) + " " + to
+        }
+
+        var storageToBytes = {
+            "b": 1,
+
+            "kb": 1000,
+            "mb": 1000000,
+            "gb": 1000000000,
+            "tb": 1000000000000,
+
+            "kib": 1024,
+            "mib": 1024 * 1024,
+            "gib": 1024 * 1024 * 1024,
+            "tib": 1024 * 1024 * 1024 * 1024
+        }
+
+        if (storageToBytes[from] !== undefined &&
+            storageToBytes[to] !== undefined) {
+
+            var bytes = val * storageToBytes[from]
+            return round(bytes / storageToBytes[to]) + " " + to
+        }
+
+        var timeToSec = {
+            "s": 1,
+            "sec": 1,
+            "secs": 1,
+            "second": 1,
+            "seconds": 1,
+
+            "min": 60,
+            "mins": 60,
+            "minute": 60,
+            "minutes": 60,
+
+            "h": 3600,
+            "hr": 3600,
+            "hrs": 3600,
+            "hour": 3600,
+            "hours": 3600,
+
+            "day": 86400,
+            "days": 86400,
+
+            "week": 604800,
+            "weeks": 604800
+        }
+
+        if (timeToSec[from] !== undefined &&
+            timeToSec[to] !== undefined) {
+
+            var sec = val * timeToSec[from]
+            return round(sec / timeToSec[to]) + " " + to
         }
 
         return null
