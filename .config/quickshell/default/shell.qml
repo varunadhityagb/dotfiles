@@ -8,6 +8,7 @@ import Quickshell.Hyprland
 import QtQuick
 import QtQuick.Layouts
 import "./"
+import "./launcher"
 import "./bar"
 import "./bar/popups"
 import "./osd"
@@ -40,6 +41,8 @@ ShellRoot {
 
     NotifServer { id: notifServer }
 
+    Launcher { id: launcher }
+
     ControlCenter { id: controlCenter }
 
     CalendarPopup {
@@ -53,7 +56,6 @@ ShellRoot {
     }
 
     WorkspaceOverview { id: workspaceOverview }
-
 
     Variants {
         model: Quickshell.screens

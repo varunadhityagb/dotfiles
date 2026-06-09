@@ -110,16 +110,4 @@ RowLayout {
             }
         }
     }
-
-    Text {
-        text: "󱂬"
-        color: root.subtext0
-        font.pixelSize: root.fontSize
-        font.family: root.fontFamily
-        Layout.leftMargin: 8
-        MouseArea {
-            anchors.fill: parent
-            onClicked: if (bar.overviewPopup) bar.overviewPopup.visible = !bar.overviewPopup.visible
-        }
-    }
 }
