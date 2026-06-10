@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 uptime="$(uptime -p | sed -e 's/up //g')"
 
-shutdown='  Shutdown'
-reboot='  Reboot'
-sleep='󰒲    Sleep'
-logout='  Logout'
+shutdown='     Shutdown'
+reboot='     Reboot'
+sleep=' 󰒲     Sleep'
+logout='     Logout'
+hibernate=' 󰒲 󰒲   Hibernate'
 
 screen_time="$(screen_timer status)"
 power_mode="$(powerprofilesctl get)"
@@ -30,7 +31,7 @@ rofi_cmd() {
 
 # Pass variables to rofi dmenu
 run_rofi() {
-    echo -e "$sleep\n$logout\n$reboot\n$shutdown" | rofi_cmd
+    echo -e "$sleep\n$hibernate\n$logout\n$reboot\n$shutdown" | rofi_cmd
 }
 
 chosen="$(run_rofi)"
@@ -45,6 +46,9 @@ $reboot)
     ;;
 $sleep)
     systemctl suspend
+    ;;
+$hibernate)
+    systemctl hibernate
     ;;
 $logout)
     /home/varunadhityagb/.local/bin/wellbeing off

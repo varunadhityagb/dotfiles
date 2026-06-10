@@ -20,7 +20,7 @@ window {
     border-radius:              8px;
     border-color:               rgba(255, 255, 255, 0.35);
     cursor:                     "default";
-    background-color:           rgba(0, 0, 0, 0.7);
+    background-color:           @primary-container;
 }
 
 mainbox {
@@ -30,7 +30,6 @@ mainbox {
     padding:                    15px;
     border:                     0px solid;
     border-radius:              12px;
-    border-color:               @primary-container;
     background-color:           transparent;
     children:                   ["message", "listview"];
 }
@@ -42,8 +41,8 @@ message {
     border:                     0px solid;
     border-radius:              12px;
     border-color:               @primary-container;
-    background-color:           @error-container;
-    text-color:                 @on-error-container;
+    background-color:           @error;
+    text-color:                 @on-error;
     font:                       "JetBrainsMono Nerd Font 12";
 }
 
@@ -52,7 +51,7 @@ textbox {
     text-color:                 inherit;
     vertical-align:             0.5;
     horizontal-align:           0.0;
-    placeholder-color:          @on-error-container;
+    placeholder-color:          @on-error;
     blink:                      true;
     markup:                     true;
 }

@@ -1,5 +1,4 @@
 # TeX Live paths
-set -gx MANPATH /usr/local/texlive/2024/texmf-dist/doc/man $MANPATH
 set -gx INFOPATH /usr/local/texlive/2024/texmf-dist/doc/info $INFOPATH
 fish_add_path /usr/local/texlive/2024/bin/x86_64-linux
 

@@ -24,8 +24,9 @@ hl.env("QML2_IMPORT_PATH", "/usr/lib/qt6/qml")
 
 local terminal = "ghostty"
 local fileManager = "thunar"
-local menu =  [[rofi -kb-element-prev "Ctrl+[45]" -kb-element-next "Ctrl+[44]" -kb-mode-previous "Ctrl+[43]" -kb-mode-next "Ctrl+[46]"]]
-local browser = [[brave --enable-features=UseOzonePlatform,TouchpadOverscrollHistoryNavigation --ozone-platform=wayland --disable-features=WaylandWpColorManagerV1]]
+-- local menu =  [[rofi -kb-element-prev "Ctrl+[45]" -kb-element-next "Ctrl+[44]" -kb-mode-previous "Ctrl+[43]" -kb-mode-next "Ctrl+[46]"]]
+local menu =  [[qs ipc call launcher toggle]]
+local browser = [[brave --enable-features=UseOzonePlatform,TouchpadOverscrollHistoryNavigation,NativeNotifications --ozone-platform=wayland --disable-features=WaylandWpColorManagerV1]]
 local mainMod = "SUPER"
 
 require("shader")
@@ -36,23 +37,21 @@ hl.on("hyprland.start", function()
         hl.exec_cmd("bash /home/varunadhityagb/.config/hypr/scripts/open_whatsapp")
         hl.exec_cmd("bash /usr/bin/screen_timer start ")
         hl.exec_cmd("bash /home/varunadhityagb/.local/bin/wellbeing on")
-        hl.exec_cmd("waybar")
+        hl.exec_cmd("hyprpm reload")
         hl.exec_cmd("emacs --daemon")
         hl.exec_cmd("cliphist wipe")
         hl.exec_cmd("awww-daemon")
         hl.exec_cmd("hypridle")
-        hl.exec_cmd("avizo-service")
         hl.exec_cmd("/usr/bin/clipse -clear")
         hl.exec_cmd("/usr/bin/clipse -listen")
+        hl.exec_cmd("quickshell")
         hl.exec_cmd("syncthing --gui-address=0.0.0.0:8384 --no-browser")
         hl.exec_cmd("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1")
-        hl.exec_cmd("swaync")
         hl.exec_cmd("kdeconnect-indicator")
         hl.exec_cmd("kdeconnectd")
-        hl.exec_cmd("bash wayscriber --no-tray -d")
-        hl.exec_cmd("qs -c overview")
+        hl.exec_cmd("wayscriber --no-tray -d")
         hl.exec_cmd([[bash -c 'socat -u UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock - | while read -r line; do pkill -RTMIN+8 waybar; done']])
-        hl.exec_cmd("matugen image /home/varunadhityagb/Downloads/trees_and_bushes.jpg")
+        hl.exec_cmd("matugen image /home/varunadhityagb/Downloads/cat_leaves.jpg")
 end)
 
 local colors = require("colors")
@@ -71,7 +70,7 @@ hl.config({
     },
 
     decoration = {
-        rounding = 10,
+        rounding = 20,
         rounding_power = 2,
         blur = {
             enabled = true,
@@ -168,7 +167,43 @@ hl.config({
     },
 })
 
+-- Hyprglass
+if hl.plugin.hyprglass then
+    local hg = hl.plugin.hyprglass
 
+    hg.config({
+        default_theme = "dark",
+        default_preset = "clear",
+        tint_color = 0x8899aa22,
+
+        brightness = 0.9,
+        dark = { brightness = 0.82 },
+        light = { adaptive_boost = 0.5 },
+
+        layers = { enabled = 1 },
+    })
+
+    -- Layer surfaces: each call whitelists the namespace and configures it
+    hg.layer("quickshell", { preset = "glass", mask_threshold = 0.05 })
+    hg.layer("swaync-notification-window", { preset = "glass", mask_threshold = 0.05 })
+    hg.layer("swaync-control-center", { preset = "glass", mask_threshold = 0.05 })
+    hg.layer("rofi", { preset = "ui", mask_threshold = 0.25 })
+    hg.layer("avizo", { preset = "ui", mask_threshold = 0.05 })
+
+    -- Presets
+    hg.preset("clear", {
+        glass_opacity = 0.8,
+        blur_strength = 1.5,
+        dark = { brightness = 0.7 },
+        light = { brightness = 1.2 },
+    })
+
+    hg.preset("glassy", {
+        inherits = "glassy",
+        contrast = 1.2,
+        adaptive_dim = 1.5,
+    })
+end
 
 hl.window_rule({
   name = "windowrule-1",
@@ -398,21 +433,21 @@ hl.window_rule({
 hl.layer_rule({
   name = "layerrule-1",
   animation = "popin",
-  blur = true,
+  blur = false,
   match = { namespace = "rofi" },
 })
 
 hl.layer_rule({
   name = "layerrule-2",
   animation = "popin",
-  blur = true,
+  blur = false,
   match = { namespace = "avizo" },
 })
 
 hl.layer_rule({
   name = "layerrule-3",
   animation = "slide top",
-  blur = true,
+  blur = false,
   blur_popups = true,
   match = { namespace = "waybar" },
 })
@@ -427,13 +462,13 @@ hl.layer_rule({
 hl.layer_rule({
   name = "layerrule-5",
   animation = "slide top",
-  blur = true,
+  blur = false,
   match = { namespace = "swaync-control-center" },
 })
 
 hl.layer_rule({
   name = "layerrule-6",
-  blur = true,
+  blur = false,
   ignore_alpha = 0,
   animation = "slide top",
   match = { namespace = "swaync-notification-window" },
@@ -465,9 +500,79 @@ hl.layer_rule({
   match = { namespace = "selection" },
 })
 
+require("layouts/overview")
 hl.workspace_rule({ workspace = "1", layout = "scrolling" })
 hl.workspace_rule({ workspace = "2", layout = "monocle" })
 hl.workspace_rule({ workspace = "4", layout = "monocle" })
+
+hl.workspace_rule({ workspace = "1", on_created_empty = "emacsclient -c -a ''" })
+hl.workspace_rule({ workspace = "3", on_created_empty = browser })
+hl.workspace_rule({ workspace = "4", on_created_empty = "~/dotfiles/.config/hypr/scripts/open_whatsapp" })
+
+hl.workspace_rule({ workspace = "2", monitor = "desc:HP Inc. HP E223 CNC7311BY0", default = true })
+
+
+local prev_layouts = {}   -- [ws_id] = layout string before overview was set
+
+local function toggle_overview()
+    local ws = hl.get_active_workspace()
+    if not ws then return end
+
+    local ws_id = tostring(ws.id)
+    local cur   = ws.tiled_layout   -- e.g. "lua:overview", "lua:dwindle", etc.
+
+    if cur == "lua:overview" then
+        -- ── leaving overview: restore saved layout ────────────────────
+        local restore = prev_layouts[ws_id]
+        if not restore then
+            -- workspace had no per-workspace rule before; fall back to
+            -- whatever the global general.layout is set to
+            restore = hl.get_config("general.layout")
+        end
+        hl.workspace_rule({ workspace = ws_id, layout = restore })
+        prev_layouts[ws_id] = nil
+    else
+        -- ── entering overview: save current layout and switch ─────────
+        prev_layouts[ws_id] = cur
+        hl.workspace_rule({ workspace = ws_id, layout = "lua:overview" })
+    end
+end
+hl.bind("SUPER + Tab", toggle_overview)
+
+
+local function send_system(message)
+    hl.notification.create({
+        text = message ,
+        timeout = 10000
+    })
+end
+
+local function what_layout()
+    local ws = hl.get_active_workspace()
+    if not ws then return end
+
+    local ws_id = tostring(ws.id)
+    local cur   = ws.tiled_layout   -- e.g. "lua:overview", "lua:dwindle", etc.
+    send_system(cur)
+end
+hl.bind("SUPER + space", what_layout)
+
+local function layout_bind(bind_table)
+    return function ()
+        local workspace = hl.get_active_special_workspace() or
+                          hl.get_active_workspace()
+
+        if not workspace then
+            return
+        end
+
+        local layout = workspace.tiled_layout
+
+        if bind_table[layout] then
+            hl.dispatch(bind_table[layout])
+        end
+    end
+end
 
 hl.bind(mainMod .. " + R", hl.dsp.submap("apps"))
 hl.define_submap("apps", function()
@@ -553,12 +658,25 @@ end)
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + W", hl.dsp.window.close())
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle"}))
-hl.bind(mainMod .. " + period", hl.dsp.layout("cyclenext"))
-hl.bind(mainMod .. " + TAB", hl.dsp.exec_cmd("qs ipc -c overview call overview toggle"))
 hl.bind("ALT + tab", hl.dsp.window.cycle_next())
 
+hl.bind("SUPER + period", layout_bind({
+    scrolling = hl.dsp.layout("swapcol l"),  -- Scrolling: swap column with left one
+    dwindle   = hl.dsp.layout("swapsplit"),  -- Dwindle: swap window split
+    monocle   = hl.dsp.layout("cycleprev"),  -- Monocle and master: cycle prev window
+    master    = hl.dsp.layout("cycleprev"),
+}))
+
+hl.bind("SUPER + comma", layout_bind({
+    scrolling = hl.dsp.layout("swapcol r"),   -- Scrolling: swap column with right one
+    dwindle   = hl.dsp.layout("togglesplit"), -- Dwindle: toggle window split
+    monocle   = hl.dsp.layout("cyclenext"),   -- Monocle and master: cycle next window
+    master    = hl.dsp.layout("cyclenext"),
+}))
+
 -- applications
-hl.bind("ALT + space", hl.dsp.exec_cmd(menu .. " -show drun -sort false"))
+-- hl.bind("ALT + space", hl.dsp.exec_cmd(menu .. " -show drun -sort false"))
+hl.bind("ALT + space", hl.dsp.exec_cmd(menu))
 
 -- misc
 hl.bind("ALT + F9", hl.dsp.exec_cmd("~/dotfiles/.config/hypr/scripts/vigil"))
@@ -647,7 +765,6 @@ hl.bind("CTRL + ALT + L", hl.dsp.exec_cmd("qs -c lockscreen"))
 hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
 hl.gesture({ fingers = 3, direction = "vertical", mods = "SUPER", action = "float" })
 hl.gesture({ fingers = 3, direction = "vertical", mods = "ALT", scale = 1.5, action = "fullscreen" })
-hl.gesture({ fingers = 3, direction = "vertical", scale = 1.5, action = "fullscreen", mode = "maximize" })
 
 -- Scroll through existing workspaces with mainMod + scroll
 hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))

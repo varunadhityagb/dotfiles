@@ -44,7 +44,6 @@ output_path = '~/dotfiles/.config/kitty/colors.conf'
 [templates.swaync]
 input_path = '~/.config/matugen/templates/matugen-swaync.css'
 output_path = '~/.config/swaync/matugen/matugen-swaync.css'
-post_hook = "swaync-client -rs"
 
 [templates.zathura]
 input_path = '~/dotfiles/.config/matugen/templates/zathura-colors'
@@ -81,6 +80,10 @@ output_path = '~/.config/cava/config'
 input_path = "~/.config/matugen/templates/doom-matugen-theme.el"
 output_path = "~/.config/doom/themes/doom-matugen-theme.el"
 
+[templates.emacsd]
+input_path = "~/.config/matugen/templates/matugen-theme.el"
+output_path = "~/dotfiles/.emacs.d/themes/matugen-theme.el"
+
 [templates.nvim]
 input_path = "~/dotfiles/.config/matugen/templates/matugen.lua"
 output_path = "~/dotfiles/.config/nvim/lua/plugins/matugen.lua"
@@ -99,4 +102,4 @@ output_path = '~/dotfiles/.config/ghostty/ghostty-colors'
 
 [templates.quickshell]
 input_path = "~/dotfiles/.config/matugen/templates/lockscreen-template.json"
-output_path = "/tmp/qs_colors.json"
+output_path = "~/dotfiles/.config/quickshell/qs_colors.json"

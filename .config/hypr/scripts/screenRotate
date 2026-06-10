@@ -1,42 +1,31 @@
 #!/bin/bash
 
-# Device configuration
-# Format: device_name, preferred_resolution, auto settings, transform state, etc.
-MONITORS=(
-    "HDMI-A-1,preferred,0x0,1"
-    "eDP-1,highress@highrr,auto,1"
-)
-
-# Get the monitor index from the parameter
+MONITORS=("HDMI-A-1" "eDP-1")
 monitor_index=$1
+device_name=${MONITORS[$monitor_index]}
+STATE_FILE="$HOME/.config/hypr/state.lua"
 
-# Get the configuration for the selected monitor
-monitor_config=${MONITORS[$monitor_index]}
-IFS=',' read -r device_name preferred_resolution auto_settings scale <<<"$monitor_config"
-
-# File to store the current state of the device
-STATE_FILE="$HOME/.hyprctl_x_state_$device_name"
-
-# Check if the state file exists, if not, initialize it to 0
-if [ ! -f "$STATE_FILE" ]; then
-    echo 0 >"$STATE_FILE"
+if [ -z "$device_name" ]; then
+    echo "Usage: $0 <0|1>  (0=HDMI-A-1, 1=eDP-1)"
+    exit 1
 fi
 
-# Read the current state
-current_state=$(cat "$STATE_FILE")
+# Read current transform
+current=$(grep -A3 "\"${device_name}\"" "$STATE_FILE" | grep -oP "transform\s*=\s*\K[0-9]+")
+current=${current:-0}
 
-# Determine the next state (0, 1, 2, or 3)
-case $current_state in
-0) next_state=1 ;;
-1) next_state=2 ;;
-2) next_state=3 ;;
-3) next_state=0 ;;
-*) next_state=0 ;; # Default to 0 in case of an invalid state
+case $current in
+0) next=1 ;; 1) next=2 ;; 2) next=3 ;; 3) next=0 ;; *) next=0 ;;
 esac
 
-# Update the state file with the new value
-echo $next_state >"$STATE_FILE"
+# Patch transform inside the monitor's block
+# Uses awk to only change the line after the device name is seen
+awk -v dev="$device_name" -v new_transform="$next" '
+    found && /transform/ { sub(/transform *= *[0-9]+/, "transform = " new_transform); found=0 }
+    /\[\"/ { found=0 }
+    $0 ~ "\"" dev "\"" { found=1 }
+    { print }
+' "$STATE_FILE" >/tmp/state_tmp.lua && mv /tmp/state_tmp.lua "$STATE_FILE"
 
-./project 0
-
-echo "Toggled $device_name to X=$next_state"
+echo "Rotated $device_name: $current → $next"
+hyprctl reload

@@ -16,3 +16,5 @@
 	clean = git-lfs clean -- %f
 [push]
 	autoSetupRemote = true
+[rebase]
+	autoStash = true

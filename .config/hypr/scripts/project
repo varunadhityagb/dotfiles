@@ -1,127 +1,23 @@
 #!/bin/bash
 
-if [ "$1" = 0 ]; then
-    mode="update"
-else
-    mode=$(echo -e "screen1\nscreen2\nmult\nmirror" | rofi \
-        -kb-element-prev "Ctrl+[45]" \
-        -kb-element-next "Ctrl+[44]" \
-        -dmenu)
-fi
+STATE="$HOME/.config/hypr/state.lua"
 
-lua_file="$HOME/dotfiles/.config/hypr/monitors.lua"
-monitor_curr="$HOME/dotfiles/.config/hypr/monitor"
+layout=$(
+    printf "%s\n" \
+        screen1 \
+        screen2 \
+        mult \
+        mirror |
+        rofi \
+            -kb-element-prev "Ctrl+[45]" \
+            -kb-element-next "Ctrl+[44]" \
+            -dmenu
+)
 
-# Read rotation states for both monitors
-hdmi_state=$(cat "$HOME/.hyprctl_x_state_HDMI-A-1" 2>/dev/null || echo "0")
-edp_state=$(cat "$HOME/.hyprctl_x_state_eDP-1" 2>/dev/null || echo "0")
+[ -z "$layout" ] && exit
 
-# -------------------------
-# LUA CONFIG STRINGS
-# -------------------------
+sed -i \
+    "s/layout *= *\"[^\"]*\"/layout = \"$layout\"/" \
+    "$STATE"
 
-screen1_lua='
-hl.monitor({
-    output    = "HDMI-A-1",
-    disabled  = true,
-})
-
-hl.monitor({
-    output    = "eDP-1",
-    mode      = "highress@highrr",
-    position  = "auto",
-    scale     = 1,
-    transform = '"$edp_state"',
-})
-'
-
-screen2_lua='
-hl.monitor({
-    output    = "HDMI-A-1",
-    mode      = "highress@highrr",
-    position  = "auto",
-    scale     = 1,
-    transform = '"$hdmi_state"',
-})
-
-hl.monitor({
-    output    = "eDP-1",
-    disabled  = true,
-})
-'
-
-mult_lua='
-hl.monitor({
-    output    = "HDMI-A-1",
-    mode      = "highress@highrr",
-    position  = "auto-left",
-    scale     = 1,
-    transform = '"$hdmi_state"',
-})
-
-hl.monitor({
-    output    = "eDP-1",
-    mode      = "highress@highrr",
-    position  = "auto",
-    scale     = 1,
-    transform = '"$edp_state"',
-})
-'
-
-mirror_lua='
-hl.monitor({
-    output     = "HDMI-A-1",
-    mode       = "highress@highrr",
-    position   = "auto",
-    scale      = 1,
-    mirror     = "eDP-1",
-    transform  = '"$hdmi_state"',
-})
-
-hl.monitor({
-    output    = "eDP-1",
-    mode      = "highress@highrr",
-    position  = "auto",
-    scale     = 1,
-    transform = '"$edp_state"',
-})
-'
-
-# -------------------------
-# APPLY MODE
-# -------------------------
-
-case $mode in
-"screen1")
-    printf "%s\n" "$screen1_lua" >"$lua_file"
-    echo "0" >"$monitor_curr"
-    ;;
-
-"screen2")
-    printf "%s\n" "$screen2_lua" >"$lua_file"
-    echo "1" >"$monitor_curr"
-    ;;
-
-"mult")
-    printf "%s\n" "$mult_lua" >"$lua_file"
-    echo "2" >"$monitor_curr"
-    ;;
-
-"mirror")
-    printf "%s\n" "$mirror_lua" >"$lua_file"
-    echo "3" >"$monitor_curr"
-    ;;
-"update")
-    curr=$(cat "$monitor_curr")
-
-    if [ "$curr" = 0 ]; then
-        printf "%s\n" "$screen1_lua" >"$lua_file"
-    elif [ "$curr" = 1 ]; then
-        printf "%s\n" "$screen2_lua" >"$lua_file"
-    elif [ "$curr" = 2 ]; then
-        printf "%s\n" "$mult_lua" >"$lua_file"
-    elif [ "$curr" = 3 ]; then
-        printf "%s\n" "$mirror_lua" >"$lua_file"
-    fi
-    ;;
-esac
+hyprctl reload

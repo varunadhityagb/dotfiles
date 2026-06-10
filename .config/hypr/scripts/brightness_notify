@@ -28,8 +28,14 @@ fi
 #                --custom-progress= \
 #                --custom-progress-text="$BRIGHTNESS_PERCENT%"
 
-avizo-client --image-resource="$ICON" \
-    --progress=$(echo "scale=2; $BRIGHTNESS_PERCENT / 100" | bc)
+if [[ $1 -eq 0 ]]; then
+    qs ipc call osd brightness $BRIGHTNESS_PERCENT
+elif [[ $1 -eq 1 ]]; then
+    qs ipc call osd monitor $BRIGHTNESS_PERCENT
+fi
+
+# avizo-client --image-resource="$ICON" \
+#     --progress=$(echo "scale=2; $BRIGHTNESS_PERCENT / 100" | bc)
 
 # osd-client --image-resource="$ICON" \
 #     --progress=$(echo "scale=2; $BRIGHTNESS_PERCENT / 100" | bc)
