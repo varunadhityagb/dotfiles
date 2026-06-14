@@ -37,15 +37,64 @@ PanelWindow {
         }
     }
 
+    property bool dmenuMode: false
+    property var dmenuItems: []
+    property string dmenuPrompt: "Select"
+
+    function dmenuShow(items, prompt) {
+        dmenuItems = items
+        dmenuPrompt = prompt || "Select"
+        dmenuMode = true
+        searchInput.text = ""
+        visible = true
+        Qt.callLater(() => searchInput.forceActiveFocus())
+    }
+
+    function dmenuSelect(item) {
+        // write to fifo
+        dmenuWriter.text = item + "\n"
+        dmenuWriter.running = true
+        dmenuMode = false
+        dmenuItems = []
+        launcher.close()
+    }
+
+    Process {
+        id: dmenuWriter
+        property string text: ""
+        command: ["bash", "-c", "echo -n '" + text + "' > /tmp/qs-dmenu-out"]
+    }
+
     IpcHandler {
         target: "launcher"
         function toggle() {
-            if (launcher.visible) launcher.close()
-            else launcher.open()
+            if (launcher.visible) {
+                if (launcher.dmenuMode) {
+                    dmenuWriter.text = "__CANCELLED__\n"
+                    dmenuWriter.running = true
+                }
+                launcher.close()
+            } else {
+                launcher.open()
+            }
+        }
+
+        function dmenu(data: string) {
+            var lines = data.split("|")
+            var prompt = "Select"
+            var items = lines
+            if (lines[0].startsWith("PROMPT:")) {
+                prompt = lines[0].substring(7)
+                items = lines.slice(1)
+            }
+            launcher.dmenuShow(items, prompt)
         }
     }
 
     function open() {
+        dmenuMode = false
+        dmenuItems = []
+
         searchInput.text = ""
         visible = true
         Qt.callLater(() => searchInput.forceActiveFocus())
@@ -54,13 +103,43 @@ PanelWindow {
     function close() {
         visible = false
         searchInput.text = ""
+
+        dmenuMode = false
+        dmenuItems = []
+        dmenuPrompt = launcher.dmenuMode ? launcher.dmenuPrompt  : "Search apps • = calculator • ! command"
     }
 
     property string query: searchInput.text
     property string mode: {
+        if (dmenuMode) return "dmenu"
         if (query.startsWith("=")) return "calc"
         if (query.startsWith("!")) return "cmd"
         return "apps"
+    }
+
+    FileView {
+        id: dmenuWatcher
+        path: "/tmp/qs-dmenu-in"
+        watchChanges: true
+        onTextChanged: {
+            var lines = text.trim().split("\n")
+            if (lines.length === 0 || text.trim() === "") return
+            var prompt = "Select"
+            var items = lines
+            // first line can be "PROMPT:My Prompt" to set prompt
+            if (lines[0].startsWith("PROMPT:")) {
+                prompt = lines[0].substring(7)
+                items = lines.slice(1)
+            }
+            launcher.dmenuShow(items, prompt)
+            // clear the file after reading
+            dmenuClear.running = true
+        }
+    }
+
+    Process {
+        id: dmenuClear
+        command: ["bash", "-c", "> /tmp/qs-dmenu-in"]
     }
 
     property var allApps: DesktopEntries.applications.values
@@ -77,6 +156,12 @@ PanelWindow {
             return a.name.toLowerCase().includes(q) ||
                 (a.genericName && a.genericName.toLowerCase().includes(q))
         })
+    }
+
+    property var filteredDmenu: {
+        if (query === "") return dmenuItems
+        var q = query.toLowerCase()
+        return dmenuItems.filter(i => i.toLowerCase().includes(q))
     }
 
     property var recentApps: []
@@ -176,6 +261,9 @@ PanelWindow {
                                         } else if (launcher.mode === "calc") {
                                             calcList.forceActiveFocus()
                                             calcList.currentIndex = 0
+                                        } else if (launcher.mode === "dmenu") {
+                                            dmenuList.forceActiveFocus()
+                                            dmenuList.currentIndex = 0
                                         }
                                         event.accepted = true
                                     } else if (event.key === Qt.Key_L) {
@@ -188,16 +276,23 @@ PanelWindow {
                                 }
                             }
 
+                            Keys.onEscapePressed: {
+                                if (launcher.mode === "dmenu") {
+                                    dmenuWriter.text = "__CANCELLED__\n"
+                                    dmenuWriter.running = true
+                                }
+                                launcher.close()
+                            }
+
                             Text {
                                 anchors.fill: parent
-                                text: "Search apps • = calculator • ! command"
+                                text: launcher.dmenuMode ? launcher.dmenuPrompt : "Search apps • = calculator • ! command"
                                 color: root.subtext0
                                 font.pixelSize: 22
                                 font.family: root.fontFamily
                                 visible: parent.text === ""
                             }
 
-                            Keys.onEscapePressed: launcher.close()
                             Keys.onReturnPressed: {
                                 if (launcher.mode === "cmd") {
                                     var cmd = searchInput.text.substring(1).trim()
@@ -766,6 +861,88 @@ PanelWindow {
                                                                 match.index + match[0].length)
                                             }
                                         }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // ── DMENU ──
+                    Rectangle {
+                        anchors.fill: parent
+                        radius: 14
+                        color: Qt.alpha(root.surface0, 0.7)
+                        visible: launcher.mode === "dmenu"
+
+
+                        ScrollView {
+                            anchors.top: parent.top
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            anchors.bottom: parent.bottom
+                            anchors.margins: 8
+                            ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+
+                            ListView {
+                                id: dmenuList
+                                model: launcher.filteredDmenu
+                                spacing: 4
+                                clip: true
+                                keyNavigationEnabled: true
+
+                                Keys.onPressed: event => {
+                                    if (event.modifiers & Qt.ControlModifier) {
+                                        if (event.key === Qt.Key_J) {
+                                            currentIndex = Math.min(count - 1, currentIndex + 1)
+                                            event.accepted = true
+                                        } else if (event.key === Qt.Key_K) {
+                                            if (currentIndex <= 0) searchInput.forceActiveFocus()
+                                            else currentIndex--
+                                            event.accepted = true
+                                        }
+                                    }
+                                }
+                                Keys.onReturnPressed: {
+                                    if (currentIndex >= 0)
+                                        launcher.dmenuSelect(model[currentIndex])
+                                }
+                                Keys.onEscapePressed: {
+                                    dmenuWriter.text = "__CANCELLED__\n"
+                                    dmenuWriter.running = true
+                                    launcher.dmenuMode = false
+                                    launcher.close()
+                                }
+                                Keys.onUpPressed: {
+                                    if (currentIndex <= 0) searchInput.forceActiveFocus()
+                                    else currentIndex--
+                                }
+                                Keys.onDownPressed: currentIndex = Math.min(count - 1, currentIndex + 1)
+
+                                delegate: Rectangle {
+                                    required property string modelData
+                                    required property int index
+
+                                    width: dmenuList.width
+                                    height: 44
+                                    radius: 10
+                                    color: dmenuList.currentIndex === index ? Qt.alpha(root.blue, 0.18) : "transparent"
+                                    border.color: dmenuList.currentIndex === index ? root.blue : "transparent"
+
+                                    Text {
+                                        anchors.verticalCenter: parent.verticalCenter
+                                        anchors.left: parent.left
+                                        anchors.leftMargin: 14
+                                        text: modelData
+                                        color: root.text
+                                        font.pixelSize: root.fontSize
+                                        font.family: root.fontFamily
+                                    }
+
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        hoverEnabled: true
+                                        onEntered: dmenuList.currentIndex = index
+                                        onClicked: launcher.dmenuSelect(modelData)
                                     }
                                 }
                             }

@@ -12,6 +12,7 @@ PopupWindow {
     id: controlCenter
     property Item targetItem: null
     property var parentWin: null
+    property string expandedTile: ""
     visible: false
     anchor.item: targetItem
     anchor.edges: Edges.Bottom
@@ -60,81 +61,7 @@ PopupWindow {
             anchors.margins: 16
             spacing: 12
 
-            // ── MEDIA ──
-            Rectangle {
-                Layout.fillWidth: true
-                height: 80
-                radius: 12
-                color: root.surface0
-                visible: controlCenter.player !== null
 
-                RowLayout {
-                    anchors.fill: parent
-                    anchors.margins: 12
-                    spacing: 10
-
-                    ColumnLayout {
-                        Layout.fillWidth: true
-                        spacing: 2
-                        Text {
-                            text: controlCenter.player ? controlCenter.player.trackTitle : ""
-                            color: root.text
-                            font.pixelSize: root.fontSize
-                            font.family: root.fontFamily
-                            font.bold: true
-                            elide: Text.ElideRight
-                            Layout.fillWidth: true
-                        }
-                        Text {
-                            text: controlCenter.player ? controlCenter.player.trackArtist : ""
-                            color: root.subtext0
-                            font.pixelSize: root.fontSize - 2
-                            font.family: root.fontFamily
-                            elide: Text.ElideRight
-                            Layout.fillWidth: true
-                        }
-                    }
-
-                    RowLayout {
-                        spacing: 12
-                        Text {
-                            text: "󰒮"
-                            color: root.mauve
-                            font.pixelSize: 18
-                            font.family: root.fontFamily
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: if (controlCenter.player) controlCenter.player.previous()
-                            }
-                        }
-                        Text {
-                            text: controlCenter.player && controlCenter.player.playbackState === MprisPlaybackState.Playing ? "󰏤" : "󰐊"
-                            color: root.mauve
-                            font.pixelSize: 18
-                            font.family: root.fontFamily
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: {
-                                    if (!controlCenter.player) return
-                                    controlCenter.player.playbackState === MprisPlaybackState.Playing
-                                        ? controlCenter.player.pause()
-                                        : controlCenter.player.play()
-                                }
-                            }
-                        }
-                        Text {
-                            text: "󰒭"
-                            color: root.mauve
-                            font.pixelSize: 18
-                            font.family: root.fontFamily
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: if (controlCenter.player) controlCenter.player.next()
-                            }
-                        }
-                    }
-                }
-            }
 
             // ── WIFI ──
             Rectangle {
@@ -398,6 +325,82 @@ PopupWindow {
             }
 
             Item { Layout.fillHeight: true }
+
+            // ── MEDIA ──
+            Rectangle {
+                Layout.fillWidth: true
+                height: 80
+                radius: 12
+                color: root.surface0
+                visible: controlCenter.player !== null
+
+                RowLayout {
+                    anchors.fill: parent
+                    anchors.margins: 12
+                    spacing: 10
+
+                    ColumnLayout {
+                        Layout.fillWidth: true
+                        spacing: 2
+                        Text {
+                            text: controlCenter.player ? controlCenter.player.trackTitle : ""
+                            color: root.text
+                            font.pixelSize: root.fontSize
+                            font.family: root.fontFamily
+                            font.bold: true
+                            elide: Text.ElideRight
+                            Layout.fillWidth: true
+                        }
+                        Text {
+                            text: controlCenter.player ? controlCenter.player.trackArtist : ""
+                            color: root.subtext0
+                            font.pixelSize: root.fontSize - 2
+                            font.family: root.fontFamily
+                            elide: Text.ElideRight
+                            Layout.fillWidth: true
+                        }
+                    }
+
+                    RowLayout {
+                        spacing: 12
+                        Text {
+                            text: "󰒮"
+                            color: root.mauve
+                            font.pixelSize: 18
+                            font.family: root.fontFamily
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: if (controlCenter.player) controlCenter.player.previous()
+                            }
+                        }
+                        Text {
+                            text: controlCenter.player && controlCenter.player.playbackState === MprisPlaybackState.Playing ? "󰏤" : "󰐊"
+                            color: root.mauve
+                            font.pixelSize: 18
+                            font.family: root.fontFamily
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: {
+                                    if (!controlCenter.player) return
+                                    controlCenter.player.playbackState === MprisPlaybackState.Playing
+                                        ? controlCenter.player.pause()
+                                        : controlCenter.player.play()
+                                }
+                            }
+                        }
+                        Text {
+                            text: "󰒭"
+                            color: root.mauve
+                            font.pixelSize: 18
+                            font.family: root.fontFamily
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: if (controlCenter.player) controlCenter.player.next()
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

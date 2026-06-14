@@ -55,8 +55,6 @@ ShellRoot {
         onClearAllHistory: notifServer.history = []
     }
 
-    WorkspaceOverview { id: workspaceOverview }
-
     Variants {
         model: Quickshell.screens
         Bar {
@@ -67,7 +65,6 @@ ShellRoot {
             calPopup: calendarPopup
             dnd: notifServer.dnd
             historyCount: notifServer.history.length
-            overviewPopup: workspaceOverview
             Component.onCompleted: {
                 controlCenter.parentWin = bar
                 calendarPopup.parentWin = bar
