@@ -1,5 +1,4 @@
 pragma ComponentBehavior: Bound
-//@ pragma UseQApplication
 import Quickshell
 import Quickshell.Services.SystemTray
 import Quickshell.Wayland
@@ -10,13 +9,11 @@ import QtQuick.Layouts
 import "./"
 import "./launcher"
 import "./bar"
-import "./bar/popups"
 import "./osd"
 import "./notifications"
 
 ShellRoot {
     id: root
-
     MatugenColors { id: _theme }
     readonly property color base: _theme.base
     readonly property color crust: _theme.crust
@@ -33,42 +30,26 @@ ShellRoot {
     readonly property color peach: _theme.peach
     readonly property color blue: _theme.blue
     readonly property color green: _theme.green
-
     readonly property string fontFamily: "JetBrainsMono Nerd Font"
     readonly property int fontSize: 14
 
-    Osd { id:osd }
-
+    Osd { id: osd }
     NotifServer { id: notifServer }
-
     Launcher { id: launcher }
-
-    ControlCenter { id: controlCenter }
-
-    CalendarPopup {
-        id: calendarPopup
-        notifHistory: notifServer.history
-        onRemoveHistory: id => {
-            notifServer.remove(id)
-            notifServer.removeHistory(id)
-        }
-        onClearAllHistory: notifServer.history = []
-    }
 
     Variants {
         model: Quickshell.screens
         Bar {
-            id: bar
-            property var modelData
+            required property var modelData
             screen: modelData
-            ccPopup: controlCenter
-            calPopup: calendarPopup
             dnd: notifServer.dnd
             historyCount: notifServer.history.length
-            Component.onCompleted: {
-                controlCenter.parentWin = bar
-                calendarPopup.parentWin = bar
+            notifHistory: notifServer.history
+            onRemoveHistory: id => {
+                notifServer.remove(id)
+                notifServer.removeHistory(id)
             }
+            onClearAllHistory: notifServer.history = []
         }
     }
 }
