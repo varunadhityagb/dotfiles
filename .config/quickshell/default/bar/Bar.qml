@@ -32,8 +32,11 @@ PanelWindow {
     exclusiveZone: 44
 
     implicitHeight: {
-        if (expandedPill === "middle") return 44 + 6 + calendarContent.height
-        if (expandedPill === "right") return 44 + 6 + ccContent.implicitHeight
+        if (expandedPanel === "calendar") return 44 + 6 + calendarContent.height
+        if (expandedPanel === "network") return 44 + 6 + networkContent.implicitHeight
+        if (expandedPanel === "bluetooth") return 44 + 6 + bluetoothContent.implicitHeight
+        if (expandedPanel === "volume") return 44 + 6 + volumeContent.implicitHeight
+        if (expandedPanel === "battery") return 44 + 6 + batteryContent.implicitHeight
         return 44
     }
 
@@ -61,13 +64,24 @@ PanelWindow {
     property int fontSize: root.fontSize
 
     // ── Expansion state ──────────────────────────────────────────────────
-    property string expandedPill: ""
+    property string expandedPanel: ""
 
     function toggleMiddle() {
-        expandedPill = (expandedPill === "middle") ? "" : "middle"
+        expandedPanel = (expandedPanel === "calendar") ? "" : "calendar"
     }
-    function toggleRight() {
-        expandedPill = (expandedPill === "right") ? "" : "right"
+    function toggleNetwork() {
+        expandedPanel = (expandedPanel === "network") ? "" : "network"
+    }
+    function toggleBluetooth() {
+        expandedPanel = (expandedPanel === "bluetooth") ? "" : "bluetooth"
+    }
+    function toggleVolume() {
+        expandedPanel = (expandedPanel === "volume") ? "" : "volume"
+    }
+    function toggleBattery() {
+        console.log(batteryContent.height, batteryContent.implicitHeight)
+        expandedPanel = (expandedPanel === "battery") ? "" : "battery"
+        console.log(batteryContent.height, batteryContent.implicitHeight)
     }
 
     // ── Clock ────────────────────────────────────────────────────────────
@@ -133,12 +147,12 @@ PanelWindow {
                 height: 38
                 radius: 19
                 color: Qt.alpha(root.base, 0.85)
-                border.color: bar.expandedPill === "middle" ? root.mauve : root.surface1
+                border.color: bar.expandedPanel === "calendar" ? root.mauve : root.surface1
                 border.width: 1
                 Behavior on border.color { ColorAnimation { duration: 200 } }
                 Behavior on width { NumberAnimation { duration: 250; easing.type: Easing.OutQuart } }
 
-                width: bar.expandedPill === "middle"
+                width: bar.expandedPanel === "calendar"
                     ? (expandedHeader.implicitWidth + 40)
                     : (collapsedContent.implicitWidth + 32)
 
@@ -146,9 +160,8 @@ PanelWindow {
                     id: collapsedContent
                     anchors.centerIn: parent
                     spacing: 8
-                    visible: bar.expandedPill !== "middle"
+                    visible: bar.expandedPanel !== "calendar"
 
-                    Text { text: "󰃰"; font.family: root.fontFamily; font.pixelSize: 13; color: root.mauve }
                     Text { text: bar.clockDate; font.family: root.fontFamily; font.pixelSize: 13; font.bold: true; color: root.subtext0 }
                     Text { text: bar.clockTime; font.family: root.fontFamily; font.pixelSize: 13; font.bold: true; color: root.blue }
                     Text {
@@ -162,7 +175,7 @@ PanelWindow {
                     id: expandedHeader
                     anchors.centerIn: parent
                     spacing: 10
-                    visible: bar.expandedPill === "middle"
+                    visible: bar.expandedPanel === "calendar"
 
                     Text { text: bar.clockSec; font.family: root.fontFamily; font.pixelSize: 15; font.bold: true; color: root.blue }
                     Rectangle { width: 1; height: 16; color: root.surface2 }
@@ -175,10 +188,6 @@ PanelWindow {
                         visible: bar.dnd || bar.historyCount > 0
                         text: bar.dnd ? "󰂛 DND" : "󰂚 " + bar.historyCount
                         color: root.blue; font.family: root.fontFamily; font.pixelSize: 12
-                    }
-                    Text {
-                        text: "✕"; color: root.overlay0; font.pixelSize: 12; font.family: root.fontFamily
-                        MouseArea { anchors.fill: parent; onClicked: bar.expandedPill = "" }
                     }
                 }
 
@@ -206,7 +215,7 @@ PanelWindow {
                 height: 38
                 radius: 19
                 color: Qt.alpha(root.base, 0.85)
-                border.color: bar.expandedPill === "right" ? root.blue : root.surface1
+                border.color: bar.expandedPanel !== "" && bar.expandedPanel !== "calendar" ? root.blue : root.surface1
                 border.width: 1
                 Behavior on border.color { ColorAnimation { duration: 200 } }
                 Behavior on width { NumberAnimation { duration: 250; easing.type: Easing.OutQuart } }
@@ -223,26 +232,26 @@ PanelWindow {
 
                     NetworkPill {
                         rootBar: root
-                        active: bar.expandedPill === "right"
-                        onTap: bar.toggleRight()
+                        active: bar.expandedPanel === "network"
+                        onTap: bar.toggleNetwork()
                     }
 
                     BluetoothPill {
                         rootBar: root
-                        active: bar.expandedPill === "right"
-                        onTap: bar.toggleRight()
+                        active: bar.expandedPanel === "bluetooth"
+                        onTap: bar.toggleBluetooth()
                     }
 
                     VolumePill {
                         rootBar: root
-                        active: bar.expandedPill === "right"
-                        onTap: bar.toggleRight()
+                        active: bar.expandedPanel === "volume"
+                        onTap: bar.toggleVolume()
                     }
 
                     BatteryPill {
                         rootBar: root
-                        active: bar.expandedPill === "right"
-                        onTap: bar.toggleRight()
+                        active: bar.expandedPanel === "battery"
+                        onTap: bar.toggleBattery()
                         visible: BatteryModel.device !== null
                     }
                 }
@@ -256,28 +265,61 @@ PanelWindow {
         anchors.top: parent.top
         anchors.topMargin: 50
         anchors.horizontalCenter: parent.horizontalCenter
-        opacity: bar.expandedPill === "middle" ? 1 : 0
-        // always rendered so implicitHeight is always known
+        opacity: bar.expandedPanel === "calendar" ? 1 : 0
         Behavior on opacity { NumberAnimation { duration: 200 } }
 
         rootBar: bar
         history: bar.notifHistory
     }
 
-    ControlCenter {
-        id: ccContent
+    NetworkPanel {
+        id: networkContent
         anchors.top: parent.top
         anchors.topMargin: 50
         anchors.right: parent.right
         anchors.rightMargin: 8
-        opacity: bar.expandedPill === "right" ? 1 : 0
-        // always rendered so implicitHeight is always known
+        opacity: bar.expandedPanel === "network" ? 1 : 0
+        Behavior on opacity { NumberAnimation { duration: 200 } }
+
+        rootBar: bar
+    }
+
+    BluetoothPanel {
+        id: bluetoothContent
+        anchors.top: parent.top
+        anchors.topMargin: 50
+        anchors.right: parent.right
+        anchors.rightMargin: 8
+        opacity: bar.expandedPanel === "bluetooth" ? 1 : 0
+        Behavior on opacity { NumberAnimation { duration: 200 } }
+
+        rootBar: bar
+    }
+
+    VolumePanel {
+        id: volumeContent
+        anchors.top: parent.top
+        anchors.topMargin: 50
+        anchors.right: parent.right
+        anchors.rightMargin: 8
+        opacity: bar.expandedPanel === "volume" ? 1 : 0
+        Behavior on opacity { NumberAnimation { duration: 200 } }
+
+        rootBar: bar
+    }
+
+    BatteryPanel {
+        id: batteryContent
+        anchors.top: parent.top
+        anchors.topMargin: 50
+        anchors.right: parent.right
+        anchors.rightMargin: 8
+        opacity: bar.expandedPanel === "battery" ? 1 : 0
         Behavior on opacity { NumberAnimation { duration: 200 } }
 
         rootBar: bar
         Component.onCompleted: {
-            console.log("CC height =", height)
-            console.log("CC implicitHeight =", implicitHeight)
+            console.log(batteryContent.height, batteryContent.implicitHeight)
         }
-        }
+    }
 }
