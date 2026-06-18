@@ -6,9 +6,9 @@ import "../models"
 Rectangle {
     id: root
     width: 320
-    implicitHeight: 200
-    height: 100
-    radius: 25
+    implicitHeight: content.implicitHeight + 32
+    height: implicitHeight
+    radius: 16
     color: Qt.alpha(rootBar.base, 0.97)
     border.color: rootBar.surface1
     border.width: 1
@@ -17,6 +17,7 @@ Rectangle {
     property var rootBar
 
     ColumnLayout {
+        id: content
         anchors.fill: parent
         anchors.margins: 16
         spacing: 16
@@ -29,9 +30,23 @@ Rectangle {
                 Text { text: "Volume  " + Math.round(VolumeModel.volume * 100) + "%"; color: rootBar.text; font.family: rootBar.fontFamily; font.pixelSize: 13; font.bold: true }
                 Rectangle { Layout.fillWidth: true; height: 6; radius: 3; color: rootBar.surface2
                     Rectangle { width: parent.width * Math.min(VolumeModel.volume, 1.0); height: parent.height; radius: parent.radius; color: rootBar.blue }
-                    MouseArea { anchors.fill: parent; onClicked: mouse => { VolumeModel.setVolume(mouse.x / width) } }
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: mouse => { VolumeModel.setVolume(mouse.x / width) }
+                        onWheel: (wheel) => {
+                            let delta = wheel.angleDelta.y > 0 ? 0.05 : -0.05
+                            VolumeModel.setVolume(VolumeModel.volume + delta)
+                        }
+                    }
                 }
             }
+        }
+
+        // Output Device
+        RowLayout {
+            Layout.fillWidth: true
+            Text { text: "󰓓"; color: rootBar.subtext0; font.family: rootBar.fontFamily; font.pixelSize: 12 }
+            Text { text: VolumeModel.outputDevice; color: rootBar.text; font.family: rootBar.fontFamily; font.pixelSize: 11; Layout.fillWidth: true; elide: Text.ElideRight }
         }
 
         // Media

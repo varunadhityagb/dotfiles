@@ -8,16 +8,15 @@ import QtQuick.Layouts
 PanelWindow {
     id: osd
 
-    anchors.top: true
-    anchors.left: true
+    anchors.bottom: true
     exclusionMode: ExclusionMode.Ignore
     color: "transparent"
 
-    implicitWidth: 500
+    implicitWidth: 250
     implicitHeight: 50
 
-    margins.top: 5
-    margins.left: 5
+
+    margins.bottom: 100
 
     visible: osdVisible
     property bool osdVisible: false
@@ -70,7 +69,7 @@ PanelWindow {
     Rectangle {
         anchors.fill: parent
         color: Qt.alpha(root.base, 0.8)
-        radius: 20
+        radius: 25
         border.color: root.surface1
 
         opacity: osd.osdVisible ? 1 : 0

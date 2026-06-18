@@ -17,14 +17,12 @@ PanelWindow {
     color: "transparent"
 
     anchors.top: true
-    anchors.right: true
     exclusionMode: ExclusionMode.Ignore
 
     implicitWidth: 500
-    implicitHeight: cardCol.height + 60
+    implicitHeight: cardCol.height + 30
 
     margins.top: 5
-    margins.right: 5
 
     Column {
         id: cardCol

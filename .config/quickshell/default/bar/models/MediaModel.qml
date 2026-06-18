@@ -24,9 +24,16 @@ QtObject {
         )
     })
 
-    property var player: players.find(
-        p => p.playbackState === MprisPlaybackState.Playing
-    ) ?? null
+    property var player:
+        players.find(
+            p => p.playbackState === MprisPlaybackState.Playing
+        )
+        ??
+        players.find(
+            p => p.playbackState === MprisPlaybackState.Paused
+        )
+        ??
+        null
 
     property string title: player?.trackTitle ?? ""
     property string artist: player?.trackArtist ?? ""
@@ -52,6 +59,10 @@ QtObject {
         }
         return s || "No media info"
     }
+
+    property bool playing:
+        player &&
+        player.playbackState === MprisPlaybackState.Playing
 
     function playPause() {
         if (player) player.playPause()

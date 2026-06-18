@@ -6,7 +6,7 @@ import QtQuick.Layouts
 
 RowLayout {
     spacing: 4
-    Layout.rightMargin: 8
+    Layout.rightMargin: 0
 
     Repeater {
         model: SystemTray.items
@@ -38,4 +38,16 @@ RowLayout {
             }
         }
     }
+
+
+    Rectangle {
+        visible: SystemTray.items.values.length > 0
+        width: 2
+        height: 16
+        color: root.surface2
+        Layout.leftMargin: 4
+        Layout.rightMargin: 4
+    }
 }
+
+

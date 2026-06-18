@@ -30,6 +30,7 @@ Rectangle {
     property real slideOffset: -20
     property real swipeOffset: 0
     property bool isSwiping: false
+    property bool isDismissing: false
 
     transform: [
         Translate { x: card.swipeOffset; y: card.slideOffset }
@@ -51,10 +52,12 @@ Rectangle {
     Behavior on slideOffset {
         NumberAnimation { duration: 150; easing.type: Easing.OutCubic }
     }
+
     Behavior on swipeOffset {
-        enabled: !card.isSwiping
+        enabled: !card.isSwiping && !card.isDismissing
         NumberAnimation { duration: 150; easing.type: Easing.OutCubic }
     }
+
 
     HoverHandler {
         onHoveredChanged: {
@@ -67,6 +70,10 @@ Rectangle {
     property real dragStartX: 0
     property real swipeDismissThreshold: 120
 
+    property int dragStartTime: 0
+    property real lastX: 0
+    property int lastTime: 0
+
     MouseArea {
         id: dragArea
         anchors.fill: cardBg
@@ -74,33 +81,73 @@ Rectangle {
 
         onPressed: mouse => {
             card.dragStartX = mouse.x
+            card.lastX = mouse.x
+
+            card.dragStartTime = Date.now()
+            card.lastTime = card.dragStartTime
+
             card.isSwiping = false
         }
 
         onPositionChanged: mouse => {
             var delta = mouse.x - card.dragStartX
+
             if (Math.abs(delta) > 8) {
                 card.isSwiping = true
-                card.swipeOffset = delta
-                // fade as dragged
+                card.swipeOffset = delta   // IMPORTANT: direct assignment only
                 card.opacity = Math.max(0.3, 1 - Math.abs(delta) / 300)
             }
         }
 
         onReleased: mouse => {
             if (!card.isSwiping) return
-            if (Math.abs(card.swipeOffset) >= card.swipeDismissThreshold) {
-                // fling out
-                card.swipeOffset = card.swipeOffset > 0 ? 600 : -600
+
+            var dx = mouse.x - card.dragStartX
+            var velocity = dx / (Date.now() - card.dragStartTime)
+
+            var shouldDismiss =
+                Math.abs(velocity) > 0.8 ||
+                Math.abs(dx) > card.width * 0.4
+
+            if (shouldDismiss) {
+                card.isDismissing = true
+                card.swipeOffset = dx > 0 ? card.width * 2 : -card.width * 2
                 card.opacity = 0
                 closeDelay.start()
             } else {
-                // snap back
                 card.isSwiping = false
-                card.swipeOffset = 0
-                card.opacity = 1
+                card.swipeOffset = 0   // spring animates back
             }
+
+            card.isSwiping = false
         }
+
+        onWheel: wheel => {
+
+            var delta = wheel.pixelDelta.x !== 0
+                        ? wheel.pixelDelta.x
+                        : wheel.angleDelta.x
+
+            if (delta === 0)
+                return
+
+            card.isSwiping = true
+
+            // accumulate
+            card.swipeOffset += delta * 2.5
+
+            // clamp for stability (optional but recommended)
+            var max = card.width
+            card.swipeOffset = Math.max(-max, Math.min(max, card.swipeOffset))
+
+            card.opacity = Math.max(
+                0.3,
+                1 - Math.abs(card.swipeOffset) / (card.width * 0.5)
+            )
+
+            wheel.accepted = true
+        }
+
     }
 
     Timer {
@@ -149,9 +196,9 @@ Rectangle {
         anchors.fill: cardBg
         shadowEnabled: true
         shadowColor: "#80000000"
-        shadowBlur: 0.6
+        shadowBlur: 0
         shadowVerticalOffset: 4
-        shadowHorizontalOffset: 0
+        shadowHorizontalOffset: -1
     }
 
     // actual card background
@@ -164,7 +211,7 @@ Rectangle {
             bottom: parent.bottom
             bottomMargin: card.shadowPad
         }
-        radius: 12
+        radius: 25
         color: Qt.alpha(root.base, 0.8)
         border.color: notifData && notifData.urgency === 2
                       ? Qt.alpha(root.red, 0.5) : root.surface1

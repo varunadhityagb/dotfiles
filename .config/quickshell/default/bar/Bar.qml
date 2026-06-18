@@ -111,8 +111,8 @@ PanelWindow {
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.leftMargin: 8
-            height: 38
-            radius: 19
+            height: 40
+            radius: 25
             color: Qt.alpha(root.base, 0.85)
             border.color: root.surface1
             border.width: 1
@@ -132,6 +132,18 @@ PanelWindow {
             }
         }
 
+        Item {
+            id: mediaAnchor
+
+            anchors.top: parent.top
+            anchors.left: leftPill.right
+            anchors.right: parent.right
+
+            MediaPill {
+                rootBar: bar
+            }
+        }
+
         // ── MIDDLE PILL: Clock ────────────────────────────────────────
         Item {
             id: middleAnchor
@@ -144,8 +156,8 @@ PanelWindow {
                 id: middlePill
                 anchors.top: parent.top
                 anchors.horizontalCenter: parent.horizontalCenter
-                height: 38
-                radius: 19
+                height: 40
+                radius: 25
                 color: Qt.alpha(root.base, 0.85)
                 border.color: bar.expandedPanel === "calendar" ? root.mauve : root.surface1
                 border.width: 1
@@ -162,12 +174,12 @@ PanelWindow {
                     spacing: 8
                     visible: bar.expandedPanel !== "calendar"
 
-                    Text { text: bar.clockDate; font.family: root.fontFamily; font.pixelSize: 13; font.bold: true; color: root.subtext0 }
-                    Text { text: bar.clockTime; font.family: root.fontFamily; font.pixelSize: 13; font.bold: true; color: root.blue }
+                    Text { text: bar.clockDate; font.family: root.fontFamily; font.pixelSize: 14; font.bold: true; color: root.subtext0 }
+                    Text { text: bar.clockTime; font.family: root.fontFamily; font.pixelSize: 14; font.bold: true; color: root.blue }
                     Text {
                         visible: bar.dnd || bar.historyCount > 0
                         text: bar.dnd ? "󰂛" : "󰂚 " + bar.historyCount
-                        color: root.blue; font.family: root.fontFamily; font.pixelSize: 13; font.bold: true
+                        color: root.blue; font.family: root.fontFamily; font.pixelSize: 14; font.bold: true
                     }
                 }
 
@@ -212,8 +224,8 @@ PanelWindow {
                 id: rightPill
                 anchors.top: parent.top
                 anchors.right: parent.right
-                height: 38
-                radius: 19
+                height: 40
+                radius: 25
                 color: Qt.alpha(root.base, 0.85)
                 border.color: bar.expandedPanel !== "" && bar.expandedPanel !== "calendar" ? root.blue : root.surface1
                 border.width: 1
@@ -228,7 +240,10 @@ PanelWindow {
 
                     Tray {}
 
-                    Rectangle { width: 1; height: 16; color: root.surface2; Layout.leftMargin: 2; Layout.rightMargin: 2 }
+
+                    PrivacyPill {
+                        rootBar: bar
+                    }
 
                     NetworkPill {
                         rootBar: root

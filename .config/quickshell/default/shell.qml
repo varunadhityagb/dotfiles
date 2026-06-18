@@ -1,4 +1,5 @@
 pragma ComponentBehavior: Bound
+//@ pragma UseQApplication
 import Quickshell
 import Quickshell.Services.SystemTray
 import Quickshell.Wayland
